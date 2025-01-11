@@ -1,0 +1,36 @@
+services:
+  postgres:
+    image: postgres:latest
+    container_name: PostgresDB_container
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root_secret
+      POSTGRES_DB: mydatabase
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgresdb:/var/lib/postgresql/data
+    networks:
+      - appNetwork
+
+  # Visor base de datos
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin_container
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "admin@admin.com"
+      PGADMIN_DEFAULT_PASSWORD: "admin"
+    ports:
+      - "5050:80"
+    depends_on:
+      - postgres
+    networks:
+      - appNetwork
+
+volumes:
+  postgresdb:
+
+
+networks:
+  appNetwork:
+    driver: bridge
