@@ -12,3 +12,234 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+enum status {
+  PENDING
+  ACTIVE
+  INACTIVE
+}
+
+enum role {
+  ADMIN
+  CREATOR
+  PREMIUM
+  USER  
+}
+
+// General models ========================================
+
+model Carousel {
+  id          String @id @default(cuid())
+  title       String
+  description String
+  image       String
+
+  status    status   @default(ACTIVE)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ImagesProduct {
+  id        String  @id @default(cuid())
+  image     String
+  alt       String
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+
+  status    status   @default(ACTIVE)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Product related models ========================================
+
+model Product {
+  id    String @id @default(cuid())
+  name  String
+  slug  String @unique
+  price Float
+  stock Int?
+
+  userId String
+  cartId String?
+
+  artist          User            @relation(fields: [userId], references: [id])
+  Cart            Cart?           @relation(fields: [cartId], references: [id])
+  categories      Category[]
+  types           Type[]
+  collections     Collection[]
+  series          Series[]
+  ImagesProduct   ImagesProduct[]
+  favoritedBy     Favorites[]     @relation("ProductFavoritedBy")
+  favoritesCount  Int             @default(0)
+  orders          Order[]         @relation("ProductOrder")
+
+  status    status   @default(ACTIVE)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Category {
+  id       String    @id @default(cuid())
+  name     String
+  slug     String    @unique
+  image    String?
+  products Product[]
+
+  status    status   @default(ACTIVE)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Type {
+  id       String    @id @default(cuid())
+  name     String
+  slug     String    @unique
+  image    String?
+  products Product[]
+
+  status    status   @default(ACTIVE)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Collection {
+  id       String    @id @default(cuid())
+  name     String
+  slug     String    @unique
+  image    String?
+  products Product[]
+
+  status    status   @default(ACTIVE)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Series {
+  id       String    @id @default(cuid())
+  name     String
+  slug     String    @unique
+  image    String?
+  products Product[]
+
+  status    status   @default(ACTIVE)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// User related models =====================================
+
+model User {
+  id       String   @id @default(cuid())
+  email    String   @unique
+  password String
+  profile  Profile?
+  role     role     @default(USER)
+
+  accessToken  String
+  refreshToken Token[]
+
+  products      Product[]
+  favorites     Favorites[]    @relation("UserFavorites")
+  followers     Follows[]      @relation("follower")
+  following     Follows[]      @relation("following")
+  notifications notification[]
+  Cart          Cart[]
+  Order         Order[]
+
+  status    status   @default(ACTIVE)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Profile {
+  id       String  @id @default(cuid())
+  username String  @unique
+  bio      String?
+  avatar   String?
+
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Favorites {
+  favoriting  Product  @relation("ProductFavoritedBy", fields: [productId], references: [id], onDelete: Cascade)
+  productId   String
+  favoritedBy User     @relation("UserFavorites", fields: [userId], references: [id], onDelete: Cascade)
+  userId      String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@id([productId, userId])
+}
+
+model Follows {
+  follower    User     @relation("follower", fields: [followerId], references: [id], onDelete: Cascade)
+  followerId  String
+  following   User     @relation("following", fields: [followingId], references: [id], onDelete: Cascade)
+  followingId String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@id([followerId, followingId])
+}
+
+model notification {
+  id      String  @id @default(cuid())
+  message String
+  userId  String
+  user    User    @relation(fields: [userId], references: [id])
+  isRead  Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Order related models =====================================
+
+model Cart {
+  id       String    @id @default(cuid())
+  userId   String
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  products Product[]
+
+  status    status   @default(ACTIVE)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Order {
+  id       String    @id @default(cuid())
+  slug     String
+  userId   String
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  products Product[] @relation("ProductOrder")
+  total    Float
+
+  status    status   @default(ACTIVE)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// JWT related models =====================================
+
+model Token {
+  id     String @id @default(cuid())
+  token  String
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Blacklist {
+  id    String @id @default(cuid())
+  token String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
