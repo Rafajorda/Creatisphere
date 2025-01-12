@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -29,10 +23,11 @@ enum role {
 // General models ========================================
 
 model Carousel {
-  id          String @id @default(cuid())
+  id          Int @id @default(autoincrement())
   title       String
   description String
   image       String
+  slug        String? @unique
 
   status    status   @default(ACTIVE)
   createdAt DateTime @default(now())
@@ -40,10 +35,10 @@ model Carousel {
 }
 
 model ImagesProduct {
-  id        String  @id @default(cuid())
+  id        Int     @id @default(autoincrement())
   image     String
   alt       String
-  productId String
+  productId Int
   product   Product @relation(fields: [productId], references: [id])
 
   status    status   @default(ACTIVE)
@@ -54,25 +49,28 @@ model ImagesProduct {
 // Product related models ========================================
 
 model Product {
-  id    String @id @default(cuid())
+  id    Int    @id @default(autoincrement())
   name  String
   slug  String @unique
   price Float
   stock Int?
 
-  userId String
-  cartId String?
+  userId Int
+  cartId Int?
+  seriesId Int
+  collectionId Int
 
   artist          User            @relation(fields: [userId], references: [id])
   Cart            Cart?           @relation(fields: [cartId], references: [id])
+  collections     Collection      @relation(fields: [collectionId], references: [id])
+  series          Series          @relation(fields: [seriesId], references: [id])
   categories      Category[]
   types           Type[]
-  collections     Collection[]
-  series          Series[]
+
   ImagesProduct   ImagesProduct[]
   favoritedBy     Favorites[]     @relation("ProductFavoritedBy")
   favoritesCount  Int             @default(0)
-  orders          Order[]         @relation("ProductOrder")
+  orders          OrderLine[]
 
   status    status   @default(ACTIVE)
   createdAt DateTime @default(now())
@@ -80,7 +78,7 @@ model Product {
 }
 
 model Category {
-  id       String    @id @default(cuid())
+  id       Int       @id @default(autoincrement())
   name     String
   slug     String    @unique
   image    String?
@@ -92,7 +90,7 @@ model Category {
 }
 
 model Type {
-  id       String    @id @default(cuid())
+  id       Int       @id @default(autoincrement())
   name     String
   slug     String    @unique
   image    String?
@@ -104,7 +102,7 @@ model Type {
 }
 
 model Collection {
-  id       String    @id @default(cuid())
+  id       Int       @id @default(autoincrement())
   name     String
   slug     String    @unique
   image    String?
@@ -116,11 +114,11 @@ model Collection {
 }
 
 model Series {
-  id       String    @id @default(cuid())
+  id       Int       @id @default(autoincrement())
   name     String
   slug     String    @unique
   image    String?
-  products Product[]
+  products Product[] 
 
   status    status   @default(ACTIVE)
   createdAt DateTime @default(now())
@@ -130,7 +128,7 @@ model Series {
 // User related models =====================================
 
 model User {
-  id       String   @id @default(cuid())
+  id       Int      @id @default(autoincrement())
   email    String   @unique
   password String
   profile  Profile?
@@ -153,12 +151,12 @@ model User {
 }
 
 model Profile {
-  id       String  @id @default(cuid())
+  id       Int     @id @default(autoincrement())
   username String  @unique
   bio      String?
   avatar   String?
 
-  userId String @unique
+  userId Int @unique
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
@@ -167,9 +165,9 @@ model Profile {
 
 model Favorites {
   favoriting  Product  @relation("ProductFavoritedBy", fields: [productId], references: [id], onDelete: Cascade)
-  productId   String
+  productId   Int
   favoritedBy User     @relation("UserFavorites", fields: [userId], references: [id], onDelete: Cascade)
-  userId      String
+  userId      Int
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
@@ -178,9 +176,9 @@ model Favorites {
 
 model Follows {
   follower    User     @relation("follower", fields: [followerId], references: [id], onDelete: Cascade)
-  followerId  String
+  followerId  Int
   following   User     @relation("following", fields: [followingId], references: [id], onDelete: Cascade)
-  followingId String
+  followingId Int
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
@@ -188,9 +186,9 @@ model Follows {
 }
 
 model notification {
-  id      String  @id @default(cuid())
+  id      Int     @id @default(autoincrement())
   message String
-  userId  String
+  userId  Int
   user    User    @relation(fields: [userId], references: [id])
   isRead  Boolean @default(false)
 
@@ -201,8 +199,8 @@ model notification {
 // Order related models =====================================
 
 model Cart {
-  id       String    @id @default(cuid())
-  userId   String
+  id       Int       @id @default(autoincrement())
+  userId   Int
   user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   products Product[]
 
@@ -212,12 +210,26 @@ model Cart {
 }
 
 model Order {
-  id       String    @id @default(cuid())
-  slug     String
-  userId   String
-  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  products Product[] @relation("ProductOrder")
-  total    Float
+  id          Int        @id @default(autoincrement())
+  slug        String
+  userId      Int
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  orderLines  OrderLine[]
+  total       Float
+
+  status      status     @default(ACTIVE)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+model OrderLine {
+  id        Int      @id @default(autoincrement())
+  orderId   Int
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId Int
+  product   Product  @relation(fields: [productId], references: [id])
+  quantity  Int
+  price     Float
 
   status    status   @default(ACTIVE)
   createdAt DateTime @default(now())
@@ -227,9 +239,9 @@ model Order {
 // JWT related models =====================================
 
 model Token {
-  id     String @id @default(cuid())
+  id     Int    @id @default(autoincrement())
   token  String
-  userId String
+  userId Int
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
@@ -237,7 +249,7 @@ model Token {
 }
 
 model Blacklist {
-  id    String @id @default(cuid())
+  id    Int    @id @default(autoincrement())
   token String
 
   createdAt DateTime @default(now())
