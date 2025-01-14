@@ -64,6 +64,7 @@ model Product {
   Cart            Cart?           @relation(fields: [cartId], references: [id])
   collections     Collection      @relation(fields: [collectionId], references: [id])
   series          Series          @relation(fields: [seriesId], references: [id])
+  cartLines       CartProduct[]
   categories      Category[]
   types           Type[]
 
@@ -141,9 +142,10 @@ model User {
   favorites     Favorites[]    @relation("UserFavorites")
   followers     Follows[]      @relation("follower")
   following     Follows[]      @relation("following")
-  notifications notification[]
+  notifications Notification[]
   Cart          Cart[]
   Order         Order[]
+  returns       Returns[]
 
   status    status   @default(ACTIVE)
   createdAt DateTime @default(now())
@@ -185,7 +187,7 @@ model Follows {
   @@id([followerId, followingId])
 }
 
-model notification {
+model Notification {
   id      Int     @id @default(autoincrement())
   message String
   userId  Int
@@ -202,7 +204,21 @@ model Cart {
   id       Int       @id @default(autoincrement())
   userId   Int
   user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  cartLines CartProduct[]
   products Product[]
+  total    Float
+
+  status    status   @default(ACTIVE)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model CartProduct {
+  id       Int       @id @default(autoincrement())
+  cartId   Int
+  cart     Cart      @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  productId Int
+  product   Product  @relation(fields: [productId], references: [id])
 
   status    status   @default(ACTIVE)
   createdAt DateTime @default(now())
@@ -226,6 +242,32 @@ model OrderLine {
   id        Int      @id @default(autoincrement())
   orderId   Int
   order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId Int
+  product   Product  @relation(fields: [productId], references: [id])
+  quantity  Int
+  price     Float
+
+  status    status   @default(ACTIVE)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Returns {
+  id          Int        @id @default(autoincrement())
+  userId      Int
+  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  returnsLine ReturnsLine[]
+  total       Float
+
+  status      status     @default(ACTIVE)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+model ReturnsLine {
+  id        Int      @id @default(autoincrement())
+  returnsId Int
+  returns   Returns  @relation(fields: [returnsId], references: [id], onDelete: Cascade)
   productId Int
   product   Product  @relation(fields: [productId], references: [id])
   quantity  Int
