@@ -27,23 +27,23 @@ services:
     networks:
       - appNetwork
   
-  nextjs:
-    build:
-      context: ./next
-      dockerfile: Dockerfile
-    container_name: gvmart_nextjs_container
-    ports:
-      - "3000:3000"
-    environment:
-      DATABASE_URL: "postgresql://root:root_secret@postgres:5432/mydatabase"
-    volumes:
-      - ./next:/app
-      - /app/node_modules
-    command: ["npm", "run", "dev"]
-    depends_on:
-      - postgres
-    networks:
-      - appNetwork
+  # nextjs:
+  #   build:
+  #     context: ./next
+  #     dockerfile: Dockerfile
+  #   container_name: gvmart_nextjs_container
+  #   ports:
+  #     - "3000:3000"
+  #   environment:
+  #     DATABASE_URL: "postgresql://root:root_secret@postgres:5432/mydatabase"
+  #   volumes:
+  #     - ./next:/app
+  #     - /app/node_modules
+  #   command: ["npm", "run", "dev"]
+  #   depends_on:
+  #     - postgres
+  #   networks:
+  #     - appNetwork
 
 volumes:
   postgresdb:
