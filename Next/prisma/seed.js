@@ -2,7 +2,32 @@ require('dotenv').config();
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
+async function clearDatabase() {
+  await prisma.favorites.deleteMany();
+  await prisma.notification.deleteMany();
+  await prisma.follows.deleteMany();
+  await prisma.orderLine.deleteMany();
+  await prisma.order.deleteMany();
+  await prisma.imagesProduct.deleteMany();
+  await prisma.product.deleteMany();
+  await prisma.series.deleteMany();
+  await prisma.collection.deleteMany();
+  await prisma.category.deleteMany();
+  await prisma.profile.deleteMany();
+  await prisma.user.deleteMany();
+  await prisma.carousel.deleteMany();
+  await prisma.type.deleteMany();
+  await prisma.cart.deleteMany();
+  await prisma.token.deleteMany();
+  await prisma.blacklist.deleteMany();
+  await prisma.$executeRawUnsafe('TRUNCATE TABLE "User" RESTART IDENTITY CASCADE;');
+  await prisma.$executeRawUnsafe('TRUNCATE TABLE "Product" RESTART IDENTITY CASCADE;');
+  await prisma.$executeRawUnsafe('TRUNCATE TABLE "Collection" RESTART IDENTITY CASCADE;');
+  await prisma.$executeRawUnsafe('TRUNCATE TABLE "Series" RESTART IDENTITY CASCADE;');
+}
+
 async function main() {
+  await clearDatabase();
   // Crear usuarios
   const users = await prisma.user.createMany({
     data: [
@@ -42,6 +67,10 @@ async function main() {
 
   console.log('Colecciones creadas:', collections);
 
+
+
+
+  
   // Crear series
   const series = await prisma.series.createMany({
     data: [
@@ -133,6 +162,134 @@ async function main() {
   });
 
   console.log('Órdenes creadas:', orders);
+
+  const carousels = await prisma.carousel.createMany({
+    data: [
+      {
+        title: 'New Arrivals',
+        description: 'Discover the latest trends in digital art.',
+        image: 'https://via.placeholder.com/600',
+        slug: 'new-arrivals',
+      },
+      {
+        title: 'Exclusive Collections',
+        description: 'Explore limited-time collections.',
+        image: 'https://via.placeholder.com/600',
+        slug: 'exclusive-collections',
+      },
+      {
+        title: 'Top Rated Artists',
+        description: 'Meet the most popular creators on our platform.',
+        image: 'https://via.placeholder.com/600',
+        slug: 'top-rated-artists',
+      },
+    ],
+  });
+
+  console.log('Carruseles creados:', carousels);
+
+  // Crear tipos de producto
+  const types = await prisma.type.createMany({
+    data: [
+      { name: 'Art Prints', slug: 'art-prints', image: 'https://via.placeholder.com/300' },
+      { name: 'Sculptures', slug: 'sculptures', image: 'https://via.placeholder.com/300' },
+      { name: 'NFTs', slug: 'nfts', image: 'https://via.placeholder.com/300' },
+      { name: 'Limited Edition', slug: 'limited-edition', image: 'https://via.placeholder.com/300' },
+    ],
+  });
+
+  console.log('Tipos de producto creados:', types);
+
+  // Crear perfiles de usuario
+  const profiles = await prisma.profile.createMany({
+    data: [
+      { username: 'artist_one', bio: 'Digital artist specialized in illustrations.', avatar: 'https://via.placeholder.com/150', userId: 1 },
+      { username: 'artist_two', bio: '3D modeler and animation enthusiast.', avatar: 'https://via.placeholder.com/150', userId: 2 },
+      { username: 'user_one', bio: 'Art collector and enthusiast.', avatar: 'https://via.placeholder.com/150', userId: 3 },
+      { username: 'user_two', bio: 'Photographer and digital art fan.', avatar: 'https://via.placeholder.com/150', userId: 4 },
+    ],
+  });
+
+  console.log('Perfiles creados:', profiles);
+
+  // Crear favoritos
+  const favorites = await prisma.favorites.createMany({
+    data: [
+      { productId: 1, userId: 3 },
+      { productId: 2, userId: 3 },
+      { productId: 3, userId: 4 },
+      { productId: 4, userId: 4 },
+    ],
+  });
+
+  console.log('Favoritos creados:', favorites);
+
+  // Crear seguidores
+  const follows = await prisma.follows.createMany({
+    data: [
+      { followerId: 3, followingId: 1 },
+      { followerId: 4, followingId: 1 },
+      { followerId: 3, followingId: 2 },
+      { followerId: 4, followingId: 2 },
+    ],
+  });
+
+  console.log('Seguidores creados:', follows);
+
+  // Crear notificaciones
+  const notifications = await prisma.notification.createMany({
+    data: [
+      { message: 'Your artwork has been approved!', userId: 1 },
+      { message: 'New follower: user_one.', userId: 1 },
+      { message: 'Your order has been shipped.', userId: 3 },
+      { message: 'Your payment has been confirmed.', userId: 4 },
+    ],
+  });
+
+  console.log('Notificaciones creadas:', notifications);
+
+  // Crear carritos
+  const carts = await prisma.cart.createMany({
+    data: [
+      { userId: 3, total: 0 }, 
+      { userId: 4, total: 0 },
+    ],
+  });
+
+  console.log('Carritos creados:', carts);
+
+  // Crear líneas de órdenes
+  const orderLines = await prisma.orderLine.createMany({
+    data: [
+      { orderId: 1, productId: 1, quantity: 1, price: 120.99 },
+      { orderId: 2, productId: 2, quantity: 1, price: 220.5 },
+      { orderId: 3, productId: 3, quantity: 2, price: 191.5 },
+      { orderId: 4, productId: 4, quantity: 1, price: 150.25 },
+    ],
+  });
+
+  console.log('Líneas de órdenes creadas:', orderLines);
+
+  // Crear tokens
+  const tokens = await prisma.token.createMany({
+    data: [
+      { token: 'abc123', userId: 1 },
+      { token: 'def456', userId: 2 },
+      { token: 'ghi789', userId: 3 },
+    ],
+  });
+
+  console.log('Tokens creados:', tokens);
+
+  // Crear tokens en la lista negra
+  const blacklistedTokens = await prisma.blacklist.createMany({
+    data: [
+      { token: 'expiredToken123' },
+      { token: 'maliciousToken456' },
+    ],
+  });
+
+  console.log('Tokens en lista negra creados:', blacklistedTokens);
 
   console.log('Datos dummy creados con éxito!');
 }
