@@ -11,7 +11,7 @@ const ListProducts = async () => {
                 {products.map((product: ProductItem) => (
                     <div key={product.id}>
                         <h2>Nombre: {product.name}</h2>
-                        <p>Collection: {product.collection.name}</p>
+                        <p>Collection: {product.collections.name}</p>
                         <p>Series: {product.series.name}</p>
                         <div>
                             {product.categories.map((category) => (
