@@ -1,11 +1,9 @@
-import { Product } from './Product';  // Relación con Product
-import { status } from '.prisma/client';  // Para el tipo 'status'
+import { Series, Product } from "@prisma/client";
 
-export interface Series {
-    id: number;
-    name: string;
-    slug: string;
-    image?: string;
-    products: Product[];  // Relación con el modelo Product
-    status: status;
+export interface SeriesItem extends Omit<Series, 'updatedAt'> {
+    products: Product[];
+}
+
+export interface SeriesResponse {
+    series: SeriesItem[];
 }
