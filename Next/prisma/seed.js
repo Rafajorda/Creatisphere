@@ -42,34 +42,61 @@ async function main() {
   console.log('Usuarios creados:', users);
 
   // Crear categorías
-  const categories = await prisma.category.createMany({
-    data: [
-      { name: 'Digital Paintings', slug: 'digital-paintings', image: 'https://via.placeholder.com/300' },
-      { name: '3D Models', slug: '3d-models', image: 'https://via.placeholder.com/300' },
-      { name: 'Illustrations', slug: 'illustrations', image: 'https://via.placeholder.com/300' },
-      { name: 'Photography', slug: 'photography', image: 'https://via.placeholder.com/300' },
-      { name: 'Animations', slug: 'animations', image: 'https://via.placeholder.com/300' },
-    ],
-  });
+  const categories = [];
+  categories.push(await prisma.category.create({
+    data: { name: 'Digital Paintings', slug: 'digital-paintings', image: 'https://via.placeholder.com/300' },
+  }));
+  categories.push(await prisma.category.create({
+    data: { name: '3D Models', slug: '3d-models', image: 'https://via.placeholder.com/300' },
+  }));
+  categories.push(await prisma.category.create({
+    data: { name: 'Illustrations', slug: 'illustrations', image: 'https://via.placeholder.com/300' },
+  }));
+  categories.push(await prisma.category.create({
+    data: { name: 'Photography', slug: 'photography', image: 'https://via.placeholder.com/300' },
+  }));
+  categories.push(await prisma.category.create({
+    data: { name: 'Animations', slug: 'animations', image: 'https://via.placeholder.com/300' },
+  }));
 
   console.log('Categorías creadas:', categories);
 
+    // Crear tipos de producto
+  const types = [];
+  types.push(await prisma.type.create({
+    data: { name: 'Art Prints', slug: 'art-prints', image: 'https://via.placeholder.com/300' },
+  }));
+  types.push(await prisma.type.create({
+    data: { name: 'Digital', slug: 'digital', image: 'https://via.placeholder.com/300' },
+  }));
+  types.push(await prisma.type.create({
+    data: { name: '3D', slug: '3d', image: 'https://via.placeholder.com/300' },
+  }));
+  types.push(await prisma.type.create({
+    data: { name: 'Limited Edition', slug: 'limited-edition', image: 'https://via.placeholder.com/300' },
+  }));
+
+  console.log('Tipos de producto creados:', types);
+
   // Crear colecciones
-  const collections = await prisma.collection.createMany({
-    data: [
-      { name: 'Summer Vibes', slug: 'summer-vibes', image: 'https://via.placeholder.com/300' },
-      { name: 'Cyberpunk Dreams', slug: 'cyberpunk-dreams', image: 'https://via.placeholder.com/300' },
-      { name: 'Nature Beauty', slug: 'nature-beauty', image: 'https://via.placeholder.com/300' },
-      { name: 'Abstract Art', slug: 'abstract-art', image: 'https://via.placeholder.com/300' },
-      { name: 'Futuristic Visions', slug: 'futuristic-visions', image: 'https://via.placeholder.com/300' },
-    ],
-  });
+  const collections = [];
+  collections.push(await prisma.collection.create({
+    data: { name: 'Summer Vibes', slug: 'summer-vibes', image: 'https://via.placeholder.com/300' },
+  }));
+  collections.push(await prisma.collection.create({
+    data: { name: 'Cyberpunk Dreams', slug: 'cyberpunk-dreams', image: 'https://via.placeholder.com/300' },
+  }));
+  collections.push(await prisma.collection.create({
+    data: { name: 'Nature Beauty', slug: 'nature-beauty', image: 'https://via.placeholder.com/300' },
+  }));
+  collections.push(await prisma.collection.create({
+    data: { name: 'Abstract Art', slug: 'abstract-art', image: 'https://via.placeholder.com/300' },
+  }));
+  collections.push(await prisma.collection.create({
+    data: { name: 'Futuristic Visions', slug: 'futuristic-visions', image: 'https://via.placeholder.com/300' },
+  }));
 
   console.log('Colecciones creadas:', collections);
-
-
-
-
   
   // Crear series
   const series = await prisma.series.createMany({
@@ -85,57 +112,154 @@ async function main() {
   console.log('Series creadas:', series);
 
   // Crear productos con relaciones
-  const products = await prisma.product.createMany({
-    data: [
-      {
-        name: 'Sunset Overdrive',
-        slug: 'sunset-overdrive',
-        price: 120.99,
-        stock: 10,
-        userId: 1,
-        collectionId: 1,
-        seriesId: 1,
-      },
-      {
-        name: 'Cyber Noir',
-        slug: 'cyber-noir',
-        price: 220.5,
-        stock: 5,
-        userId: 2,
-        collectionId: 2,
-        seriesId: 2,
-      },
-      {
-        name: 'Mountain Reflections',
-        slug: 'mountain-reflections',
-        price: 95.75,
-        stock: 15,
-        userId: 1,
-        collectionId: 3,
-        seriesId: 3,
-      },
-      {
-        name: 'Urban Chaos',
-        slug: 'urban-chaos',
-        price: 150.25,
-        stock: 8,
-        userId: 2,
-        collectionId: 4,
-        seriesId: 4,
-      },
-      {
-        name: 'Dreamscape',
-        slug: 'dreamscape',
-        price: 199.99,
-        stock: 12,
-        userId: 1,
-        collectionId: 5,
-        seriesId: 5,
-      },
-    ],
-  });
+  const products = [];
+  products.push(await prisma.product.create({
+    data: {
+      name: 'Sunset Overdrive',
+      slug: 'sunset-overdrive',
+      price: 120.99,
+      stock: 10,
+      userId: 1,
+      collectionId: 1,
+      seriesId: 1,
+    },
+  }));
+  products.push(await prisma.product.create({
+    data: {
+      name: 'Cyber Noir',
+      slug: 'cyber-noir',
+      price: 220.5,
+      stock: 5,
+      userId: 2,
+      collectionId: 2,
+      seriesId: 2,
+    },
+  }));
+  products.push(await prisma.product.create({
+    data: {
+      name: 'Mountain Reflections',
+      slug: 'mountain-reflections',
+      price: 95.75,
+      stock: 15,
+      userId: 1,
+      collectionId: 3,
+      seriesId: 3,
+    },
+  }));
+  products.push(await prisma.product.create({
+    data: {
+      name: 'Urban Chaos',
+      slug: 'urban-chaos',
+      price: 150.25,
+      stock: 8,
+      userId: 2,
+      collectionId: 4,
+      seriesId: 4,
+    },
+  }));
+  products.push(await prisma.product.create({
+    data: {
+      name: 'Dreamscape',
+      slug: 'dreamscape',
+      price: 199.99,
+      stock: 12,
+      userId: 1,
+      collectionId: 5,
+      seriesId: 5,
+    },
+  }));
 
   console.log('Productos creados:', products);
+
+  /**
+   * CREAR LOS DUMMIES DE LAS TABLAS PIVOT
+   */
+
+  await prisma.product.update({
+    where: { id: products[0].id },
+    data: {
+      categories: {
+        connect: [
+          { id: categories[1].id },
+          { id: categories[2].id },
+        ]
+      },
+      types: {
+        connect: [
+          { id: types[0].id },
+          { id: types[2].id },
+        ]
+      }
+    }
+  })
+
+  await prisma.product.update({
+    where: { id: products[1].id },
+    data: {
+      categories: {
+        connect: [
+          { id: categories[3].id },
+        ]
+      },
+      types: {
+        connect: [
+          { id: types[1].id },
+        ]
+      }
+    }
+  })
+
+  await prisma.product.update({
+    where: { id: products[2].id },
+    data: {
+      categories: {
+        connect: [
+          { id: categories[0].id },
+          { id: categories[2].id },
+          { id: categories[4].id },
+        ]
+      },
+      types: {
+        connect: [
+          { id: types[2].id },
+        ]
+      }
+    }
+  })
+
+  await prisma.product.update({
+    where: { id: products[3].id },
+    data: {
+      categories: {
+        connect: [
+          { id: categories[1].id },
+          { id: categories[4].id },
+        ]
+      },
+      types: {
+        connect: [
+          { id: types[3].id },
+        ]
+      }
+    }
+  })
+
+  await prisma.product.update({
+    where: { id: products[4].id },
+    data: {
+      categories: {
+        connect: [
+          { id: categories[3].id },
+        ]
+      },
+      types: {
+        connect: [
+          { id: types[1].id },
+          { id: types[3].id },
+        ]
+      }
+    }
+  })  
 
   // Crear imágenes para los productos
   const imagesProduct = await prisma.imagesProduct.createMany({
@@ -187,18 +311,6 @@ async function main() {
   });
 
   console.log('Carruseles creados:', carousels);
-
-  // Crear tipos de producto
-  const types = await prisma.type.createMany({
-    data: [
-      { name: 'Art Prints', slug: 'art-prints', image: 'https://via.placeholder.com/300' },
-      { name: 'Sculptures', slug: 'sculptures', image: 'https://via.placeholder.com/300' },
-      { name: 'NFTs', slug: 'nfts', image: 'https://via.placeholder.com/300' },
-      { name: 'Limited Edition', slug: 'limited-edition', image: 'https://via.placeholder.com/300' },
-    ],
-  });
-
-  console.log('Tipos de producto creados:', types);
 
   // Crear perfiles de usuario
   const profiles = await prisma.profile.createMany({
