@@ -4,7 +4,7 @@ export interface ProductItem extends Omit<Product, 'updatedAt'> {
     categories: Category[];
     types: Type[];
     series: Series;
-    collection: Collection;
+    collections: Collection;
 }
 
 export interface ProductResponse {
