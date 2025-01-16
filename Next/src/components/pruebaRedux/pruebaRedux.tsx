@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 import { increment, decrement } from '@/store/slices/counterSlice';
 

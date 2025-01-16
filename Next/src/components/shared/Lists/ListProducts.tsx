@@ -1,17 +1,21 @@
-import getProducts from '@/actions/getProducts';
-import { ProductItem } from '@/types/Product';
+"use client"
+
+import { useAppSelector } from '@/store/store';
 import React from 'react';
 
-const ListProducts = async () => {
-    const {products} = await getProducts();
+const ListProducts = () => {
+    const products = useAppSelector((state) => state.product.products);
+
+    console.log(products);
 
     return (
         <div className='text-center'>
             <div>
-                {products.map((product: ProductItem) => (
+                <h1>hola</h1>
+                {/* {products.map((product: ProductItem) => (
                     <div key={product.id}>
                         <h2>Nombre: {product.name}</h2>
-                        <p>Collection: {product.collection.name}</p>
+                        <p>Collection: {product.collections.name}</p>
                         <p>Series: {product.series.name}</p>
                         <div>
                             {product.categories.map((category) => (
@@ -19,7 +23,7 @@ const ListProducts = async () => {
                             ))}
                         </div>
                     </div>
-                ))}
+                ))} */}
             </div>
         </div>
     );
