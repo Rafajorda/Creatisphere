@@ -1,12 +1,11 @@
-import PruebaRedux from '@/components/pruebaRedux/pruebaRedux';
+import ListProducts from '@/components/shared/Lists/ListProducts';
 import React from 'react';
 
 const Home = () => {
     return (
-        <div className='text-center'>
-            <h1>Hola Mundo</h1>
-            <PruebaRedux />
-        </div>
+        <>
+            <ListProducts />
+        </>
     );
 };
 
