@@ -24,6 +24,19 @@ async function clearDatabase() {
   await prisma.$executeRawUnsafe('TRUNCATE TABLE "Product" RESTART IDENTITY CASCADE;');
   await prisma.$executeRawUnsafe('TRUNCATE TABLE "Collection" RESTART IDENTITY CASCADE;');
   await prisma.$executeRawUnsafe('TRUNCATE TABLE "Series" RESTART IDENTITY CASCADE;');
+  await prisma.$executeRawUnsafe('TRUNCATE TABLE "Category" RESTART IDENTITY CASCADE;');
+  await prisma.$executeRawUnsafe('TRUNCATE TABLE "Favorites" RESTART IDENTITY CASCADE;');
+  await prisma.$executeRawUnsafe('TRUNCATE TABLE "Notification" RESTART IDENTITY CASCADE;');
+  await prisma.$executeRawUnsafe('TRUNCATE TABLE "Follows" RESTART IDENTITY CASCADE;');
+  await prisma.$executeRawUnsafe('TRUNCATE TABLE "OrderLine" RESTART IDENTITY CASCADE;');
+  await prisma.$executeRawUnsafe('TRUNCATE TABLE "Order" RESTART IDENTITY CASCADE;');
+  await prisma.$executeRawUnsafe('TRUNCATE TABLE "ImagesProduct" RESTART IDENTITY CASCADE;');
+  await prisma.$executeRawUnsafe('TRUNCATE TABLE "Profile" RESTART IDENTITY CASCADE;');
+  await prisma.$executeRawUnsafe('TRUNCATE TABLE "Carousel" RESTART IDENTITY CASCADE;');
+  await prisma.$executeRawUnsafe('TRUNCATE TABLE "Type" RESTART IDENTITY CASCADE;');
+  await prisma.$executeRawUnsafe('TRUNCATE TABLE "Cart" RESTART IDENTITY CASCADE;');
+  await prisma.$executeRawUnsafe('TRUNCATE TABLE "Token" RESTART IDENTITY CASCADE;');
+  await prisma.$executeRawUnsafe('TRUNCATE TABLE "Blacklist" RESTART IDENTITY CASCADE;');
 }
 
 async function main() {
