@@ -1,16 +1,15 @@
-// redux/provider.tsx
 'use client';
 
-import React from 'react';
 import { Provider } from 'react-redux';
 import { store } from './store';
+import React from 'react';
 
 interface Props {
     children: React.ReactNode;
 }
 
-const ReduxProvider = ({ children }: Props) => {
+const StoreProvider = ({ children }: Props) => {
     return <Provider store={store}>{children}</Provider>;
 };
 
-export default ReduxProvider;
+export default StoreProvider;
