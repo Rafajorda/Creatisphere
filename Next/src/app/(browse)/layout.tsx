@@ -1,6 +1,6 @@
 import React from 'react'
 import { Metadata } from 'next'
-import ReduxProvider from '@/store/provider'
+import StoreProvider from '@/store/StoreProvider'
 
 export const metadata: Metadata = {
     title: {
@@ -18,11 +18,13 @@ interface RootLayoutProps {
 function RootLayout({ children }: RootLayoutProps) {
     return (
         <>
-            <html>
-                <body suppressHydrationWarning={true}>
-                    <ReduxProvider>{children}</ReduxProvider>
-                </body>
-            </html>
+            <StoreProvider>
+                <html>
+                    <body suppressHydrationWarning={true}>
+                        {children}
+                    </body>
+                </html>
+            </StoreProvider>
         </>
     )
 }

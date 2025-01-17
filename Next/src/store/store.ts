@@ -4,11 +4,13 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 
 // Importa tus reducers aquí
 import counterReducer from './slices/counterSlice';
+import productReducer from './slices/productSlice';
 
 export const store = configureStore({
     reducer: {
         // Agrega tus slices aquí
         counter: counterReducer,
+        product: productReducer,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware()
 });
