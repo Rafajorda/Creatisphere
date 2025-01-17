@@ -1,6 +1,8 @@
-// pages/api/products.ts
+'use server';
+
 import { prisma } from '@/lib/prisma';
 import { ProductResponse } from '@/types/Product';
+import { excludeTimestampsFromArray, excludeTimestamps } from '@/utils/mapper';
 
 export default async function getProducts(): Promise<ProductResponse> {
   const data = await prisma.product.findMany({
@@ -13,14 +15,18 @@ export default async function getProducts(): Promise<ProductResponse> {
     }
   });
 
+  const productMapped = excludeTimestampsFromArray(data);
+
   return {
-    products: data.map((product) => ({
-      ...product,
-      collections: product.collections,
-      categories: product.categories,
-      types: product.types,
-      series: product.series,
-      ImagesProduct: product.ImagesProduct,
-    })),
-  }
+    products: productMapped.map((product) => {
+      return {
+        ...product,
+        categories: excludeTimestampsFromArray(product.categories),
+        types: excludeTimestampsFromArray(product.types),
+        series: excludeTimestamps(product.series),
+        collections: excludeTimestamps(product.collections),
+        ImagesProduct: excludeTimestampsFromArray(product.ImagesProduct),
+      };
+    }),
+  };
 }
