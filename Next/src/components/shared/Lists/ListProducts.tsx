@@ -1,17 +1,9 @@
-'use client';
-
-import { fetchProducts, selectProducts } from '@/store/slices/productSlice';
-import { useAppDispatch, useAppSelector } from '@/store/store';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { CardProduct } from '../Cards/CardProduct';
+import getProducts from '@/actions/getProducts';
 
-const ListProducts = () => {
-    const products = useAppSelector(selectProducts);
-    const dispatch = useAppDispatch();
-
-    useEffect(() => {
-        dispatch(fetchProducts());
-    }, [dispatch]);
+const ListProducts = async () => {
+    const {products} = await getProducts();
 
     return (
         <div>
