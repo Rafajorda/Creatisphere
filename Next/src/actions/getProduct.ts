@@ -13,10 +13,14 @@ export async function getProduct(params: IProductParams) {
         // const userId = currentUser?.id;
       where: { slug: params.slug },
       include: {
-        artist: true,
+        artist: {
+            include: {
+              profile: true,
+            },
+          },
         series: true,
         collections: true,
-        types:true
+        types:true,
         },
     })
     if (!data) {

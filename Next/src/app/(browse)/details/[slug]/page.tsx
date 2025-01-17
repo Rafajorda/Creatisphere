@@ -35,7 +35,7 @@
                 <p><strong>Favorites Count:</strong> {product.favoritesCount}</p>
                 <p><strong>Collection:</strong> {product.collections.name}</p>
                 <p><strong>Series:</strong> {product.series.name}</p>
-                <p><strong>Artist:</strong> {product.artist?.email}</p>
+                <p><strong>Artist:</strong> {product.artist?.profile?.username}</p>
             </div>
         );
     } catch (error) {
