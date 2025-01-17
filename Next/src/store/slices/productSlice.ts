@@ -1,6 +1,7 @@
-import getProducts from "@/actions/getProducts";
 import { ProductItem } from "@/types/Product";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { RootState } from "../store";
+import { fetchWrapper } from "@/utils/fetch";
 
 interface ProductState {
     products: ProductItem[];
@@ -14,9 +15,12 @@ const initialState: ProductState = {
     error: undefined,
 };
 
-export const getProductsRedux = createAsyncThunk(
-    "product/getAllProducts",
-    getProducts
+export const fetchProducts = createAsyncThunk(
+    "products/fetchProducts",
+    async () => {
+        const response = await fetchWrapper(`/api/products`, 'GET');
+        return response.products;
+    }
 );
 
 const productSlice = createSlice({
@@ -25,13 +29,27 @@ const productSlice = createSlice({
     reducers: {
         pageUnloaded: () => initialState,
     },
-    extraReducers(builder) {
-        builder.addCase(getProductsRedux.fulfilled, (state, action) => {
-            state.products = action.payload.products;
-        })
+    extraReducers: (builder) => {
+        builder
+            .addCase(fetchProducts.pending, (state) => {
+                state.loading = true;
+                state.error = undefined;
+            })
+            .addCase(fetchProducts.fulfilled, (state, action) => {
+                state.loading = false;
+                state.products = action.payload;
+            })
+            .addCase(fetchProducts.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error.message;
+            });
     },
 });
 
 export const { pageUnloaded } = productSlice.actions;
+
+export const selectProducts = (state: RootState) => state.product.products;
+export const selectLoading = (state: RootState) => state.product.loading;
+export const selectError = (state: RootState) => state.product.error;
 
 export default productSlice.reducer;
