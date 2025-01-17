@@ -1,6 +1,7 @@
 import React from 'react'
 import { Metadata } from 'next'
 import StoreProvider from '@/store/StoreProvider'
+import { Header } from '@/components/shared/Header/Header'
 
 export const metadata: Metadata = {
     title: {
@@ -21,6 +22,7 @@ function RootLayout({ children }: RootLayoutProps) {
             <StoreProvider>
                 <html>
                     <body suppressHydrationWarning={true}>
+                        <Header />
                         {children}
                     </body>
                 </html>
