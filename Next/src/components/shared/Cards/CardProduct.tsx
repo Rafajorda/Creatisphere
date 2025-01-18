@@ -1,5 +1,5 @@
 import React from "react";
-import { GalleryImage } from "@/components/BentoGrids/BentoGridProducts";
+import { GalleryImage } from "@/hooks/useGalleryImages";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -32,9 +32,9 @@ export const CardProduct = ({ product }: CardProductProps) => {
                     />
                     <div className="absolute inset-0 bg-white bg-opacity-60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                         <div className="text-center">
-                            <p className="text-black text-3xl font-black">{product.name}</p>
-                            <p className="text-black text-2xl font-bold">Collection: {product.collection}</p>
-                            <p className="text-black text-2xl font-bold">Series: {product.series}</p>
+                            <p className="text-black text-3xl font-black italic">{product.name}</p>
+                            <p className="text-black text-2xl font-bold"><span className="font-extrabold">Collection: </span>{product.collection}</p>
+                            <p className="text-black text-2xl font-bold"><span className="font-extrabold">Series: </span>{product.series}</p>
                             <p className="text-black text-lg font-bold pt-5">Click for more info!</p>
                         </div>
                     </div>
