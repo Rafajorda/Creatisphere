@@ -12,7 +12,7 @@ export const HeaderData = () => {
                         <Image
                             src="/assets/logo/logo.png"
                             alt="BrandName Logo"
-                            width={110}
+                            width={100}
                             height={100}
                             priority
                         />
@@ -22,10 +22,9 @@ export const HeaderData = () => {
                 {/* Navigation Links */}
                 <div className="hidden md:flex space-x-8">
                     <Link href="/" prefetch={false} className="text-2xl">Home</Link>
-                    <Link href="/shop" prefetch={false} className="text-2xl">Shop</Link>
-                    <Link href="/Commisions" prefetch={false} className="text-2xl">Commisions</Link>
+                    <Link href="/Shop" prefetch={false} className="text-2xl">Shop</Link>
+                    <Link href="/Commissions" prefetch={false} className="text-2xl">Commissions</Link>
                     <Link href="/Portfolio" prefetch={false} className="text-2xl">Portfolio</Link>
-                    <Link href="/contact" prefetch={false} className="text-2xl">Contact</Link>
                 </div>
 
                 {/* Mobile Menu */}

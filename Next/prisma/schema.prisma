@@ -20,6 +20,12 @@ enum role {
   USER
 }
 
+enum sizes {
+  tall
+  wide
+  square
+}
+
 // General models ========================================
 
 model Carousel {
@@ -36,8 +42,9 @@ model Carousel {
 
 model ImagesProduct {
   id        Int     @id @default(autoincrement())
-  image     String
+  src       String
   alt       String
+  size      sizes
   productId Int
   product   Product @relation(fields: [productId], references: [id])
 

@@ -3,7 +3,6 @@
 /**
  * Separamos la lógica de los datos del Header para que el componente client
  * no nos empeore el SEO. Ya que la carga de datos está en el servidor
- * 
  */
 
 import { useState, useEffect } from "react";
@@ -11,6 +10,10 @@ import { HeaderData } from "./HeaderData";
 import React from "react";
 
 export const Header = () => {
+    /**
+     * Utilizaremos el hook useState para manejar el estado de la visibilidad
+     * en vez de Redux, ya que no vale la pena hacer un slice entero solo para esto
+     */
     const [showHeader, setShowHeader] = useState(true);
     const [lastScrollY, setLastScrollY] = useState(0);
 
