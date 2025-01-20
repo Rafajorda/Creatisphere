@@ -1,5 +1,5 @@
 
-import BentoGridSeries from '@/components/BentoGrids/BentoGridCollections';
+import BentoGridSeries from '@/components/BentoGrids/BentoGridSeries';
 import CarouselHome from '@/components/carousel/Carousel';
 import React from 'react';
 
