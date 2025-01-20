@@ -1,10 +1,15 @@
+
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-export const HeaderData = () => {
+interface HeaderDataProps {
+    activeRoute: string; // Recibimos activeRoute como prop
+}
+
+export const HeaderData: React.FC<HeaderDataProps> = ({ activeRoute }) => {
     return (
-        <div className="bg-black text-white shadow-md">
+        <div className="bg-black text-light-gold font-semibold shadow-md">
             <nav className="mx-auto flex items-center justify-between px-20 pl-10 py-4">
                 {/* Logo */}
                 <div className="flex items-center">
@@ -20,34 +25,42 @@ export const HeaderData = () => {
                 </div>
 
                 {/* Navigation Links */}
-                <div className="hidden md:flex space-x-8">
-                    <Link href="/" prefetch={false} className="text-2xl">Home</Link>
-                    <Link href="/Shop" prefetch={false} className="text-2xl">Shop</Link>
-                    <Link href="/Commissions" prefetch={false} className="text-2xl">Commissions</Link>
-                    <Link href="/Portfolio" prefetch={false} className="text-2xl">Portfolio</Link>
-                </div>
-
-                {/* Mobile Menu */}
-                <div className="md:hidden">
-                    <button
-                        className="text-white hover:text-gray-300 focus:outline-none"
-                        aria-label="Open Menu"
+                <div className="hidden md:flex items-center space-x-4 group-hover:opacity-100">
+                    <Link
+                        href="/"
+                        prefetch={false}
+                        className={`text-2xl px-4 py-1 rounded-lg hover:text-black hover:bg-gray-300 transition-colors duration-200 ${activeRoute === "/" ? "text-black bg-white" : ""}`}
                     >
-                        <svg
-                            className="w-6 h-6"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M4 6h16M4 12h16M4 18h16"
-                            />
-                        </svg>
-                    </button>
+                        Home
+                    </Link>
+                    <Link
+                        href="/Shop"
+                        prefetch={false}
+                        className={`text-2xl px-4 py-1 rounded-lg hover:text-black hover:bg-gray-300 transition-colors duration-200 ${activeRoute === "/Shop" ? "text-black bg-white" : ""}`}
+                    >
+                        Shop
+                    </Link>
+                    <Link
+                        href="/Commissions"
+                        prefetch={false}
+                        className={`text-2xl px-4 py-1 rounded-lg hover:text-black hover:bg-gray-300 transition-colors duration-200 ${activeRoute === "/Commissions" ? "text-black bg-white" : ""}`}
+                    >
+                        Commissions
+                    </Link>
+                    <Link
+                        href="/Portfolio"
+                        prefetch={false}
+                        className={`text-2xl px-4 py-1 rounded-lg hover:text-black hover:bg-gray-300 transition-colors duration-200 ${activeRoute === "/Portfolio" ? "text-black bg-white" : ""}`}
+                    >
+                        Portfolio
+                    </Link>
+                    <Link
+                        href="/SignIn"
+                        prefetch={false}
+                        className={`text-2xl font-bold text-black bg-gold px-4 py-2 rounded-lg hover:bg-dark-gold hover:text-white transition-colors duration-200 ${activeRoute === "/SignIn" ? "bg-dark-gold text-white" : ""}`}
+                    >
+                        Sign in
+                    </Link>
                 </div>
             </nav>
         </div>
