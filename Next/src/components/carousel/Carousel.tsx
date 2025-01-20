@@ -11,7 +11,7 @@ const CarouselHome = async () => {
                 <CarouselContent>
                     {carouselSlides.carousels.map((slide) => (
                         <CarouselItem key={slide.id} className="relative group">
-                            <img src={`/assets/carousel/${slide.image}`} alt={slide.title} className="object-cover" />
+                            <img src={`/assets/carousel/${slide.image}`} alt={slide.title} />
                             <div className="absolute bottom-0 left-0 right-0 h-2/3">
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                                 <div className="absolute bottom-10 left-40 right-0 p-6 text-white font-serif italic text-shadow-xl select-none">
