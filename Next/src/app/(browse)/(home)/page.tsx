@@ -1,13 +1,11 @@
 
-import ListCollections from '@/components/shared/Lists/ListCollections';
-import ListSeries from '@/components/shared/Lists/ListSeries';
+import CarouselHome from '@/components/carousel/Carousel';
 import React from 'react';
 
 const Home = () => {
     return (
         <>
-            <ListCollections />
-            <ListSeries />
+            <CarouselHome />
         </>
     );
 };
