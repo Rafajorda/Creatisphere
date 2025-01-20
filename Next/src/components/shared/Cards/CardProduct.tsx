@@ -26,9 +26,9 @@ export const CardProduct = ({ product }: CardProductProps) => {
                     />
                     <div className="absolute inset-0 bg-white bg-opacity-60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                         <div className="text-center p-2 font-serif">
-                            <p className="text-black text-base sm:text-xl md:text-2xl lg:text-3xl font-black italic">{product.name}</p>
-                            <p className="text-black text-xs sm:text-sm md:text-base lg:text-lg font-bold"><span className="font-extrabold">Collection: </span>{product.collection}</p>
-                            <p className="text-black text-xs sm:text-sm md:text-base lg:text-lg font-bold"><span className="font-extrabold">Series: </span>{product.series}</p>
+                            <p className="text-black text-base sm:text-xl md:text-2xl lg:text-4xl font-bold italic">{product.name}</p>
+                            <p className="text-black text-xs sm:text-sm md:text-base lg:text-2xl italic"><span className="font-extrabold">Collection: </span>{product.collection}</p>
+                            <p className="text-black text-xs sm:text-sm md:text-base lg:text-2xl italic"><span className="font-extrabold">Series: </span>{product.series}</p>
                             <p className="text-black text-xs sm:text-sm md:text-base lg:text-lg font-bold pt-1 sm:pt-2 md:pt-3 lg:pt-5">Click for more info!</p>
                         </div>
                     </div>
