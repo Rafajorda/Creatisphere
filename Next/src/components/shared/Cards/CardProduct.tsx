@@ -24,8 +24,8 @@ export const CardProduct = ({ product }: CardProductProps) => {
                         sizes="(max-width: 768px) 50vw, 25vw"
                         className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
                     />
-                    <div className="absolute inset-0 bg-white bg-opacity-60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                        <div className="text-center p-2 font-serif">
+                    <div className="absolute inset-0 bg-white bg-opacity-70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                        <div className="text-center p-2 font-serif text-shadow-md">
                             <p className="text-black text-base sm:text-xl md:text-2xl lg:text-4xl font-bold italic">{product.name}</p>
                             <p className="text-black text-xs sm:text-sm md:text-base lg:text-2xl italic"><span className="font-extrabold">Collection: </span>{product.collection}</p>
                             <p className="text-black text-xs sm:text-sm md:text-base lg:text-2xl italic"><span className="font-extrabold">Series: </span>{product.series}</p>

@@ -55,9 +55,9 @@ export const HeaderData: React.FC<HeaderDataProps> = ({ activeRoute }) => {
                         Portfolio
                     </Link>
                     <Link
-                        href="/SignIn"
+                        href="/Auth"
                         prefetch={false}
-                        className={`text-2xl font-bold text-black bg-gold px-4 py-2 rounded-lg hover:bg-dark-gold hover:text-white transition-colors duration-200 ${activeRoute === "/SignIn" ? "bg-dark-gold text-white" : ""}`}
+                        className={`text-2xl font-bold text-black bg-gold px-4 py-2 rounded-lg hover:bg-dark-gold hover:text-white transition-colors duration-200 ${activeRoute === "/Auth" ? "bg-dark-gold text-white" : ""}`}
                     >
                         Sign in
                     </Link>
