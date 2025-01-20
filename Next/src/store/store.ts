@@ -3,14 +3,11 @@ import { configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 
 // Importa tus reducers aquí
-import counterReducer from './slices/counterSlice';
 import productReducer from './slices/productSlice';
 import collectionReducer from './slices/collectionSlice';
 
 export const store = configureStore({
     reducer: {
-        // Agrega tus slices aquí
-        counter: counterReducer,
         product: productReducer,
         collection: collectionReducer,
     },

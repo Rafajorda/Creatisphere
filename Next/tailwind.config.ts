@@ -13,7 +13,7 @@ export default {
 				foreground: 'hsl(var(--foreground))',
 				gold: '#d1a93b',
 				'light-gold': '#edc461',
-				'dark-gold': '#d1a93b',
+				'dark-gold': '#937836',
 				card: {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
