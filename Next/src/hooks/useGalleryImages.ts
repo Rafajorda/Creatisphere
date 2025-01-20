@@ -35,7 +35,7 @@ const sortImages = (images: GalleryImage[]): GalleryImage[] => {
     return grid.flat().filter((img): img is GalleryImage => img !== null);
 };
 
-export const fetchGalleryImages = async (): Promise<GalleryImage[]> => {
+export const useFetchGalleryImages = async (): Promise<GalleryImage[]> => {
     const { products } = await getProducts();
 
     const mappedImages = products.map(product => {

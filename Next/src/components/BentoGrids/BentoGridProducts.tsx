@@ -1,9 +1,9 @@
 import React from 'react';
 import { CardProduct } from '../shared/Cards/CardProduct';
-import { fetchGalleryImages } from '@/hooks/useGalleryImages';
+import { useFetchGalleryImages } from '@/hooks/useGalleryImages';
 
 const ImageGallery = async () => {
-    const sortedImages = await fetchGalleryImages();
+    const sortedImages = await useFetchGalleryImages();
 
     return (
         <div className="bg-gray-900 py-1">
