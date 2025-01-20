@@ -523,22 +523,28 @@ async function main() {
   const carousels = await prisma.carousel.createMany({
     data: [
       {
-        title: 'New Arrivals',
-        description: 'Discover the latest trends in digital art.',
-        image: 'https://picsum.photos/200/300',
-        slug: 'new-arrivals',
+        title: 'Aomori Fauna',
+        slug: 'aomori-fauna',
+        description: '¡Últimas unidades en prints firmadas, date prisa para conseguir una!',
+        image: 'carousel_1.jpg',
       },
       {
-        title: 'Exclusive Collections',
-        description: 'Explore limited-time collections.',
-        image: 'https://picsum.photos/200/300',
-        slug: 'exclusive-collections',
+        title: 'Backgrounds',
+        slug: 'backgrounds',
+        description: 'Echa un vistazo a la categoría con los mejores paisajes',
+        image: 'carousel_2.jpg',
       },
       {
-        title: 'Top Rated Artists',
-        description: 'Meet the most popular creators on our platform.',
-        image: 'https://picsum.photos/200/300',
-        slug: 'top-rated-artists',
+        title: 'Final Fantasy XIV',
+        slug: 'final-fantasy-xiv',
+        description: 'Rememora tus escenas favoritas con la colección del aclamado MMO',
+        image: 'carousel_3.jpg',
+      },
+      {
+        title: 'Fanarts',
+        slug: 'fanarts',
+        description: '¡Descubre nuestro catálogo de Fanarts!',
+        image: 'carousel_4.jpg',
       },
     ],
   });
