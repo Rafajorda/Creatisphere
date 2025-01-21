@@ -1,7 +1,7 @@
 'use client';
 
 import { useAppDispatch, useAppSelector } from '../../store/store';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { fetchCollections, selectCollections } from '../../store/slices/collectionSlice';
 import { fetchSeries, selectSeries } from '../../store/slices/seriesSlice';
 import { fetchCategories, selectCategories } from '../../store/slices/categoriesSlice';
@@ -27,8 +27,4 @@ const InitializeFiltersShop = () => {
     return null;
 }
 
-const FiltersFetcher = () => {
-    return <InitializeFiltersShop />
-}
-
-export default FiltersFetcher;
+export default InitializeFiltersShop;

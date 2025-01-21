@@ -1,6 +1,7 @@
 import ImageGallery from '@/components/BentoGrids/BentoGridProducts';
 import { Filters } from '@/components/shared/filters';
-import FiltersFetcher from '@/components/shared/FiltersFetcher';
+import InitializeFiltersShop from '@/components/shared/FiltersFetcher';
+// import FiltersFetcher from '@/components/shared/FiltersFetcher';
 import React from 'react';
 
 const Shop = ({
@@ -11,7 +12,7 @@ const Shop = ({
     return (
         <div>
             <ImageGallery searchParams={searchParams} />
-            <FiltersFetcher />
+            <InitializeFiltersShop />
             <Filters />
         </div>
     );
