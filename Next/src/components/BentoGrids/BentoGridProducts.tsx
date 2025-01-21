@@ -5,20 +5,21 @@ import { SkeletonProduct } from '../shared/skeletons/skeletonProduct';
 
 const ImageGallery = async ({ searchParams }: {
     searchParams?: {
-        category?: string[]
-        collection?: string[]
-        series?: string
-        page?: number
+        Category?: string[]
+        Collection?: string[]
+        Series?: string[]
+        Page?: number
     }
 }) => {
 
+
     // const category = await searchParams?.category || '';
-    const { category, collection, series, page } = await searchParams;
+    const { Category, Collection, Series, Page } = await searchParams;
     const filters = {
-        categorySlugs: category ? category.split(',') : '', // Dividimos por comas
-        collectionSlugs: collection ? collection.split(',') : '',
-        seriesSlugs: series || '',
-        page: page || 0,
+        categorySlugs: Category ? Category.split(',') : '', // Dividimos por comas
+        collectionSlugs: Collection ? Collection.split(',') : '',
+        seriesSlugs: Series ? Series.split(',') : '',
+        page: Page || 0,
     };
 
     // console.log(filters);
