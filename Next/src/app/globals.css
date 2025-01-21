@@ -14,6 +14,10 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+section {
+  padding: 50px 0px;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

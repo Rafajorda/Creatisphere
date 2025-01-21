@@ -57,16 +57,22 @@ async function main() {
   // Crear categorías
   const categories = [];
   categories.push(await prisma.category.create({
-    data: { name: 'Digital Paintings', slug: 'digital-paintings', image: 'https://via.placeholder.com/300' },
+    data: { name: 'Portraits', slug: 'portraits', image: 'https://via.placeholder.com/300' },
+  }));
+  categories.push(await prisma.category.create({
+    data: { name: 'Backgrounds', slug: 'backgrounds', image: 'https://via.placeholder.com/300' },
   }));
   categories.push(await prisma.category.create({
     data: { name: '3D Models', slug: '3d-models', image: 'https://via.placeholder.com/300' },
   }));
   categories.push(await prisma.category.create({
-    data: { name: 'Illustrations', slug: 'illustrations', image: 'https://via.placeholder.com/300' },
+    data: { name: 'Weapons', slug: 'photography', image: 'https://via.placeholder.com/300' },
   }));
   categories.push(await prisma.category.create({
-    data: { name: 'Photography', slug: 'photography', image: 'https://via.placeholder.com/300' },
+    data: { name: 'Concept Art', slug: 'concept-art', image: 'https://via.placeholder.com/300' },
+  }));
+  categories.push(await prisma.category.create({
+    data: { name: 'Fanart', slug: 'fanart', image: 'https://via.placeholder.com/300' },
   }));
   categories.push(await prisma.category.create({
     data: { name: 'Animations', slug: 'animations', image: 'https://via.placeholder.com/300' },
@@ -77,16 +83,16 @@ async function main() {
   // Crear tipos de producto
   const types = [];
   types.push(await prisma.type.create({
-    data: { name: 'Art Prints', slug: 'art-prints', image: 'https://via.placeholder.com/300' },
+    data: { name: 'Print', slug: 'print', image: 'https://via.placeholder.com/300' },
   }));
   types.push(await prisma.type.create({
-    data: { name: 'Digital', slug: 'digital', image: 'https://via.placeholder.com/300' },
+    data: { name: 'Digital copy', slug: 'digital-copy', image: 'https://via.placeholder.com/300' },
   }));
   types.push(await prisma.type.create({
     data: { name: '3D', slug: '3d', image: 'https://via.placeholder.com/300' },
   }));
   types.push(await prisma.type.create({
-    data: { name: 'Limited Edition', slug: 'limited-edition', image: 'https://via.placeholder.com/300' },
+    data: { name: 'Limited Edition bundle', slug: 'limited-edition-bundle', image: 'https://via.placeholder.com/300' },
   }));
 
   console.log('Tipos de producto creados:', types);

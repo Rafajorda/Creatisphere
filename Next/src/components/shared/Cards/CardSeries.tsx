@@ -12,7 +12,7 @@ export const CardSeries = ({ series, ind }: CardSeriesProps) => {
     return (
         <Link
             key={series.id}
-            href="/"
+            href={`/Shop?series=${series.slug}`}
             className={`group relative flex overflow-hidden rounded-2xl transition-all duration-300 hover:scale-[1.02] ${ind === 0
                 ? 'md:col-span-2 md:row-span-4'
                 : ind === 1
