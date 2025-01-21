@@ -5,11 +5,13 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 // Importa tus reducers aquí
 import productReducer from './slices/productSlice';
 import collectionReducer from './slices/collectionSlice';
+import filtersReducer from './slices/filtersSlice';
 
 export const store = configureStore({
     reducer: {
         product: productReducer,
         collection: collectionReducer,
+        filters: filtersReducer
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware()
 });
