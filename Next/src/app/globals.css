@@ -18,6 +18,10 @@ section {
   padding: 50px 0px;
 }
 
+.border-filter {
+  border: 2px solid white;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

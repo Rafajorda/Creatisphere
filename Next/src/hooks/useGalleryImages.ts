@@ -11,6 +11,13 @@ export interface GalleryImage {
     series: string;
 }
 
+interface filters {
+    category?: string[]
+    collection?: string[]
+    series?: string
+    page?: number
+}
+
 const sortImages = (images: GalleryImage[]): GalleryImage[] => {
     const grid: (GalleryImage | null)[][] = Array(4).fill(null).map(() => []);
     const columnHeights = [0, 0, 0, 0];
@@ -35,8 +42,8 @@ const sortImages = (images: GalleryImage[]): GalleryImage[] => {
     return grid.flat().filter((img): img is GalleryImage => img !== null);
 };
 
-export const useFetchGalleryImages = async (): Promise<GalleryImage[]> => {
-    const { products } = await getProducts();
+export const useFetchGalleryImages = async (filters: filters): Promise<GalleryImage[]> => {
+    const { products } = await getProducts(filters);
 
     const mappedImages = products.map(product => {
         const firstImage = product.ImagesProduct[0];
