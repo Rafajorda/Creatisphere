@@ -2,6 +2,7 @@ import { prisma } from '@/lib/prisma';
 import { ProductResponse } from '@/types/Product';
 import { ARTICLE_PAGE_LIMIT } from '@/utils/constants';
 // import { excludeTimestampsFromArray, excludeTimestamps } from '@/utils/mapper';
+import redis from '@/lib/redis';
 
 interface GetProductsParams {
   status?: string;
@@ -19,6 +20,16 @@ export default async function getProducts(params: GetProductsParams = {}): Promi
   const page = params.page || 1;
   const limit = ARTICLE_PAGE_LIMIT;
   const offset = (page - 1) * ARTICLE_PAGE_LIMIT;
+
+  // Construir una clave única para Redis basado en los parámetros
+  const cacheKey = `products:${JSON.stringify(params)}`;
+
+  // 1. Intentar obtener los datos desde Redis
+  const cachedData = await redis.get(cacheKey);
+  if (cachedData) {
+    // console.log('Usando datos en caché para productos');
+    return JSON.parse(cachedData);
+  }
 
   const query: any = {}
   query.status = 'ACTIVE';
@@ -62,6 +73,8 @@ export default async function getProducts(params: GetProductsParams = {}): Promi
     }
   }
 
+  // 2. Si no está en caché, obtener los datos de la base de datos
+  // console.log('Obteniendo datos de la base de datos para productos');
   const data = await prisma.product.findMany({
     where: query,
     // skip: offset,
@@ -77,7 +90,7 @@ export default async function getProducts(params: GetProductsParams = {}): Promi
 
   // const productMapped = excludeTimestampsFromArray(data);
 
-  return {
+  const response: ProductResponse = {
     products: data.map((product) => {
       return {
         ...product,
@@ -89,4 +102,9 @@ export default async function getProducts(params: GetProductsParams = {}): Promi
       };
     }),
   };
+
+  // 3. Guardar los datos en Redis (con un TTL de 1 hora, por ejemplo)
+  await redis.set(cacheKey, JSON.stringify(response), 'EX', 3600);
+
+  return response;
 }
