@@ -6,12 +6,16 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import productReducer from './slices/productSlice';
 import collectionReducer from './slices/collectionSlice';
 import filtersReducer from './slices/filtersSlice';
+import seriesReducer from './slices/seriesSlice';
+import categoriesReducer from './slices/categoriesSlice';
 
 export const store = configureStore({
     reducer: {
         product: productReducer,
         collection: collectionReducer,
-        filters: filtersReducer
+        filters: filtersReducer,
+        series: seriesReducer,
+        categories: categoriesReducer,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware()
 });
