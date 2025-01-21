@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { useFilters } from "@/hooks/useFilters"
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger, SheetFooter, SheetOverlay, } from "@/components/ui/sheet"
 import { ScrollArea } from "@/components/ui/scroll-area"
+import Search from "./search"
 
 export function Filters() {
     const [open, setOpen] = useState(false)
@@ -28,8 +29,11 @@ export function Filters() {
                 <ScrollArea className="h-[calc(100vh-4rem)] pr-4">
                     <SheetHeader>
                         <SheetTitle className="text-white">Filtros</SheetTitle>
-                        <SheetDescription className="text-gray-300">Selecciona las categorías que deseas filtrar</SheetDescription>
+                        <SheetDescription className="text-gray-300">
+                            {/* Selecciona las categorías que deseas filtrar */}
+                        </SheetDescription>
                     </SheetHeader>
+                    <Search placeholder="Product's name" />
                     <div className="grid gap-4 py-4">
                         {Object.entries(filterList).map(([filter, indexes]) => (
                             <div key={filter} className="space-y-2">

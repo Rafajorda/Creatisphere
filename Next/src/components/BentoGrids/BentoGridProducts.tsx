@@ -8,21 +8,21 @@ const ImageGallery = async ({ searchParams }: {
         Category?: string[]
         Collection?: string[]
         Series?: string[]
+        Name?: string
         Page?: number
     }
 }) => {
 
 
     // const category = await searchParams?.category || '';
-    const { Category, Collection, Series, Page } = await searchParams;
+    const { Category, Collection, Series, Name, Page } = await searchParams;
     const filters = {
         categorySlugs: Category ? Category.split(',') : '', // Dividimos por comas
         collectionSlugs: Collection ? Collection.split(',') : '',
         seriesSlugs: Series ? Series.split(',') : '',
+        searchQuery: Name || '',
         page: Page || 0,
     };
-
-    // console.log(filters);
 
     const sortedImages = await useFetchGalleryImages(filters);
 
