@@ -2,6 +2,7 @@ import React from 'react'
 import { Metadata } from 'next'
 import StoreProvider from '@/store/StoreProvider'
 import { Header } from '@/components/shared/Header/Header'
+import Footer from '@/components/shared/Footer'
 
 export const metadata: Metadata = {
     title: {
@@ -20,10 +21,11 @@ function RootLayout({ children }: RootLayoutProps) {
     return (
         <>
             <StoreProvider>
-                <html>
+                <html lang='en'>
                     <body suppressHydrationWarning={true}>
                         <Header />
                         {children}
+                        <Footer />
                     </body>
                 </html>
             </StoreProvider>
