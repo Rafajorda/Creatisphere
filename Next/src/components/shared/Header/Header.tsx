@@ -8,22 +8,20 @@
 import { useState, useEffect } from "react";
 import { HeaderData } from "./HeaderData";
 import React from "react";
+import { usePathname } from "next/navigation"; // Importamos useRouter
 
 export const Header = () => {
-    /**
-     * Utilizaremos el hook useState para manejar el estado de la visibilidad
-     * en vez de Redux, ya que no vale la pena hacer un slice entero solo para esto
-     */
     const [showHeader, setShowHeader] = useState(true);
     const [lastScrollY, setLastScrollY] = useState(0);
+
+    // Usamos useRouter para obtener la ruta activa
+    const pathname = usePathname();
 
     const handleScroll = () => {
         const currentScrollY = window.scrollY;
         if (currentScrollY > lastScrollY && currentScrollY > 50) {
-            // Ocultar header al hacer scroll hacia abajo
             setShowHeader(false);
         } else {
-            // Mostrar header al hacer scroll hacia arriba
             setShowHeader(true);
         }
         setLastScrollY(currentScrollY);
@@ -38,7 +36,8 @@ export const Header = () => {
 
     return (
         <div className={`sticky top-0 z-50 transition-transform duration-300 ${showHeader ? "translate-y-0" : "-translate-y-full"}`}>
-            <HeaderData />
+            {/* Le pasamos la ruta activa al componente HeaderData */}
+            <HeaderData activeRoute={pathname} />
         </div>
     );
 };

@@ -1,14 +1,18 @@
 
-import ListCollections from '@/components/shared/Lists/ListCollections';
-import ListSeries from '@/components/shared/Lists/ListSeries';
+import BentoGridCategories from '@/components/BentoGrids/BentoGridCategory';
+import BentoGridCollection from '@/components/BentoGrids/BentoGridCollection';
+import BentoGridSeries from '@/components/BentoGrids/BentoGridSeries';
+import CarouselHome from '@/components/carousel/Carousel';
 import React from 'react';
 
 const Home = () => {
     return (
-        <>
-            <ListCollections />
-            <ListSeries />
-        </>
+        <div className='bg-zinc-800'>
+            <CarouselHome />
+            <BentoGridCollection />
+            <BentoGridSeries />
+            <BentoGridCategories />
+        </div>
     );
 };
 

@@ -57,16 +57,22 @@ async function main() {
   // Crear categorías
   const categories = [];
   categories.push(await prisma.category.create({
-    data: { name: 'Digital Paintings', slug: 'digital-paintings', image: 'https://via.placeholder.com/300' },
+    data: { name: 'Portraits', slug: 'portraits', image: 'https://via.placeholder.com/300' },
+  }));
+  categories.push(await prisma.category.create({
+    data: { name: 'Backgrounds', slug: 'backgrounds', image: 'https://via.placeholder.com/300' },
   }));
   categories.push(await prisma.category.create({
     data: { name: '3D Models', slug: '3d-models', image: 'https://via.placeholder.com/300' },
   }));
   categories.push(await prisma.category.create({
-    data: { name: 'Illustrations', slug: 'illustrations', image: 'https://via.placeholder.com/300' },
+    data: { name: 'Weapons', slug: 'photography', image: 'https://via.placeholder.com/300' },
   }));
   categories.push(await prisma.category.create({
-    data: { name: 'Photography', slug: 'photography', image: 'https://via.placeholder.com/300' },
+    data: { name: 'Concept Art', slug: 'concept-art', image: 'https://via.placeholder.com/300' },
+  }));
+  categories.push(await prisma.category.create({
+    data: { name: 'Fanart', slug: 'fanart', image: 'https://via.placeholder.com/300' },
   }));
   categories.push(await prisma.category.create({
     data: { name: 'Animations', slug: 'animations', image: 'https://via.placeholder.com/300' },
@@ -77,16 +83,16 @@ async function main() {
   // Crear tipos de producto
   const types = [];
   types.push(await prisma.type.create({
-    data: { name: 'Art Prints', slug: 'art-prints', image: 'https://via.placeholder.com/300' },
+    data: { name: 'Print', slug: 'print', image: 'https://via.placeholder.com/300' },
   }));
   types.push(await prisma.type.create({
-    data: { name: 'Digital', slug: 'digital', image: 'https://via.placeholder.com/300' },
+    data: { name: 'Digital copy', slug: 'digital-copy', image: 'https://via.placeholder.com/300' },
   }));
   types.push(await prisma.type.create({
     data: { name: '3D', slug: '3d', image: 'https://via.placeholder.com/300' },
   }));
   types.push(await prisma.type.create({
-    data: { name: 'Limited Edition', slug: 'limited-edition', image: 'https://via.placeholder.com/300' },
+    data: { name: 'Limited Edition bundle', slug: 'limited-edition-bundle', image: 'https://via.placeholder.com/300' },
   }));
 
   console.log('Tipos de producto creados:', types);
@@ -493,11 +499,11 @@ async function main() {
       { productId: products[8].id, src: 'prod_9.jpg', alt: 'Cage interpretation', size: 'wide' },
       { productId: products[9].id, src: 'prod_11.jpg', alt: 'Dragon dance - Zuko', size: 'wide' },
       { productId: products[10].id, src: 'prod_10.jpg', alt: 'Dragon dance - Aang', size: 'wide' },
-      { productId: products[11].id, src: 'prod_12.jpg', alt: 'Pokemon Galicia', size: 'square' },
+      { productId: products[11].id, src: 'prod_12.jpg', alt: 'Pokemon Galicia', size: 'wide' },
       { productId: products[12].id, src: 'prod_13.jpg', alt: 'Temple Yue', size: 'wide' },
       { productId: products[13].id, src: 'prod_14.png', alt: 'Moonholder Yue', size: 'tall' },
       { productId: products[14].id, src: 'prod_15.jpg', alt: 'Agni kai', size: 'wide' },
-      { productId: products[15].id, src: 'prod_16.jpg', alt: 'Hoenn', size: 'wide' },
+      { productId: products[15].id, src: 'prod_16.jpg', alt: 'Hoenn', size: 'square' },
       { productId: products[16].id, src: 'prod_17.jpg', alt: 'Hyouka finale', size: 'wide' },
       { productId: products[17].id, src: 'prod_18.jpeg', alt: 'Starry night', size: 'wide' },
       { productId: products[18].id, src: 'prod_19.jpg', alt: 'Heize', size: 'square' },
@@ -523,22 +529,28 @@ async function main() {
   const carousels = await prisma.carousel.createMany({
     data: [
       {
-        title: 'New Arrivals',
-        description: 'Discover the latest trends in digital art.',
-        image: 'https://picsum.photos/200/300',
-        slug: 'new-arrivals',
+        title: 'Aomori Fauna',
+        slug: 'aomori-fauna',
+        description: '¡Últimas unidades en prints firmadas, date prisa para conseguir una!',
+        image: 'carousel_1.jpg',
       },
       {
-        title: 'Exclusive Collections',
-        description: 'Explore limited-time collections.',
-        image: 'https://picsum.photos/200/300',
-        slug: 'exclusive-collections',
+        title: 'Backgrounds',
+        slug: 'backgrounds',
+        description: 'Echa un vistazo a la categoría con los mejores paisajes',
+        image: 'carousel_2.jpg',
       },
       {
-        title: 'Top Rated Artists',
-        description: 'Meet the most popular creators on our platform.',
-        image: 'https://picsum.photos/200/300',
-        slug: 'top-rated-artists',
+        title: 'Final Fantasy XIV',
+        slug: 'final-fantasy-xiv',
+        description: 'Rememora tus escenas favoritas con la colección del aclamado MMO',
+        image: 'carousel_3.jpg',
+      },
+      {
+        title: 'Fanarts',
+        slug: 'fanarts',
+        description: '¡Descubre nuestro catálogo de Fanarts!',
+        image: 'carousel_4.jpg',
       },
     ],
   });
