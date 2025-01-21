@@ -1,12 +1,15 @@
 import { useCallback, useEffect } from "react"
 import { useSearchParams, usePathname, useRouter } from "next/navigation"
-import { useSelector, useDispatch } from "react-redux"
-import type { RootState, AppDispatch } from "../store/store"
+// import { useSelector, useDispatch } from "react-redux"
+import { type RootState, useAppSelector, useAppDispatch } from "../store/store"
 import { toggleFilter, setFiltersFromUrl } from "@/store/slices/filtersSlice"
+import { selectCollections } from "@/store/slices/collectionSlice"
+import { selectCategories } from "@/store/slices/categoriesSlice"
+import { selectSeries } from "@/store/slices/seriesSlice"
 
 export const useFilters = () => {
-    const dispatch = useDispatch<AppDispatch>()
-    const filters = useSelector((state: RootState) => state.filters)
+    const dispatch = useAppDispatch();
+    const filters = useAppSelector((state: RootState) => state.filters)
     const searchParams = useSearchParams()
     const pathname = usePathname()
     const router = useRouter()
@@ -56,6 +59,16 @@ export const useFilters = () => {
         [filters],
     )
 
-    return { filters, toggleFilterValue, isActive }
+    const collections = useAppSelector(selectCollections)
+    const categories = useAppSelector(selectCategories)
+    const series = useAppSelector(selectSeries)
+
+    const filterList = {
+        Collection: collections.map((collection) => collection.slug),
+        Category: categories.map((category) => category.slug),
+        Series: series.map((serie) => serie.slug),
+    }
+
+    return { filters, toggleFilterValue, isActive, filterList }
 }
 
