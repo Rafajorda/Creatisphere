@@ -12,7 +12,7 @@ export const CardCategories = ({ category, ind }: CardCategoriesProps) => {
     return (
         <Link
             key={category.id}
-            href={`/Shop?category=${category.slug}`}
+            href={`/Shop?Category=${category.slug}`}
             className={`group relative flex overflow-hidden rounded-2xl transition-all duration-300 hover:scale-[1.02] ${ind === 0
                 ? 'md:col-span-3 md:row-span-4'
                 : ind === 1

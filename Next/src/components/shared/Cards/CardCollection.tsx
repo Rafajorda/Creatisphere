@@ -12,7 +12,7 @@ export const CardCollections = ({ collection, ind }: CardCollectionProps) => {
     return (
         <Link
             key={collection.id}
-            href={`/Shop?collection=${collection.slug}`}
+            href={`/Shop?Collection=${collection.slug}`}
             className={`group relative flex overflow-hidden rounded-2xl transition-all duration-300 hover:scale-[1.02] ${ind === 0
                 ? 'md:col-span-2 md:row-span-2'
                 : ind === 1
