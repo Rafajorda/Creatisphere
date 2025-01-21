@@ -22,7 +22,7 @@ function RootLayout({ children }: RootLayoutProps) {
         <>
             <StoreProvider>
                 <html lang='en'>
-                    <body suppressHydrationWarning={true}>
+                    <body suppressHydrationWarning={true} className='bg-stone-900'>
                         <Header />
                         {children}
                         <Footer />
