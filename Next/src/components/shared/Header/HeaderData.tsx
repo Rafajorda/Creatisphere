@@ -1,13 +1,17 @@
-
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
+
 interface HeaderDataProps {
     activeRoute: string; // Recibimos activeRoute como prop
+    session: any;
 }
 
-export const HeaderData: React.FC<HeaderDataProps> = ({ activeRoute }) => {
+export const HeaderData: React.FC<HeaderDataProps> = ({ activeRoute, session }) => {
+
+  
+
     return (
         <div className="bg-black text-light-gold font-semibold shadow-md">
             <nav className="mx-auto flex items-center justify-between px-20 pl-10 py-4">
@@ -54,13 +58,17 @@ export const HeaderData: React.FC<HeaderDataProps> = ({ activeRoute }) => {
                     >
                         Portfolio
                     </Link>
-                    <Link
-                        href="/Auth"
-                        prefetch={false}
-                        className={`text-2xl font-bold text-black bg-gold px-4 py-2 rounded-lg hover:bg-dark-gold hover:text-white transition-colors duration-200 ${activeRoute === "/Auth" ? "bg-dark-gold text-white" : ""}`}
-                    >
-                        Sign in
-                    </Link>
+                    {!session ? (
+                        <Link
+                            href="/Login"
+                            prefetch={false}
+                            className={`text-2xl font-bold text-black bg-gold px-4 py-2 rounded-lg hover:bg-dark-gold hover:text-white transition-colors duration-200 ${
+                                activeRoute === "/Auth" ? "bg-dark-gold text-white" : ""
+                            }`}
+                        >
+                            Sign in
+                        </Link>
+                     ) : null}
                 </div>
             </nav>
         </div>

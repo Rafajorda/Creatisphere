@@ -3,7 +3,6 @@ import { Metadata } from 'next'
 import StoreProvider from '@/store/StoreProvider'
 import { Header } from '@/components/shared/Header/Header'
 import Footer from '@/components/shared/Footer'
-
 export const metadata: Metadata = {
     title: {
         template: '%s | next.js RealWorld example app',
@@ -21,13 +20,13 @@ function RootLayout({ children }: RootLayoutProps) {
     return (
         <>
             <StoreProvider>
-                <html lang='en'>
-                    <body suppressHydrationWarning={true}>
-                        <Header />
-                        {children}
-                        <Footer />
-                    </body>
-                </html>
+                    <html lang='en'>
+                        <body suppressHydrationWarning={true}>
+                            <Header />
+                            {children}
+                            <Footer />
+                        </body>
+                    </html>
             </StoreProvider>
         </>
     )
