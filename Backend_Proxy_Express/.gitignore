@@ -1,0 +1,13 @@
+# Dependency directories
+node_modules/
+/dist/
+
+# Logs
+logs
+*.log
+
+# dotenv environment variables file
+.env
+
+# Package Lock json
+package-lock.json
