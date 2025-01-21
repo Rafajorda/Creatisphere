@@ -9,6 +9,7 @@ import { useState, useEffect } from "react";
 import { HeaderData } from "./HeaderData";
 import React from "react";
 import { usePathname } from "next/navigation"; // Importamos useRouter
+import { useSession } from "next-auth/react";
 
 export const Header = () => {
     const [showHeader, setShowHeader] = useState(true);
@@ -16,6 +17,8 @@ export const Header = () => {
 
     // Usamos useRouter para obtener la ruta activa
     const pathname = usePathname();
+
+    const { data: session } = useSession();
 
     const handleScroll = () => {
         const currentScrollY = window.scrollY;
@@ -37,7 +40,7 @@ export const Header = () => {
     return (
         <div className={`sticky top-0 z-50 transition-transform duration-300 ${showHeader ? "translate-y-0" : "-translate-y-full"}`}>
             {/* Le pasamos la ruta activa al componente HeaderData */}
-            <HeaderData activeRoute={pathname} />
+            <HeaderData activeRoute={pathname} session={session} />
         </div>
     );
 };
