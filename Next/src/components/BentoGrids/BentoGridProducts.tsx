@@ -3,8 +3,28 @@ import { CardProduct } from '../shared/Cards/CardProduct';
 import { useFetchGalleryImages } from '@/hooks/useGalleryImages';
 import { SkeletonProduct } from '../shared/skeletons/skeletonProduct';
 
-const ImageGallery = async () => {
-    const sortedImages = await useFetchGalleryImages();
+const ImageGallery = async ({ searchParams }: {
+    searchParams?: {
+        Category?: string[]
+        Collection?: string[]
+        Series?: string[]
+        Page?: number
+    }
+}) => {
+
+
+    // const category = await searchParams?.category || '';
+    const { Category, Collection, Series, Page } = await searchParams;
+    const filters = {
+        categorySlugs: Category ? Category.split(',') : '', // Dividimos por comas
+        collectionSlugs: Collection ? Collection.split(',') : '',
+        seriesSlugs: Series ? Series.split(',') : '',
+        page: Page || 0,
+    };
+
+    // console.log(filters);
+
+    const sortedImages = await useFetchGalleryImages(filters);
 
     return (
         <div className="bg-gray-900 py-1">

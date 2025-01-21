@@ -66,7 +66,7 @@ async function main() {
     data: { name: '3D Models', slug: '3d-models', image: 'https://via.placeholder.com/300' },
   }));
   categories.push(await prisma.category.create({
-    data: { name: 'Weapons', slug: 'photography', image: 'https://via.placeholder.com/300' },
+    data: { name: 'Weapons', slug: 'Weapons', image: 'https://via.placeholder.com/300' },
   }));
   categories.push(await prisma.category.create({
     data: { name: 'Concept Art', slug: 'concept-art', image: 'https://via.placeholder.com/300' },

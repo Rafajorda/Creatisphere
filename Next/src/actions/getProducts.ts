@@ -1,87 +1,71 @@
 import { prisma } from '@/lib/prisma';
 import { ProductResponse } from '@/types/Product';
+import { ARTICLE_PAGE_LIMIT } from '@/utils/constants';
 // import { excludeTimestampsFromArray, excludeTimestamps } from '@/utils/mapper';
 
 interface GetProductsParams {
-  status?: string; 
-  categorySlugs?: string[]; 
-  typeSlugs?: string[]; 
-  seriesSlugs?: string[]; 
-  collectionSlugs?: string[]; 
+  status?: string;
+  categorySlugs?: string[];
+  typeSlugs?: string[];
+  seriesSlugs?: string[];
+  collectionSlugs?: string[];
   searchQuery?: string;
   pageSize?: number;
   page?: number;
-  limit?:number;
-  offset?:number;
+  limit?: number;
+  offset?: number;
 }
 export default async function getProducts(params: GetProductsParams = {}): Promise<ProductResponse> {
-   params = {
-    // categorySlugs: [''],
-    // typeSlugs: ['art-prints'],
-    // seriesSlugs: ['hololive'],
-     // searchQuery: 'sa',
-      page: 2,
-   }; 
+  const page = params.page || 1;
+  const limit = ARTICLE_PAGE_LIMIT;
+  const offset = (page - 1) * ARTICLE_PAGE_LIMIT;
 
-  const {
-    pageSize= 4,
-    page = 1,
-    limit =pageSize,
-    offset=(page - 1)*4,
-    categorySlugs,
-    typeSlugs,
-    seriesSlugs,
-    collectionSlugs,
-    searchQuery,  
-  } = params;
+  const query: any = {}
+  query.status = 'ACTIVE';
 
-  let query: any = {}
-
-  query.status='ACTIVE';
-
-  if(params.categorySlugs){
+  if (params.categorySlugs) {
     query.categories = {
       some: {
         slug: {
-          in: categorySlugs,
+          in: params.categorySlugs,
         },
       },
     }
   }
-  if(params.typeSlugs){
+  if (params.typeSlugs) {
     query.types = {
       some: {
         slug: {
-          in: typeSlugs,
+          in: params.typeSlugs,
         },
       },
     }
   }
-  if(params.seriesSlugs){
+  if (params.seriesSlugs) {
     query.series = {
       slug: {
-        in: seriesSlugs,
+        in: params.seriesSlugs,
       },
     }
   }
-  if(params.collectionSlugs){
+  if (params.collectionSlugs) {
     query.collections = {
       slug: {
-        in: collectionSlugs,
+        in: params.collectionSlugs,
       },
     }
   }
-  if(params.searchQuery){
+  if (params.searchQuery) {
     query.name = {
-      contains: searchQuery,
+      contains: params.searchQuery,
       mode: 'insensitive',
     }
   }
-  
+
   const data = await prisma.product.findMany({
-    where:query, 
-    skip: offset,
-    take: limit,
+    where: query,
+    // skip: offset,
+    // take: limit,
     include: {
       categories: true,
       types: true,

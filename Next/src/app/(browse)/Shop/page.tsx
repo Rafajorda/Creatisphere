@@ -1,12 +1,21 @@
 import ImageGallery from '@/components/BentoGrids/BentoGridProducts';
+import { Filters } from '@/components/shared/filters';
+import ShopProvider from '@/store/ShopProvider';
 import React from 'react';
 
-const Shop = () => {
+const Shop = ({
+    searchParams
+}: {
+    searchParams: { [key: string]: string | string[] | undefined }
+}) => {
     return (
-        <div>
-            <ImageGallery />
-        </div>
+        <ShopProvider>
+            <div>
+                <ImageGallery searchParams={searchParams} />
+                <Filters />
+            </div>
+        </ShopProvider>
     );
 };
 
-export default Shop
+export default Shop;
