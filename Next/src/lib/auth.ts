@@ -22,6 +22,7 @@ export const authOptions: AuthOptions = {
           where: {
             email: credentials.email,
           },
+          include: { profile: true },
         })
        
         
@@ -35,12 +36,13 @@ export const authOptions: AuthOptions = {
           credentials.password,
         )
 
-        if (!isCorrectPassword) {
+        if (!isCorrectPassword) { 
           return null
         }
        console.log("user", user.id, user.status);
         return {
           id: user.id.toString(),
+          username:user.profile?.username,
           email: user.email,
           password: user.password,
           status: user.status,
@@ -57,18 +59,20 @@ export const authOptions: AuthOptions = {
   },
   session: {
     strategy: 'jwt',
-    maxAge: 1 * 1 * 60 * 60, 
-    updateAge: 0.25* 1 * 60 * 60, 
+    maxAge: 60, 
+    updateAge: 20, 
   },
   jwt: {
-    maxAge: 1 * 24 * 60 * 60,
+    maxAge: 3600,
   },
   callbacks: {
     async jwt({ token, user }: { token: any, user?: any }) {
       if (user) {
-   
+        console.log("user", user);
+        console.log("token", token);
         return {
-          ...token,     
+          ...token,
+          username: user.username,     
           email: user.email, 
           role: user.role,   
         };
@@ -78,6 +82,7 @@ export const authOptions: AuthOptions = {
      },
     async session({ session, token }: { session: any, token: any }) { 
       session.user = {
+        username: token.username,  
         email: token.email,
         role: token.role,
       };
