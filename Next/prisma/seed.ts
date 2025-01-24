@@ -18,8 +18,8 @@ async function clearDatabase() {
   await prisma.carousel.deleteMany();
   await prisma.type.deleteMany();
   await prisma.cart.deleteMany();
-  await prisma.token.deleteMany();
-  await prisma.blacklist.deleteMany();
+  // await prisma.token.deleteMany();
+  // await prisma.blacklist.deleteMany();
   await prisma.$executeRawUnsafe('TRUNCATE TABLE "User" RESTART IDENTITY CASCADE;');
   await prisma.$executeRawUnsafe('TRUNCATE TABLE "Product" RESTART IDENTITY CASCADE;');
   await prisma.$executeRawUnsafe('TRUNCATE TABLE "Collection" RESTART IDENTITY CASCADE;');
@@ -35,8 +35,8 @@ async function clearDatabase() {
   await prisma.$executeRawUnsafe('TRUNCATE TABLE "Carousel" RESTART IDENTITY CASCADE;');
   await prisma.$executeRawUnsafe('TRUNCATE TABLE "Type" RESTART IDENTITY CASCADE;');
   await prisma.$executeRawUnsafe('TRUNCATE TABLE "Cart" RESTART IDENTITY CASCADE;');
-  await prisma.$executeRawUnsafe('TRUNCATE TABLE "Token" RESTART IDENTITY CASCADE;');
-  await prisma.$executeRawUnsafe('TRUNCATE TABLE "Blacklist" RESTART IDENTITY CASCADE;');
+  // await prisma.$executeRawUnsafe('TRUNCATE TABLE "Token" RESTART IDENTITY CASCADE;');
+  // await prisma.$executeRawUnsafe('TRUNCATE TABLE "Blacklist" RESTART IDENTITY CASCADE;');
 }
 
 async function main() {
@@ -44,11 +44,11 @@ async function main() {
   // Crear usuarios
   const users = await prisma.user.createMany({
     data: [
-      { email: 'artist1@example.com', password: 'password123', role: 'CREATOR', accessToken: 'token1' },
-      { email: 'artist2@example.com', password: 'password123', role: 'CREATOR', accessToken: 'token2' },
-      { email: 'user1@example.com', password: 'password123', role: 'USER', accessToken: 'token3' },
-      { email: 'user2@example.com', password: 'password123', role: 'USER', accessToken: 'token4' },
-      { email: 'admin@example.com', password: 'adminpassword', role: 'ADMIN', accessToken: 'token5' },
+      { email: 'artist1@example.com', password: 'password123', role: 'CREATOR' },
+      { email: 'artist2@example.com', password: 'password123', role: 'CREATOR' },
+      { email: 'user1@example.com', password: 'password123', role: 'USER' },
+      { email: 'user2@example.com', password: 'password123', role: 'USER' },
+      { email: 'admin@example.com', password: 'adminpassword', role: 'ADMIN' },
     ],
   });
 
@@ -596,10 +596,10 @@ async function main() {
   // Crear notificaciones
   const notifications = await prisma.notification.createMany({
     data: [
-      { message: 'Your artwork has been approved!', userId: 1 },
-      { message: 'New follower: user_one.', userId: 1 },
-      { message: 'Your order has been shipped.', userId: 3 },
-      { message: 'Your payment has been confirmed.', userId: 4 },
+      { message: 'Your artwork has been approved!', userId: 1, isRead: true, notificationType: 'bell' },
+      { message: 'New follower: user_one.', userId: 1, isRead: false, notificationType: 'bell' },
+      { message: 'Your order has been shipped.', userId: 3, isRead: true, notificationType: 'email' },
+      { message: 'Your payment has been confirmed.', userId: 4, isRead: true, notificationType: 'email' },
     ],
   });
 
@@ -628,25 +628,25 @@ async function main() {
   console.log('Líneas de órdenes creadas:', orderLines);
 
   // Crear tokens
-  const tokens = await prisma.token.createMany({
-    data: [
-      { token: 'abc123', userId: 1 },
-      { token: 'def456', userId: 2 },
-      { token: 'ghi789', userId: 3 },
-    ],
-  });
+  // const tokens = await prisma.token.createMany({
+  //   data: [
+  //     { token: 'abc123', userId: 1 },
+  //     { token: 'def456', userId: 2 },
+  //     { token: 'ghi789', userId: 3 },
+  //   ],
+  // });
 
-  console.log('Tokens creados:', tokens);
+  // console.log('Tokens creados:', tokens);
 
   // Crear tokens en la lista negra
-  const blacklistedTokens = await prisma.blacklist.createMany({
-    data: [
-      { token: 'expiredToken123' },
-      { token: 'maliciousToken456' },
-    ],
-  });
+  // const blacklistedTokens = await prisma.blacklist.createMany({
+  //   data: [
+  //     { token: 'expiredToken123' },
+  //     { token: 'maliciousToken456' },
+  //   ],
+  // });
 
-  console.log('Tokens en lista negra creados:', blacklistedTokens);
+  // console.log('Tokens en lista negra creados:', blacklistedTokens);
 
   console.log('Datos dummy creados con éxito!');
 }
