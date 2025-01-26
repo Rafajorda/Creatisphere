@@ -30,7 +30,6 @@ export const POST = async (req: NextRequest) => {
         data: {
             email,
             password: hashPassword,
-            accessToken: '',
             profile: {
               create: {
                 username,
