@@ -26,8 +26,8 @@ export const authOptions: AuthOptions = {
         })
        
         
-        if (!user || !user.password) {
-          console.error('User not found or no password stored') // Log para depurar
+        if (!user || !user.password || !user.profile?.username) {
+          console.error('User not found, no password stored or username missing') // Log para depurar
           return null
         }
 
@@ -48,8 +48,7 @@ export const authOptions: AuthOptions = {
           status: user.status,
           createdAt: user.createdAt,
           updatedAt: user.updatedAt,
-          role: user.role,
-          accessToken: user.accessToken,
+          role: user.role
         }
       },
     }),
