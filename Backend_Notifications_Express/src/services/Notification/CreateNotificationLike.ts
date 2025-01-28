@@ -1,6 +1,6 @@
 import PrismaCreateNotification from "../../repo/Notification/PrismaCreateNotification";
 import { User, Profile, Product } from "@prisma/client";
-export default async function CreateNotification(
+export default async function CreateNotificationLike(
     user: User & { profile: Profile },
     product: Product,
 ){ 

@@ -1,4 +1,4 @@
-import { Product, $Enums } from "@prisma/client";
+import { $Enums } from "@prisma/client";
 import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
@@ -6,7 +6,7 @@ export default async function PrismaCreateNotification(
     user: number,
     message: string,
     notificationType: $Enums.notificationType,
-    isRead: boolean
+    isRead: boolean 
 ){ 
     
     const newNotification = await prisma.notification.create({
