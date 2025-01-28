@@ -1,12 +1,13 @@
-import PrismaCreateNotificationBell from "../../repo/Notification/PrismaCreateNotificationBell";
+import PrismaCreateNotification from "../../repo/Notification/PrismaCreateNotification";
 import { User, Profile, Product } from "@prisma/client";
 export default async function CreateNotification(
     user: User & { profile: Profile },
     product: Product,
 ){ 
     try{
-       
-        const newNotification = await PrismaCreateNotificationBell(user, product);
+        const usernames = user.profile.username;
+        const  message =  `${usernames} liked your '${product?.name}' `;
+        const newNotification = await PrismaCreateNotification( product.userId,message,"bell",false);
         return newNotification;
     }catch(err){
         if (err instanceof Error) {

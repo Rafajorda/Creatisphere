@@ -1,5 +1,5 @@
 import { Router } from 'express';
- import { Likes } from '../controllers/notificationController';
+ import { Likes } from '../controllers/likesController';
 
 
 const router = Router();
