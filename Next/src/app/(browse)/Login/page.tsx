@@ -1,27 +1,27 @@
 import { Metadata, NextPage } from 'next'
-import  Link  from 'next/link'
+import Link from 'next/link'
 import SignForm from '@/components/user/SignForm'
+import React from 'react'
 
 export const metadata: Metadata = {
-    title: 'Login',
-  }
+  title: 'Login',
+}
 
 const Login: NextPage = () => {
-    return (
-      <>
-      <div className="flex items-center justify-center min-h-screen bg-gray-100">
-        <div className="w-full max-w-md bg-white p-6 rounded-lg shadow-md">
-          <h1 className="text-center text-2xl font-bold mb-4">{('sign-up')}</h1>
+  return (
+    <>
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="w-full max-w-md bg-zinc-200 p-10 rounded-lg shadow-md">
+          <h1 className="text-center text-2xl font-bold mb-4">{('Login')}</h1>
           <p className="text-center text-gray-600 mb-6">
-            <Link href="/Register" className="text-blue-500 hover:underline">
-              {('need-account')}
+            <Link href="/Register" className="text-gold font-bold hover:underline">
+              {('Need an account?')}
             </Link>
           </p>
-          <SignForm/>
+          <SignForm />
         </div>
       </div>
     </>
-    )
-  }
-  export default Login
-  
+  )
+}
+export default Login
