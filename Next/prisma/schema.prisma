@@ -153,8 +153,8 @@ model User {
 
   products      Product[]
   favorites     Favorites[]    @relation("UserFavorites")
-  followers     Follows[]      @relation("follower")
-  following     Follows[]      @relation("following")
+  followers     Follows[]      @relation("following")
+  following     Follows[]      @relation("follower")
   notifications Notification[]
   Cart          Cart[]
   Order         Order[]
@@ -201,11 +201,11 @@ model Follows {
 }
 
 model Notification {
-  id      Int     @id @default(autoincrement())
-  message String
-  userId  Int
-  user    User    @relation(fields: [userId], references: [id])
-  isRead  Boolean @default(false)
+  id               Int              @id @default(autoincrement())
+  message          String
+  userId           Int
+  user             User             @relation(fields: [userId], references: [id])
+  isRead           Boolean          @default(false)
   notificationType notificationType @default(bell)
 
   createdAt DateTime @default(now())
