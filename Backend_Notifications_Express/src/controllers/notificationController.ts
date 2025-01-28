@@ -1,58 +1,35 @@
-import { PrismaClient } from '@prisma/client';
-import asyncHandler from 'express-async-handler';
+import { PrismaClient, Profile, User } from '@prisma/client';
 import { Request, Response } from 'express';
-
+import FindUserService from '../services/User/FindUserService';
+import findProduct from '../services/Product/FindProductService';
+import CreateNotification from '../services/Notification/CreateNotificationBell';
+import { AppError } from '../utils/AppError';
 
 const prisma = new PrismaClient();
 
-
-
 export const Likes = async (req: Request, res: Response): Promise<void> => {
+    try {
+     const { username, productId } = req.body;
 
-     const { userId, productId } = req.body;
-    if (!userId || !productId) {
-        res.status(400).json({ message: 'Faltan datos requeridos: userId o productId' });
+    if (!username || !productId) {
+        res.status(400).json({ message: 'Required data missing: username or productId' });
         return;
     }
-
-    const user = await prisma.user.findUnique({
-        where: {
-            id: userId
-        },
-        include: {
-            profile: true
-        }
-    });
-
+       
+    const user = await FindUserService(username);
     
-    if (!user) {
-        res.status(404).json({ message: 'Usuario no encontrado' });
-        return;
-    }
+    const product = await findProduct(productId);
 
-    const product = await prisma.product.findUnique({
-
-        where: {
-            id: productId
-        }
-    });
-
-
-    if (!product) {
-        res.status(404).json({ message: 'Producto no encontrado' });
-        return;
-    }
-    const username = user?.profile?.username;
-
-    const newNotification = await prisma.notification.create({
-        data: {
-            userId: product.userId,
-            notificationType: 'bell',
-            message: `Usuario ${username} ha dado like a ${product?.name}`,
-            isRead: false
-        }
-    });
-
+    const newNotification = await CreateNotification(user as User & { profile: Profile }, product);
+   
     res.status(201).json(newNotification);
+} catch (err) {
+    if (err instanceof AppError) {
+        res.status(err.statusCode).json({ message: err.message });
+    } else {
+        console.error('Unexpected error in Likes:', err);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+}
 
-};
+};  
