@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { AppError } from '../utils/AppError';
 import { getExpiredPremiumUsers } from '../repo/GetPremiumsExpired';
 import { UpdateExpiredPremiumUsers } from '../repo/UpdateExpiredPremiumUsers';
 
@@ -13,7 +14,11 @@ export async function checkPremiumsExpired() {
                 console.log(`Notificación enviada al usuario ${user.user.id}`);
                 return true;
             } catch (error) {
-                console.error(`Error al enviar notificación al usuario ${user.id}:`, error);
+                if (error instanceof Error) {
+                    throw new AppError(error.message, 500);
+                } else {
+                    throw new AppError(String(error), 500);
+                }
                 return false;
             }
         }   
