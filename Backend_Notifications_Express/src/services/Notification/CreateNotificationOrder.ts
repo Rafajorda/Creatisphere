@@ -7,7 +7,7 @@ export default async function CreateNotificationOrder(
 ){ 
      try{
           const message = `Order ${order.id} has been placed`;
-          const newNotification = await PrismaCreateNotification(order.userId, message, "email", false);
+          const newNotification = await PrismaCreateNotification(order.userId, message, "email", true);
           return newNotification;
      } catch (err) {
           if (err instanceof Error) {

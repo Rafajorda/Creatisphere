@@ -7,6 +7,249 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Carousel {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  image       String
+  slug        String?  @unique
+  status      status   @default(ACTIVE)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model ImagesProduct {
+  id        Int      @id @default(autoincrement())
+  src       String
+  alt       String
+  size      sizes
+  productId Int
+  status    status   @default(ACTIVE)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  product   Product  @relation(fields: [productId], references: [id])
+}
+
+model Product {
+  id             Int             @id @default(autoincrement())
+  name           String
+  slug           String          @unique
+  price          Float
+  stock          Int?
+  userId         Int
+  cartId         Int?
+  seriesId       Int
+  collectionId   Int
+  favoritesCount Int             @default(0)
+  status         status          @default(ACTIVE)
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  cartLines      CartProduct[]
+  favoritedBy    Favorites[]     @relation("ProductFavoritedBy")
+  ImagesProduct  ImagesProduct[]
+  orders         OrderLine[]
+  Cart           Cart?           @relation(fields: [cartId], references: [id])
+  collections    Collection      @relation(fields: [collectionId], references: [id])
+  series         Series          @relation(fields: [seriesId], references: [id])
+  artist         User            @relation(fields: [userId], references: [id])
+  returns        ReturnsLine[]
+  categories     Category[]      @relation("CategoryToProduct")
+  types          Type[]          @relation("ProductToType")
+}
+
+model Category {
+  id        Int       @id @default(autoincrement())
+  name      String
+  slug      String    @unique
+  image     String?
+  status    status    @default(ACTIVE)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  products  Product[] @relation("CategoryToProduct")
+}
+
+model Type {
+  id        Int       @id @default(autoincrement())
+  name      String
+  slug      String    @unique
+  image     String?
+  status    status    @default(ACTIVE)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  products  Product[] @relation("ProductToType")
+}
+
+model Collection {
+  id        Int       @id @default(autoincrement())
+  name      String
+  slug      String    @unique
+  image     String?
+  status    status    @default(ACTIVE)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  products  Product[]
+}
+
+model Series {
+  id        Int       @id @default(autoincrement())
+  name      String
+  slug      String    @unique
+  image     String?
+  status    status    @default(ACTIVE)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  products  Product[]
+}
+
+model User {
+  id            Int            @id @default(autoincrement())
+  email         String         @unique
+  password      String
+  role          role           @default(USER)
+  status        status         @default(ACTIVE)
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  Cart          Cart[]
+  favorites     Favorites[]    @relation("UserFavorites")
+  followers     Follows[]      @relation("follower")
+  following     Follows[]      @relation("following")
+  notifications Notification[]
+  Order         Order[]
+  premium       Premium?
+  products      Product[]
+  profile       Profile?
+  returns       Returns[]
+}
+
+model Profile {
+  id        Int      @id @default(autoincrement())
+  username  String   @unique
+  bio       String?
+  avatar    String?
+  userId    Int      @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Favorites {
+  productId   Int
+  userId      Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  favoriting  Product  @relation("ProductFavoritedBy", fields: [productId], references: [id], onDelete: Cascade)
+  favoritedBy User     @relation("UserFavorites", fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([productId, userId])
+}
+
+model Follows {
+  followerId  Int
+  followingId Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  follower    User     @relation("follower", fields: [followerId], references: [id], onDelete: Cascade)
+  following   User     @relation("following", fields: [followingId], references: [id], onDelete: Cascade)
+
+  @@id([followerId, followingId])
+}
+
+model Notification {
+  id               Int              @id @default(autoincrement())
+  message          String
+  userId           Int
+  isRead           Boolean          @default(false)
+  notificationType notificationType @default(bell)
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+  user             User             @relation(fields: [userId], references: [id])
+}
+
+model Premium {
+  id            Int      @id @default(autoincrement())
+  userId        Int      @unique
+  startDate     DateTime @default(now())
+  endDate       DateTime
+  status        status   @default(ACTIVE)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  notify3day    Boolean  @default(false)
+  notifyexpired Boolean  @default(false)
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Cart {
+  id        Int           @id @default(autoincrement())
+  userId    Int
+  total     Float
+  status    status        @default(ACTIVE)
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  user      User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  cartLines CartProduct[]
+  products  Product[]
+}
+
+model CartProduct {
+  id        Int      @id @default(autoincrement())
+  cartId    Int
+  productId Int
+  status    status   @default(ACTIVE)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  cart      Cart     @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  product   Product  @relation(fields: [productId], references: [id])
+}
+
+model Order {
+  id         Int         @id @default(autoincrement())
+  slug       String
+  userId     Int
+  total      Float
+  status     status      @default(ACTIVE)
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+  user       User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  orderLines OrderLine[]
+}
+
+model OrderLine {
+  id        Int      @id @default(autoincrement())
+  orderId   Int
+  productId Int
+  quantity  Int
+  price     Float
+  status    status   @default(ACTIVE)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product   Product  @relation(fields: [productId], references: [id])
+}
+
+model Returns {
+  id          Int           @id @default(autoincrement())
+  userId      Int
+  total       Float
+  status      status        @default(ACTIVE)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  user        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  returnsLine ReturnsLine[]
+}
+
+model ReturnsLine {
+  id        Int      @id @default(autoincrement())
+  returnsId Int
+  productId Int
+  quantity  Int
+  price     Float
+  status    status   @default(ACTIVE)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  product   Product  @relation(fields: [productId], references: [id])
+  returns   Returns  @relation(fields: [returnsId], references: [id], onDelete: Cascade)
+}
+
 enum status {
   PENDING
   ACTIVE
@@ -15,7 +258,6 @@ enum status {
 
 enum role {
   ADMIN
-  CREATOR
   PREMIUM
   USER
 }
@@ -30,284 +272,3 @@ enum notificationType {
   bell
   email
 }
-
-// General models ========================================
-
-model Carousel {
-  id          Int     @id @default(autoincrement())
-  title       String
-  description String
-  image       String
-  slug        String? @unique
-
-  status    status   @default(ACTIVE)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model ImagesProduct {
-  id        Int     @id @default(autoincrement())
-  src       String
-  alt       String
-  size      sizes
-  productId Int
-  product   Product @relation(fields: [productId], references: [id])
-
-  status    status   @default(ACTIVE)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-// Product related models ========================================
-
-model Product {
-  id    Int    @id @default(autoincrement())
-  name  String
-  slug  String @unique
-  price Float
-  stock Int?
-
-  userId       Int
-  cartId       Int?
-  seriesId     Int
-  collectionId Int
-
-  artist      User          @relation(fields: [userId], references: [id])
-  Cart        Cart?         @relation(fields: [cartId], references: [id])
-  collections Collection    @relation(fields: [collectionId], references: [id])
-  series      Series        @relation(fields: [seriesId], references: [id])
-  cartLines   CartProduct[]
-  categories  Category[]
-  types       Type[]
-
-  ImagesProduct  ImagesProduct[]
-  favoritedBy    Favorites[]     @relation("ProductFavoritedBy")
-  favoritesCount Int             @default(0)
-  orders         OrderLine[]
-  returns        ReturnsLine[]
-
-  status    status   @default(ACTIVE)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model Category {
-  id       Int       @id @default(autoincrement())
-  name     String
-  slug     String    @unique
-  image    String?
-  products Product[]
-
-  status    status   @default(ACTIVE)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model Type {
-  id       Int       @id @default(autoincrement())
-  name     String
-  slug     String    @unique
-  image    String?
-  products Product[]
-
-  status    status   @default(ACTIVE)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model Collection {
-  id       Int       @id @default(autoincrement())
-  name     String
-  slug     String    @unique
-  image    String?
-  products Product[]
-
-  status    status   @default(ACTIVE)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model Series {
-  id       Int       @id @default(autoincrement())
-  name     String
-  slug     String    @unique
-  image    String?
-  products Product[]
-
-  status    status   @default(ACTIVE)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-// User related models =====================================
-
-model User {
-  id       Int      @id @default(autoincrement())
-  email    String   @unique
-  password String
-  profile  Profile?
-  role     role     @default(USER)
-
-  // accessToken  String
-  // refreshToken Token?
-
-  products      Product[]
-  favorites     Favorites[]    @relation("UserFavorites")
-  followers     Follows[]      @relation("follower")
-  following     Follows[]      @relation("following")
-  notifications Notification[]
-  Cart          Cart[]
-  Order         Order[]
-  returns       Returns[]
-
-  status    status   @default(ACTIVE)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model Profile {
-  id       Int     @id @default(autoincrement())
-  username String  @unique
-  bio      String?
-  avatar   String?
-
-  userId Int  @unique
-  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model Favorites {
-  favoriting  Product  @relation("ProductFavoritedBy", fields: [productId], references: [id], onDelete: Cascade)
-  productId   Int
-  favoritedBy User     @relation("UserFavorites", fields: [userId], references: [id], onDelete: Cascade)
-  userId      Int
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  @@id([productId, userId])
-}
-
-model Follows {
-  follower    User     @relation("follower", fields: [followerId], references: [id], onDelete: Cascade)
-  followerId  Int
-  following   User     @relation("following", fields: [followingId], references: [id], onDelete: Cascade)
-  followingId Int
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  @@id([followerId, followingId])
-}
-
-model Notification {
-  id      Int     @id @default(autoincrement())
-  message String
-  userId  Int
-  user    User    @relation(fields: [userId], references: [id])
-  isRead  Boolean @default(false)
-  notificationType notificationType @default(bell)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-// Order related models =====================================
-
-model Cart {
-  id        Int           @id @default(autoincrement())
-  userId    Int
-  user      User          @relation(fields: [userId], references: [id], onDelete: Cascade)
-  cartLines CartProduct[]
-  products  Product[]
-  total     Float
-
-  status    status   @default(ACTIVE)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model CartProduct {
-  id        Int     @id @default(autoincrement())
-  cartId    Int
-  cart      Cart    @relation(fields: [cartId], references: [id], onDelete: Cascade)
-  productId Int
-  product   Product @relation(fields: [productId], references: [id])
-
-  status    status   @default(ACTIVE)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model Order {
-  id         Int         @id @default(autoincrement())
-  slug       String
-  userId     Int
-  user       User        @relation(fields: [userId], references: [id], onDelete: Cascade)
-  orderLines OrderLine[]
-  total      Float
-
-  status    status   @default(ACTIVE)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model OrderLine {
-  id        Int     @id @default(autoincrement())
-  orderId   Int
-  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  productId Int
-  product   Product @relation(fields: [productId], references: [id])
-  quantity  Int
-  price     Float
-
-  status    status   @default(ACTIVE)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model Returns {
-  id          Int           @id @default(autoincrement())
-  userId      Int
-  user        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
-  returnsLine ReturnsLine[]
-  total       Float
-
-  status    status   @default(ACTIVE)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model ReturnsLine {
-  id        Int     @id @default(autoincrement())
-  returnsId Int
-  returns   Returns @relation(fields: [returnsId], references: [id], onDelete: Cascade)
-  productId Int
-  product   Product @relation(fields: [productId], references: [id])
-  quantity  Int
-  price     Float
-
-  status    status   @default(ACTIVE)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-// JWT related models =====================================
-
-// model Token {
-//   id     Int    @id @default(autoincrement())
-//   token  String
-//   userId Int    @unique
-//   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-//   createdAt DateTime @default(now())
-//   updatedAt DateTime @updatedAt
-// }
-
-// model Blacklist {
-//   id    Int    @id @default(autoincrement())
-//   token String
-
-//   createdAt DateTime @default(now())
-//   updatedAt DateTime @updatedAt
-// }

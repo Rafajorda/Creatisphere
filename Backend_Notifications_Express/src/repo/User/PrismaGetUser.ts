@@ -9,7 +9,8 @@ const user = await prisma.user.findFirst({
         }
     },
     include: {
-        profile: true
+        profile: true,
+        premium: true, 
     }
 });
 return user;

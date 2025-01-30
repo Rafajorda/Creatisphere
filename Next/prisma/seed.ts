@@ -35,6 +35,7 @@ async function clearDatabase() {
   await prisma.$executeRawUnsafe('TRUNCATE TABLE "Carousel" RESTART IDENTITY CASCADE;');
   await prisma.$executeRawUnsafe('TRUNCATE TABLE "Type" RESTART IDENTITY CASCADE;');
   await prisma.$executeRawUnsafe('TRUNCATE TABLE "Cart" RESTART IDENTITY CASCADE;');
+  await prisma.$executeRawUnsafe('TRUNCATE TABLE "Premium" RESTART IDENTITY CASCADE;');
   // await prisma.$executeRawUnsafe('TRUNCATE TABLE "Token" RESTART IDENTITY CASCADE;');
   // await prisma.$executeRawUnsafe('TRUNCATE TABLE "Blacklist" RESTART IDENTITY CASCADE;');
 }
@@ -44,11 +45,13 @@ async function main() {
   // Crear usuarios
   const users = await prisma.user.createMany({
     data: [
-      { email: 'artist1@example.com', password: 'password123', role: 'CREATOR' },
-      { email: 'artist2@example.com', password: 'password123', role: 'CREATOR' },
+      { email: 'artist1@example.com', password: 'password123', role: 'USER' },
+      { email: 'artist2@example.com', password: 'password123', role: 'USER' },
       { email: 'user1@example.com', password: 'password123', role: 'USER' },
       { email: 'user2@example.com', password: 'password123', role: 'USER' },
       { email: 'admin@example.com', password: 'adminpassword', role: 'ADMIN' },
+      { email: 'premium1@example.com', password: 'password123', role: 'PREMIUM' },
+      { email: 'premium2@example.com', password: 'password123', role: 'PREMIUM' },
     ],
   });
 
@@ -564,6 +567,9 @@ async function main() {
       { username: 'artist_two', bio: '3D modeler and animation enthusiast.', avatar: 'https://via.placeholder.com/150', userId: 2 },
       { username: 'user_one', bio: 'Art collector and enthusiast.', avatar: 'https://via.placeholder.com/150', userId: 3 },
       { username: 'user_two', bio: 'Photographer and digital art fan.', avatar: 'https://via.placeholder.com/150', userId: 4 },
+      { username: 'admin', bio: 'Administrator of the platform.', avatar: 'https://via.placeholder.com/150', userId: 5 },
+      { username: 'premium_one', bio: 'Premium user with access to exclusive content.', avatar: 'https://via.placeholder.com/150', userId: 6 },
+      { username: 'premium_two', bio: 'Premium user with access to exclusive content.', avatar: 'https://via.placeholder.com/150', userId: 7 },
     ],
   });
 
@@ -624,8 +630,28 @@ async function main() {
       { orderId: 4, productId: 4, quantity: 1, price: 150.25 },
     ],
   });
+  
 
   console.log('Líneas de órdenes creadas:', orderLines);
+
+  const Premium = await prisma.premium.createMany({
+    data: [
+      {
+        userId: 6, 
+        startDate: new Date(),
+        endDate: new Date(new Date().setDate(new Date().getDate() + 30)),
+        status: 'ACTIVE', 
+      },
+      {
+        userId: 7, 
+        startDate: new Date(),
+        endDate: new Date(new Date().setDate(new Date().getDate() + 30)),
+        status: 'ACTIVE',
+      },
+    ],
+  });
+
+  console.log('Suscripciones premium creadas:', Premium);
 
   // Crear tokens
   // const tokens = await prisma.token.createMany({
