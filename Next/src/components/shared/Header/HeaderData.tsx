@@ -1,3 +1,5 @@
+import { useLogout } from "@/hooks/useAuth";
+import { LogOut } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -74,6 +76,11 @@ export const HeaderData: React.FC<HeaderDataProps> = ({ activeRoute, session }) 
                             {session.user.username}
                         </Link>
                     }
+                    {session && (
+                        <button onClick={useLogout}>
+                            <LogOut className="ml-5" />
+                        </button>
+                    )}
                 </div>
             </nav>
         </div>
