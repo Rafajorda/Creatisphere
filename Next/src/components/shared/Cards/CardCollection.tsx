@@ -11,7 +11,7 @@ interface CardCollectionProps {
 export const CardCollections = ({ collection, ind }: CardCollectionProps) => {
     return (
         <Link
-            key={collection.id}
+            // key={collection.id}
             href={`/Shop?Collection=${collection.slug}`}
             className={`group relative flex overflow-hidden rounded-2xl transition-all duration-300 hover:scale-[1.02] ${ind === 0
                 ? 'md:col-span-2 md:row-span-2'
@@ -20,7 +20,7 @@ export const CardCollections = ({ collection, ind }: CardCollectionProps) => {
                     : 'md:col-span-2 md:row-span-1 lg:row-span-1'
                 }`}
         >
-            <div key={collection.id}>
+            <div className="relative w-full h-full">
                 <Image
                     // src={`/assets/category/${category.image}`}
                     src={'https://picsum.photos/200'}

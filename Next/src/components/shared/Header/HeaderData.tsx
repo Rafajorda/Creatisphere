@@ -9,9 +9,6 @@ interface HeaderDataProps {
 }
 
 export const HeaderData: React.FC<HeaderDataProps> = ({ activeRoute, session }) => {
-
-
-
     return (
         <div className="bg-black text-light-gold font-semibold shadow-md">
             <nav className="mx-auto flex items-center justify-between px-20 pl-10 py-4">
