@@ -1,9 +1,9 @@
 import { Profile, User } from '@prisma/client';
 import { Request, Response } from 'express';
-import FindUserService from '../services/User/FindUserService';
-import findProduct from '../services/Product/FindProductService';
-import { AppError } from '../utils/AppError';
-import CreateNotificationLike from '../services/Notification/Create/CreateNotificationLike';
+import FindUserService from '../../services/User/FindUserService';
+import findProduct from '../../services/Product/FindProductService';
+import { AppError } from '../../utils/AppError';
+import CreateNotificationLike from '../../services/Notification/Create/CreateNotificationLike';
 
 export const Likes = async (req: Request, res: Response): Promise<void> => {
     try {

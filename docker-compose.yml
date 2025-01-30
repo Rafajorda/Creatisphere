@@ -26,7 +26,21 @@ services:
       - postgres
     networks:
       - appNetwork
-  
+
+  notificaciones:
+    build:
+      context: ./Backend_Notifications_Express
+      dockerfile: Dockerfile
+    container_name: notificaciones_server
+    ports:
+      - "3001:3001"  
+    environment:
+      DATABASE_URL: "postgresql://root:root_secret@postgres:5432/mydatabase"
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - appNetwork
   # nextjs:
   #   build:
   #     context: ./next

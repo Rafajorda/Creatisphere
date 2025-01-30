@@ -25,7 +25,8 @@
     "@types/express": "^5.0.0",
     "@types/node": "^22.10.10",
     "nodemon": "^3.1.9",
-    "typescript": "^5.7.3"
+    "typescript": "^5.7.3",
+    "ts-node": "^10.0.0"
   },
   "main": "index.ts",
   "author": "",

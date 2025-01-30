@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
-import { AppError } from '../utils/AppError';
-import CreateNotificationDeleted from '../services/Notification/Create/CreateNotificationDeleted';
-import prismaGetProduct from '../repo/Product/PrismaGetProduct';
+import { AppError } from '../../utils/AppError';
+import CreateNotificationDeleted from '../../services/Notification/Create/CreateNotificationDeleted';
+import prismaGetProduct from '../../repo/Product/PrismaGetProduct';
 export const deleted = async (req: Request, res: Response): Promise<void> => {
     try {
      const { message, productId } = req.body;

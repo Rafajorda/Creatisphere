@@ -1,8 +1,8 @@
 import { Profile, User } from '@prisma/client';
 import { Request, Response } from 'express'; 
-import CreateNotificationFollow from '../services/Notification/Create/CreateNotificationFollow';
-import FindUserService from '../services/User/FindUserService';
-import { AppError } from '../utils/AppError';
+import CreateNotificationFollow from '../../services/Notification/Create/CreateNotificationFollow';
+import FindUserService from '../../services/User/FindUserService';
+import { AppError } from '../../utils/AppError';
 
 
 export const Follow = async (req: Request, res: Response): Promise<void> => {
