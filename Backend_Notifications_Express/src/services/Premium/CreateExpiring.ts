@@ -2,7 +2,7 @@ import { User, Profile } from "@prisma/client";
 
 import CreateEmailExpiring from "../Premium/CreateEmailExpiring";
 import { AppError } from "../../utils/AppError";
-import CreateNotificationExpiring from "../Notification/CreateNotificationExpiring";
+import CreateNotificationExpiring from "../Notification/Create/CreateNotificationExpiring";
 export default async function CreateExpiring(
   user: User & { profile: Profile },
 ){

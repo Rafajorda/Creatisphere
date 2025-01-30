@@ -1,6 +1,6 @@
-import PrismaCreateNotification from "../../repo/Notification/PrismaCreateNotification";
+import PrismaCreateNotification from "../../../repo/Notification/PrismaCreateNotification";
 import { Order } from "@prisma/client";
-import { AppError } from "../../utils/AppError";
+import { AppError } from "../../../utils/AppError";
 
 export default async function CreateNotificationOrder(
     order: Order,

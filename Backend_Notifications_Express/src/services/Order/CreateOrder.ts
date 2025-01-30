@@ -1,5 +1,5 @@
 import { Order, OrderLine } from "@prisma/client";
-import CreateNotificationOrder from "../Notification/CreateNotificationOrder";
+import CreateNotificationOrder from "../Notification/Create/CreateNotificationOrder";
 import CreateEmailOrder from "../Order/CreateEmailOrder";
 import { AppError } from "../../utils/AppError";
 export default async function CreateOrder(

@@ -2,7 +2,7 @@ import { Premium, Profile, User } from '@prisma/client';
 import { Request, Response } from 'express';
 import FindUserService from '../../services/User/FindUserService';
 import { AppError } from '../../utils/AppError';
-import CreateNotificationPurchased from '../../services/Notification/CreateNotificationPurchased';
+import CreateNotificationPurchased from '../../services/Notification/Create/CreateNotificationPurchased';
 
 
 export const purchased = async (req: Request, res: Response): Promise<void> => {

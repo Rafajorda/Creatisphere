@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
-import { AppError } from '../utils/AppError';
-import prismaGetOrder from '../repo/Order/PrismaGetOrder';
-import CreateOrder from '../services/Order/CreateOrder';
+import { AppError } from '../../utils/AppError';
+import prismaGetOrder from '../../repo/Order/PrismaGetOrder';
+import CreateOrder from '../../services/Order/CreateOrder';
 import { Order, OrderLine } from '@prisma/client';
 
 export const orders = async (req: Request, res: Response): Promise<void> => {

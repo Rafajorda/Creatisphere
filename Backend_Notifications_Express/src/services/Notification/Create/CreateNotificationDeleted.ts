@@ -1,6 +1,6 @@
-import PrismaCreateNotification from "../../repo/Notification/PrismaCreateNotification";
+import PrismaCreateNotification from "../../../repo/Notification/PrismaCreateNotification";
 import { Product } from "@prisma/client";
-import { AppError } from "../../utils/AppError";
+import { AppError } from "../../../utils/AppError";
 
 export default async function CreateNotificationDeleted(
     message: string,

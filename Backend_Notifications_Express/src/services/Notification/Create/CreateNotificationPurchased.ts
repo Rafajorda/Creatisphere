@@ -1,6 +1,6 @@
-import PrismaCreateNotification from "../../repo/Notification/PrismaCreateNotification";
+import PrismaCreateNotification from "../../../repo/Notification/PrismaCreateNotification";
 import { User, Profile, Premium } from "@prisma/client";
-import { AppError } from "../../utils/AppError";
+import { AppError } from "../../../utils/AppError";
 export default async function CreateNotificationPurchased(
     user: User & { profile: Profile } & { premium: Premium },
 ){ 

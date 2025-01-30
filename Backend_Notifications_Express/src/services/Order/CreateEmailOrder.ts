@@ -58,7 +58,7 @@ export default async function CreateEmailOrder(order: Order & { orderLines: Orde
         const response = await resend.emails.send({
             from: 'onboarding@resend.dev', 
             // to: user.email, 
-            to: 'rafajorgis@gmail.com',
+            to: process.env.EMAIL ?? 'default@example.com',
             subject: "Order Confirmation",
             html: html
         });

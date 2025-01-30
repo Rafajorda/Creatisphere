@@ -24,7 +24,7 @@ export default async function CreateEmailExpiring(user: User & { profile: Profil
         const response = await resend.emails.send({
              from: 'onboarding@resend.dev', 
             // to: user.email, 
-            to: 'rafajorgis@gmail.com',
+            to: process.env.EMAIL ?? 'default@example.com',
             subject: "Premium Subscription Expiring",
             html: html
         });

@@ -1,7 +1,7 @@
 import { Profile, User } from '@prisma/client';
 import { Request, Response } from 'express';
 import FindUserService from '../../services/User/FindUserService';
-import CreateNotificationExpired from '../../services/Notification/CreateNotificationExpired';
+import CreateNotificationExpired from '../../services/Notification/Create/CreateNotificationExpired';
 import { AppError } from '../../utils/AppError';
 
 

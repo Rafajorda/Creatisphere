@@ -1,28 +1,29 @@
 import { Profile, User } from '@prisma/client';
-import { Request, Response } from 'express';
+import { Request, Response } from 'express'; 
+import CreateNotificationFollow from '../services/Notification/Create/CreateNotificationFollow';
 import FindUserService from '../services/User/FindUserService';
-import findProduct from '../services/Product/FindProductService';
 import { AppError } from '../utils/AppError';
-import CreateNotificationLike from '../services/Notification/CreateNotificationLike';
 
-export const Likes = async (req: Request, res: Response): Promise<void> => {
-    try {
-     const { username, productId } = req.body;
 
-    if (!username || !productId) {
+export const Follow = async (req: Request, res: Response): Promise<void> => {
+    try{
+    const { following,followed  } = req.body;
+
+
+    if (!following || !followed) {
         res.status(400).json({ message: 'Required data missing: username or productId' });
         return;
     }
        
-    const user = await FindUserService(username);
-    
-    const product = await findProduct(productId);
+    const followinguser = await FindUserService(following);
 
-    const newNotification = await CreateNotificationLike(user as User & { profile: Profile }, product);
+    const followeduser = await FindUserService(followed);
+
+    const newNotification = await CreateNotificationFollow(followinguser as User & { profile: Profile }, followeduser as User & { profile: Profile });
    
     res.status(201).json(newNotification);
 
-    } catch (err) {
+    }catch (err) {
         if (err instanceof AppError) {
             res.status(err.statusCode).json({ message: err.message });
         } else {
@@ -30,5 +31,4 @@ export const Likes = async (req: Request, res: Response): Promise<void> => {
             res.status(500).json({ message: 'Internal server error' });
         }
     }
-};  
-
+}
