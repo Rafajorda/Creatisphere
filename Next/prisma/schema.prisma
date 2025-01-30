@@ -39,6 +39,7 @@ model Carousel {
   description String
   image       String
   slug        String? @unique
+  href        String
 
   status    status   @default(ACTIVE)
   createdAt DateTime @default(now())
