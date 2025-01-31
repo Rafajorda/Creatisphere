@@ -16,9 +16,6 @@ export const General = async (req: Request, res: Response): Promise<void> => {
        
     const users = await getAllUsersService()
     
-    console.log(users);
-    
-
     const newNotification = await CreateNotificationGeneral(users, message);
    
     res.status(201).json(newNotification);

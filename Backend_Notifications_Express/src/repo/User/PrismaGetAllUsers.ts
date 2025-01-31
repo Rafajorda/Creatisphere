@@ -5,7 +5,7 @@ export default async function prismaGetAllUsers(): Promise<User[]> {
     const users = await prisma.user.findMany({
         where: {
             role: {
-                not: 'ADMIN',  // Excluye los usuarios con rol 'ADMIN'
+                not: 'ADMIN',  
             }
         },
         include: {
