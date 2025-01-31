@@ -14,12 +14,18 @@ export default async function getCurrentUser() {
             return null
         }
 
-        const currentUser = await prisma.profile.findFirst({
+        const currentUser = await prisma.user.findFirst({
             where: {
-                user: {
-                    email: session.user.email
-                }
+                email: session.user.email
             },
+            select: {
+                email: true,
+                profile: {
+                    select: {
+                        username: true,
+                    }
+                }
+            }
         })
 
         if (!currentUser) {

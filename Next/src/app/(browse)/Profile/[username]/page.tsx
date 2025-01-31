@@ -26,7 +26,7 @@ const ProfilePage = async ({ params }: ProfilePageProps) => {
   const { username } = await params;
   const profile = await useGetProfile(username)
 
-  const isCurrentUser = currentUser?.username === profile?.username
+  const isCurrentUser = currentUser?.profile?.username === profile?.username
 
   if (!profile) {
     return null // Si no se encuentra el perfil, redirige
