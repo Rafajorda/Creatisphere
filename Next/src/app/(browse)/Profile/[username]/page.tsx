@@ -6,6 +6,7 @@ import { ProfileFollow } from '@/components/Profile/ProfileFollow'
 import { ProfileFavorites } from '@/components/Profile/ProfileFavorites'
 import { ProfileProducts } from '@/components/Profile/ProfileProducts'
 import { EditProfileButton } from '@/components/shared/buttons/EditProfileButton'
+import getCurrentUser from '@/actions/getCurrentUser'
 
 interface ProfilePageProps {
   params: { username: string }
@@ -15,12 +16,17 @@ export async function generateMetadata({
   params,
 }: ProfilePageProps): Promise<Metadata> {
 
-  const profile = await useGetProfile(params.username)
+  const { username } = await params;
+  const profile = await useGetProfile(username)
   return profile ? { title: profile.username } : {}
 }
 
 const ProfilePage = async ({ params }: ProfilePageProps) => {
-  const profile = await useGetProfile(params?.username)
+  const currentUser = await getCurrentUser()
+  const { username } = await params;
+  const profile = await useGetProfile(username)
+
+  const isCurrentUser = currentUser?.username === profile?.username
 
   if (!profile) {
     return null // Si no se encuentra el perfil, redirige
@@ -29,7 +35,10 @@ const ProfilePage = async ({ params }: ProfilePageProps) => {
   return (
     <div className="profile-page text-white text-xl container mx-auto">
       <ProfileInfo profile={profile} />
-      <EditProfileButton usernameProfile={profile.username} />
+
+      {isCurrentUser && (
+        <EditProfileButton />
+      )}
 
       <ProfileProducts profile={profile} />
       <ProfileFavorites profile={profile} />

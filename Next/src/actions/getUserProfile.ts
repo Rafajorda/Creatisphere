@@ -101,7 +101,7 @@ export default async function getUserProfile(username: string): Promise<UserProf
       return null;
     }
 
-    console.log('Usuario encontrado:', user);
+    // console.log('Usuario encontrado:', user);
     // Mapear la información del usuario
     return userMapper(user);
   } catch (error) {
