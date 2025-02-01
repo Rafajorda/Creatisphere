@@ -1,6 +1,7 @@
-import { FavoriteItem } from "@/types/Favorite";
-import { UserProfileResponse } from "@/types/UserProfile";
-import React from "react";
+import type { FavoriteItem } from "@/types/Favorite"
+import type { UserProfileResponse } from "@/types/UserProfile"
+import { CardProductProfile } from "../shared/Cards/CardProductProfile"
+import React from "react"
 
 interface ProfileFavoritesProps {
     profile: UserProfileResponse
@@ -9,11 +10,12 @@ interface ProfileFavoritesProps {
 export const ProfileFavorites = ({ profile }: ProfileFavoritesProps) => {
     return (
         <>
-            {profile.favorites.map((favorite: FavoriteItem) => (
-                <div key={favorite.product.id}>
-                    <h1>{favorite.product.name}</h1>
-                </div>
-            ))}
+            <div className="grid grid-cols-4 mb-5">
+                {profile.favorites.map((favorite: FavoriteItem) => (
+                    <CardProductProfile key={favorite.product.id} product={favorite.product} />
+                ))}
+            </div>
         </>
     )
 }
+
