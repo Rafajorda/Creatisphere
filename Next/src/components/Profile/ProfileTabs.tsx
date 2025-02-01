@@ -12,36 +12,42 @@ interface ProfileTabsProps {
 
 export const ProfileTabs = ({ profile }: ProfileTabsProps) => {
     return (
-        <>
-            <Tabs defaultValue="products" className="w-full mt-6">
+        <Tabs defaultValue="products" className="w-full mt-10">
 
-                <TabsList className={`grid w-full ${profile.products.products.length > 0 ? 'grid-cols-4' : 'grid-cols-3'}`}>
-
-                    {profile.products.products.length > 0 && (
-                        <TabsTrigger value="products">Products ({profile.products.products.length})</TabsTrigger>
-                    )}
-
-                    <TabsTrigger value="favorites">Favorites ({profile.favorites.length})</TabsTrigger>
-                    <TabsTrigger value="following">Following ({profile.following.length})</TabsTrigger>
-                    <TabsTrigger value="followers">Followers ({profile.followers.length})</TabsTrigger>
-                </TabsList>
+            <TabsList className={`grid w-full ${profile.products.products.length > 0 ? 'grid-cols-4' : 'grid-cols-3'}`}>
 
                 {profile.products.products.length > 0 && (
-                    <TabsContent value="products">
-                        <ProfileProducts profile={profile} />
-                    </TabsContent>
+                    <TabsTrigger value="products" className="my-5 py-1 rounded-l-xl font-bold bg-zinc-700 data-[state=active]:text-black data-[state=active]:bg-gold">
+                        Products ({profile.products.products.length})
+                    </TabsTrigger>
                 )}
 
-                <TabsContent value="favorites">
-                    <ProfileFavorites profile={profile} />
+                <TabsTrigger value="favorites" className="my-5 py-1 font-bold bg-zinc-700 data-[state=active]:text-black data-[state=active]:bg-gold">
+                    Favorites ({profile.favorites.length})
+                </TabsTrigger>
+                <TabsTrigger value="following" className="my-5 py-1 font-bold bg-zinc-700 data-[state=active]:text-black data-[state=active]:bg-gold">
+                    Following ({profile.following.length})
+                </TabsTrigger>
+                <TabsTrigger value="followers" className="my-5 py-1 rounded-r-xl font-bold bg-zinc-700 data-[state=active]:text-black data-[state=active]:bg-gold">
+                    Followers ({profile.followers.length})
+                </TabsTrigger>
+            </TabsList>
+
+            {profile.products.products.length > 0 && (
+                <TabsContent value="products">
+                    <ProfileProducts profile={profile} />
                 </TabsContent>
-                <TabsContent value="following">
-                    <ProfileFollow profile={profile} isFollower={false} />
-                </TabsContent>
-                <TabsContent value="followers">
-                    <ProfileFollow profile={profile} isFollower={true} />
-                </TabsContent>
-            </Tabs>
-        </>
+            )}
+
+            <TabsContent value="favorites">
+                <ProfileFavorites profile={profile} />
+            </TabsContent>
+            <TabsContent value="following">
+                <ProfileFollow profile={profile} isFollower={false} />
+            </TabsContent>
+            <TabsContent value="followers">
+                <ProfileFollow profile={profile} isFollower={true} />
+            </TabsContent>
+        </Tabs>
     )
 }
