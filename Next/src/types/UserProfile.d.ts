@@ -18,4 +18,5 @@ export interface UserProfileResponse {
   cart: CartResponse[];                 // Carrito de compras
   orders: OrderResponse[];              // Pedidos realizados
   returns: ReturnResponse[];            // Devoluciones realizadas
+  isFollowing?: boolean;                // Indica si el usuario actual sigue al usuario
 }

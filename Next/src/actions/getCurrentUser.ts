@@ -19,7 +19,10 @@ export default async function getCurrentUser() {
                 email: session.user.email
             },
             select: {
+                id: true,
                 email: true,
+                followers: true,
+                following: true,
                 profile: {
                     select: {
                         username: true,
