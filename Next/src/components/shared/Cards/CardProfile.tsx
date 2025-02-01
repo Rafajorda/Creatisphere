@@ -11,9 +11,8 @@ export const CardProfile = ({ profile }: CardProfileProps) => {
     return (
         <>
             <Link href={`/Profile/${profile.username}`}>
-                <div className={`bg-white shadow-sm rounded-lg overflow-hidden mx-auto my-5`}>
+                <div className={`bg-white shadow-sm rounded-lg overflow-hidden mx-auto my-5 hover:bg-zinc-100`}>
                     <div className={`relative h-24 bg-gradient-to-r from-light-gold to-dark-gold shadow-md`}>
-                        {/* <div className={`absolute bottom-0 left-1/4 transform -translate-x-1/2 translate-y-1/3`}> */}
                         <div className={`absolute bottom-0 translate-x-4 translate-y-10`}>
                             <Image
                                 src={profile.avatar || "/placeholder.svg?height=200&width=200"}
@@ -24,10 +23,18 @@ export const CardProfile = ({ profile }: CardProfileProps) => {
                             />
                         </div>
                     </div>
-                    <div className={`pt-10 pb-4 px-4 text-end`}>
+                    <div className={`pt-10 pb-4 px-5 text-end`}>
                         <h1 className={`text-xl font-bold text-gray-800 mb-1`}>{profile.username}</h1>
                         <p className="text-gray-600 text-base italic">{profile.bio}</p>
                     </div>
+                    <div className="text-white bg-black">
+                        {profile.isFollowing ?
+                            <button>siguiendo</button>
+                            :
+                            <button>no siguiendo</button>
+                        }
+                    </div>
+
                 </div>
             </Link>
         </>
