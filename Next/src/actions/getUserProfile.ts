@@ -2,7 +2,8 @@
 
 import { prisma } from '@/lib/prisma';
 import { UserProfileResponse } from '@/types/UserProfile';
-import { userMapper } from '@/app/api/mapper';
+import { userMapper } from '@/app/api/UserMapper';
+import getCurrentUser from './getCurrentUser';
 
 export default async function getUserProfile(username: string): Promise<UserProfileResponse | null> {
   try {
@@ -101,9 +102,13 @@ export default async function getUserProfile(username: string): Promise<UserProf
       return null;
     }
 
-    // console.log('Usuario encontrado:', user);
-    // Mapear la información del usuario
-    return userMapper(user);
+    const currentUser = await getCurrentUser();
+
+    if (!currentUser) {
+      return null;
+    }
+
+    return userMapper(user, currentUser);
   } catch (error) {
     console.error('Error en getUserProfile:', error);
     return null;
