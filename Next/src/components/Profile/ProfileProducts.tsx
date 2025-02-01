@@ -9,8 +9,6 @@ interface ProfileProductsProps {
 export const ProfileProducts = ({ profile }: ProfileProductsProps) => {
     return (
         <>
-            <h1>Products ({profile.products.products.length}): </h1>
-
             {profile.products.products.map((product: ProductItem) => {
                 return (
                     <ul key={product.id}>

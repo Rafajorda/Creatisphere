@@ -3,6 +3,7 @@ import { User } from '@prisma/client';
 export interface UserFollower extends Omit<User, 'password' | 'createdAt' | 'updatedAt' | 'email' | 'role'> {
   avatar: string | null; // Incluimos el avatar de perfil
   username: string; // Incluimos el nombre de usuario
+  bio: string; // Incluimos la biografía
 }
 
 export interface FollowResponse {
