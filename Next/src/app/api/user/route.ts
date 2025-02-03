@@ -1,7 +1,7 @@
 import { prisma } from "@/lib/prisma"
 import argon2 from "argon2"
 import type { NextRequest } from "next/server"
-import { ApiResponse } from "@/app/api/response"
+import { ApiResponse } from "@/app/api/exceptions"
 
 export const PUT = async (req: NextRequest) => {
     const body = await req.json()

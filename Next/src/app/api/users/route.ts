@@ -1,6 +1,6 @@
 import { NextRequest } from 'next/server'
 import { prisma } from '@/lib/prisma'
-import { ApiResponse } from '@/app/api/error'
+import { ApiResponse } from '@/app/api/exceptions'
 import { userRegisterSchema } from '@/validation/schema'
 import argon2 from 'argon2'
 
