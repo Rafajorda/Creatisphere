@@ -26,6 +26,8 @@ export default async function getCurrentUser() {
                 profile: {
                     select: {
                         username: true,
+                        avatar: true,
+                        bio: true
                     }
                 }
             }
