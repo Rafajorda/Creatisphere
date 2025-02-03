@@ -12,10 +12,12 @@ model Carousel {
   title       String
   description String
   image       String
-  slug        String?  @unique
-  status      status   @default(ACTIVE)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  slug        String? @unique
+  href        String
+
+  status    status   @default(ACTIVE)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model ImagesProduct {
@@ -111,8 +113,8 @@ model User {
   updatedAt     DateTime       @updatedAt
   Cart          Cart[]
   favorites     Favorites[]    @relation("UserFavorites")
-  followers     Follows[]      @relation("follower")
-  following     Follows[]      @relation("following")
+  followers     Follows[]      @relation("following")
+  following     Follows[]      @relation("follower")
   notifications Notification[]
   Order         Order[]
   premium       Premium?
@@ -158,6 +160,7 @@ model Notification {
   id               Int              @id @default(autoincrement())
   message          String
   userId           Int
+  user             User             @relation(fields: [userId], references: [id])
   isRead           Boolean          @default(false)
   notificationType notificationType @default(bell)
   createdAt        DateTime         @default(now())

@@ -533,27 +533,31 @@ async function main() {
     data: [
       {
         title: 'Aomori Fauna',
-        slug: 'aomori-fauna',
+        slug: 'Aomori-Fauna',
         description: '¡Últimas unidades en prints firmadas, date prisa para conseguir una!',
         image: 'carousel_1.jpg',
+        href: '/Details/Aomori-Fauna'
       },
       {
         title: 'Backgrounds',
         slug: 'backgrounds',
         description: 'Echa un vistazo a la categoría con los mejores paisajes',
         image: 'carousel_2.jpg',
+        href: '/Shop?Category=backgrounds'
       },
       {
         title: 'Final Fantasy XIV',
         slug: 'final-fantasy-xiv',
         description: 'Rememora tus escenas favoritas con la colección del aclamado MMO',
         image: 'carousel_3.jpg',
+        href: '/Shop?Series=final-fantasy-xiv'
       },
       {
-        title: 'Fanarts',
-        slug: 'fanarts',
+        title: 'Fanart',
+        slug: 'fanart',
         description: '¡Descubre nuestro catálogo de Fanarts!',
         image: 'carousel_4.jpg',
+        href: '/Shop?Category=fanart'
       },
     ],
   });

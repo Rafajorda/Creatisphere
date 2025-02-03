@@ -24,8 +24,8 @@ export const authOptions: AuthOptions = {
           },
           include: { profile: true },
         })
-       
-        
+
+
         if (!user || !user.password || !user.profile?.username) {
           console.error('User not found, no password stored or username missing') // Log para depurar
           return null
@@ -36,13 +36,13 @@ export const authOptions: AuthOptions = {
           credentials.password,
         )
 
-        if (!isCorrectPassword) { 
+        if (!isCorrectPassword) {
           return null
         }
-       console.log("user", user.id, user.status);
+        console.log("user", user.id, user.status);
         return {
           id: user.id.toString(),
-          username:user.profile?.username,
+          username: user.profile?.username,
           email: user.email,
           password: user.password,
           status: user.status,
@@ -58,11 +58,11 @@ export const authOptions: AuthOptions = {
   },
   session: {
     strategy: 'jwt',
-    maxAge: 60, 
-    updateAge: 20, 
+    maxAge: 24 * 60 * 60,
+    updateAge: 6 * 60 * 60,
   },
   jwt: {
-    maxAge: 3600,
+    maxAge: 3 * 24 * 60 * 60,
   },
   callbacks: {
     async jwt({ token, user }: { token: any, user?: any }) {
@@ -71,24 +71,24 @@ export const authOptions: AuthOptions = {
         console.log("token", token);
         return {
           ...token,
-          username: user.username,     
-          email: user.email, 
-          role: user.role,   
+          username: user.username,
+          email: user.email,
+          role: user.role,
         };
       }
 
-       return token;
-     },
-    async session({ session, token }: { session: any, token: any }) { 
+      return token;
+    },
+    async session({ session, token }: { session: any, token: any }) {
       session.user = {
-        username: token.username,  
+        username: token.username,
         email: token.email,
         role: token.role,
       };
-     
-      console.log(session);
+
+      // console.log(session);
       return session;
     },
   },
-  secret: process.env.NEXTAUTH_SECRET, 
+  secret: process.env.NEXTAUTH_SECRET,
 };

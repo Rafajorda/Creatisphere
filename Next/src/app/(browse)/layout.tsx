@@ -7,7 +7,7 @@ import Footer from '@/components/shared/Footer'
 export const metadata: Metadata = {
     title: {
         template: '%s | next.js RealWorld example app',
-        default: 'Conduit | next.js RealWorld example app', // a default is required when creating a template
+        default: 'GVM Art', // a default is required when creating a template
     },
     description: 'Powered by Next.js',
 }
@@ -22,7 +22,7 @@ function RootLayout({ children }: RootLayoutProps) {
         <>
             <StoreProvider>
                 <html lang='en'>
-                    <body suppressHydrationWarning={true} className='bg-stone-900'>
+                    <body suppressHydrationWarning={true} className='bg-zinc-800'>
                         <Header />
                         {children}
                         <Footer />
