@@ -1,6 +1,6 @@
 import { Metadata, NextPage } from 'next'
 import Link from 'next/link'
-import SignForm from '@/components/user/SignForm'
+import SignForm from '@/components/forms/SignForm'
 import React from 'react'
 
 export const metadata: Metadata = {
