@@ -23,6 +23,7 @@ export default async function getCurrentUser() {
                 email: true,
                 followers: true,
                 following: true,
+                role: true,
                 profile: {
                     select: {
                         username: true,
