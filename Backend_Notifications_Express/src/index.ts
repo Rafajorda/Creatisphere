@@ -20,9 +20,9 @@
         res.status(500).send('Algo salió mal!');
     });
 
-    const PORT = process.env.PORT || 3001;
+    const PORT = parseInt(process.env.PORT as string, 10) || 3001;
 
-    app.listen(PORT, () => {
+    app.listen(PORT, "0.0.0.0", () => {
     console.log(`Server is running on port ${PORT}`);
     });
 
