@@ -44,7 +44,7 @@ const sortImages = (images: GalleryImage[]): GalleryImage[] => {
 
 export const useFetchGalleryImages = async (filters: filters): Promise<GalleryImage[]> => {
     const { products } = await getProducts(filters);
-
+    console.log("products",products);
     const mappedImages = products.map(product => {
         const firstImage = product.ImagesProduct[0];
         return {

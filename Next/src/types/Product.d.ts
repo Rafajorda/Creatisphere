@@ -1,8 +1,8 @@
-import { Category, Collection, ImagesProduct, Product, Series, Type, User } from "@prisma/client";
+import { Category, Collection, ImagesProduct, Product, Series, User, ProductPrice } from "@prisma/client";
 
 export interface ProductItem extends Omit<Product, 'updatedAt'> {
     categories: Category[];
-    types: Type[];
+    productPrices: ProductPrice[];
     series: Series;
     collections: Collection;
     artist: User;

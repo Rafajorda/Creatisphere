@@ -7,40 +7,16 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum status {
-  PENDING
-  ACTIVE
-  INACTIVE
-}
-
-enum role {
-  ADMIN
-  PREMIUM
-  USER
-}
-
-enum sizes {
-  tall
-  wide
-  square
-}
-
-enum notificationType {
-  bell
-  email
-}
-
 model Carousel {
-  id          Int     @id @default(autoincrement())
+  id          Int      @id @default(autoincrement())
   title       String
   description String
   image       String
-  slug        String? @unique
+  slug        String?  @unique
   href        String
-
-  status    status   @default(ACTIVE)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  status      status   @default(ACTIVE)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model ImagesProduct {
@@ -59,7 +35,6 @@ model Product {
   id             Int             @id @default(autoincrement())
   name           String
   slug           String          @unique
-  price          Float
   stock          Int?
   userId         Int
   cartId         Int?
@@ -77,9 +52,32 @@ model Product {
   collections    Collection      @relation(fields: [collectionId], references: [id])
   series         Series          @relation(fields: [seriesId], references: [id])
   artist         User            @relation(fields: [userId], references: [id])
+  productPrices  ProductPrice[]
   returns        ReturnsLine[]
   categories     Category[]      @relation("CategoryToProduct")
-  types          Type[]          @relation("ProductToType")
+}
+
+model ProductPrice {
+  id        Int      @id @default(autoincrement())
+  productId Int
+  typeId    Int
+  price     Float
+  status    status   @default(ACTIVE)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  product   Product  @relation(fields: [productId], references: [id])
+  type      Type     @relation(fields: [typeId], references: [id])
+}
+
+model Type {
+  id            Int            @id @default(autoincrement())
+  name          String
+  slug          String         @unique
+  image         String?
+  status        status         @default(ACTIVE)
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  productPrices ProductPrice[]
 }
 
 model Category {
@@ -91,17 +89,6 @@ model Category {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   products  Product[] @relation("CategoryToProduct")
-}
-
-model Type {
-  id        Int       @id @default(autoincrement())
-  name      String
-  slug      String    @unique
-  image     String?
-  status    status    @default(ACTIVE)
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  products  Product[] @relation("ProductToType")
 }
 
 model Collection {
@@ -136,8 +123,8 @@ model User {
   updatedAt     DateTime       @updatedAt
   Cart          Cart[]
   favorites     Favorites[]    @relation("UserFavorites")
-  followers     Follows[]      @relation("following")
   following     Follows[]      @relation("follower")
+  followers     Follows[]      @relation("following")
   notifications Notification[]
   Order         Order[]
   premium       Premium?
@@ -183,11 +170,11 @@ model Notification {
   id               Int              @id @default(autoincrement())
   message          String
   userId           Int
-  user             User             @relation(fields: [userId], references: [id])
   isRead           Boolean          @default(false)
   notificationType notificationType @default(bell)
   createdAt        DateTime         @default(now())
   updatedAt        DateTime         @updatedAt
+  user             User             @relation(fields: [userId], references: [id])
 }
 
 model Premium {
@@ -273,4 +260,27 @@ model ReturnsLine {
   updatedAt DateTime @updatedAt
   product   Product  @relation(fields: [productId], references: [id])
   returns   Returns  @relation(fields: [returnsId], references: [id], onDelete: Cascade)
+}
+
+enum status {
+  PENDING
+  ACTIVE
+  INACTIVE
+}
+
+enum role {
+  ADMIN
+  PREMIUM
+  USER
+}
+
+enum sizes {
+  tall
+  wide
+  square
+}
+
+enum notificationType {
+  bell
+  email
 }

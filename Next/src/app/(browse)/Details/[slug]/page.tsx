@@ -39,8 +39,15 @@
                 <div className="w-full md:w-1/2 mt-4 md:mt-0 md:ml-4">
                     <div>wide</div>
                     <h1 className="text-3xl font-bold mb-2">{product.name}</h1>
-                    <p className="text-xl mb-2"><strong>Price:</strong> ${product.price.toFixed(2)}</p>
+                    {/* <p className="text-xl mb-2"><strong>Price:</strong> ${product.price.toFixed(2)}</p> */}
+                    
+                    
                     <p className="text-lg mb-2"><strong>Stock:</strong> {product.stock} units available</p>
+                    {product.productPrices.map((priceObj, index) => (
+                        <p key={index} className="text-lg mb-2">
+                            <strong>Price {index + 1}:</strong> ${priceObj.price.toFixed(2)} ({priceObj.type.name})
+                        </p>
+                    ))}
                     <p className="text-lg mb-2"><strong>Favorites Count:</strong> {product.favoritesCount}</p>
                     <p className="text-lg mb-2"><strong>Collection:</strong> {product.collections.name}</p>
                     <p className="text-lg mb-2"><strong>Series:</strong> {product.series.name}</p>
@@ -64,8 +71,13 @@
                     <div className="w-full md:w-1/2 mt-4 md:mt-0 md:ml-4">
                     <div>tall</div>
                         <h1 className="text-3xl font-bold mb-2">{product.name}</h1>
-                        <p className="text-xl mb-2"><strong>Price:</strong> ${product.price.toFixed(2)}</p>
-                        <p className="text-lg mb-2"><strong>Stock:</strong> {product.stock} units available</p>
+                         
+                    <p className="text-lg mb-2"><strong>Stock:</strong> {product.stock} units available</p>
+                    {product.productPrices.map((priceObj, index) => (
+                        <p key={index} className="text-lg mb-2">
+                            <strong>Price {index + 1}:</strong> ${priceObj.price.toFixed(2)} ({priceObj.type.name})
+                        </p>
+                    ))}
                         <p className="text-lg mb-2"><strong>Favorites Count:</strong> {product.favoritesCount}</p>
                         <p className="text-lg mb-2"><strong>Collection:</strong> {product.collections.name}</p>
                         <p className="text-lg mb-2"><strong>Series:</strong> {product.series.name}</p>
@@ -89,8 +101,14 @@
                     <div className="w-full md:w-1/2 mt-4 md:mt-0 md:ml-4">
                         <div>square</div>
                         <h1 className="text-3xl font-bold mb-2">{product.name}</h1>
-                        <p className="text-xl mb-2"><strong>Price:</strong> ${product.price.toFixed(2)}</p>
-                        <p className="text-lg mb-2"><strong>Stock:</strong> {product.stock} units available</p>
+                        {/* <p className="text-xl mb-2"><strong>Price:</strong> ${product.price.toFixed(2)}</p> */}
+                        
+                    <p className="text-lg mb-2"><strong>Stock:</strong> {product.stock} units available</p>
+                    {product.productPrices.map((priceObj, index) => (
+                        <p key={index} className="text-lg mb-2">
+                            <strong>Price {index + 1}:</strong> ${priceObj.price.toFixed(2)} ({priceObj.type.name})
+                        </p>
+                    ))}
                         <p className="text-lg mb-2"><strong>Favorites Count:</strong> {product.favoritesCount}</p>
                         <p className="text-lg mb-2"><strong>Collection:</strong> {product.collections.name}</p>
                         <p className="text-lg mb-2"><strong>Series:</strong> {product.series.name}</p>

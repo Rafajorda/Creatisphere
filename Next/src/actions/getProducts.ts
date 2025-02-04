@@ -7,7 +7,7 @@ import redis from '@/lib/redis';
 interface GetProductsParams {
   status?: string;
   categorySlugs?: string[];
-  typeSlugs?: string[];
+  // typeSlugs?: string[];
   seriesSlugs?: string[];
   collectionSlugs?: string[];
   searchQuery?: string;
@@ -43,15 +43,15 @@ export default async function getProducts(params: GetProductsParams = {}): Promi
       },
     }
   }
-  if (params.typeSlugs) {
-    query.types = {
-      some: {
-        slug: {
-          in: params.typeSlugs,
-        },
-      },
-    }
-  }
+  // if (params.typeSlugs) {
+  //   query.types = {
+  //     some: {
+  //       slug: {
+  //         in: params.typeSlugs,
+  //       },
+  //     },
+  //   }
+  // }
   if (params.seriesSlugs) {
     query.series = {
       slug: {
@@ -80,14 +80,17 @@ export default async function getProducts(params: GetProductsParams = {}): Promi
     // skip: offset,
     // take: limit,
     include: {
+      artist: true,
       categories: true,
-      types: true,
       series: true,
       collections: true,
       ImagesProduct: true,
+      productPrices: true,
     }
   });
 
+  console.log(data);
+  console.log("data");
   // const productMapped = excludeTimestampsFromArray(data);
 
   const response: ProductResponse = {
@@ -95,10 +98,11 @@ export default async function getProducts(params: GetProductsParams = {}): Promi
       return {
         ...product,
         categories: product.categories,
-        types: product.types,
+        productPrices: product.productPrices,
         series: product.series,
         collections: product.collections,
         ImagesProduct: product.ImagesProduct,
+        artist: product.artist
       };
     }),
   };

@@ -21,7 +21,11 @@ export async function getProduct(params: IProductParams) {
         ImagesProduct: true,
         series: true,
         collections: true,
-        types:true,
+        productPrices: {
+          include: {
+            type: true,
+          },
+        },
         },
     })
     if (!data) {
