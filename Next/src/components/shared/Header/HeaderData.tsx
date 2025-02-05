@@ -1,5 +1,6 @@
 import { useLogout } from "@/hooks/useAuth";
 import { LogOut } from "lucide-react";
+import { Session } from "next-auth";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -7,7 +8,7 @@ import React from "react";
 
 interface HeaderDataProps {
     activeRoute: string; // Recibimos activeRoute como prop
-    session: any;
+    session: Session | null;
 }
 
 export const HeaderData: React.FC<HeaderDataProps> = ({ activeRoute, session }) => {
@@ -76,6 +77,15 @@ export const HeaderData: React.FC<HeaderDataProps> = ({ activeRoute, session }) 
                             {session.user.username}
                         </Link>
                     }
+                    {(!session || session?.user.role === 'USER') && (
+                        <Link
+                            href="/Premium"
+                            prefetch={false}
+                            className={`text-2xl px-4 py-1 rounded-lg hover:text-black hover:bg-gray-300 transition-colors duration-200 ${activeRoute === "/Premium" ? "text-black bg-white" : ""}`}
+                        >
+                            Get Premium
+                        </Link>
+                    )}
                     {session && (
                         <button onClick={useLogout}>
                             <LogOut className="ml-5" />
