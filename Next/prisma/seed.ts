@@ -855,20 +855,20 @@ console.log('Precios de productos creados:', productPrices);
       { orderId: 4, productId: 4, quantity: 1, price: 150.25 },
     ],
   });
-  
+
 
   console.log('Líneas de órdenes creadas:', orderLines);
 
   const Premium = await prisma.premium.createMany({
     data: [
       {
-        userId: 6, 
+        userId: 6,
         startDate: new Date(),
         endDate: new Date(new Date().setDate(new Date().getDate() + 30)),
-        status: 'ACTIVE', 
+        status: 'ACTIVE',
       },
       {
-        userId: 7, 
+        userId: 7,
         startDate: new Date(),
         endDate: new Date(new Date().setDate(new Date().getDate() + 30)),
         status: 'ACTIVE',
@@ -877,6 +877,35 @@ console.log('Precios de productos creados:', productPrices);
   });
 
   console.log('Suscripciones premium creadas:', Premium);
+
+  const PremiumPost = await prisma.PremiumPost.createMany({
+    data: [
+      {
+        title: 'Paisaje Natural',
+        src: 'https://picsum.photos/seed/1/400/300',
+        description: 'Una hermosa vista de montañas y lagos.',
+        postType: 'image',
+      },
+      {
+        title: 'Big Buck Bunny',
+        src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+        description: 'Un corto animado sobre un conejo gigante.',
+        postType: 'video',
+      },
+      {
+        title: 'Ciudad Moderna',
+        src: 'https://picsum.photos/seed/2/400/300',
+        description: 'Rascacielos y arquitectura urbana.',
+        postType: 'image',
+      },
+      {
+        title: "Elephant's Dream",
+        src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
+        description: 'Un fascinante corto de ciencia ficción.',
+        postType: 'video',
+      },
+    ]
+  });
 
   // Crear tokens
   // const tokens = await prisma.token.createMany({

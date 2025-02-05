@@ -7,6 +7,34 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum status {
+  PENDING
+  ACTIVE
+  INACTIVE
+}
+
+enum role {
+  ADMIN
+  PREMIUM
+  USER
+}
+
+enum sizes {
+  tall
+  wide
+  square
+}
+
+enum notificationType {
+  bell
+  email
+}
+
+enum postType {
+  video
+  image
+}
+
 model Carousel {
   id          Int      @id @default(autoincrement())
   title       String
@@ -262,25 +290,14 @@ model ReturnsLine {
   returns   Returns  @relation(fields: [returnsId], references: [id], onDelete: Cascade)
 }
 
-enum status {
-  PENDING
-  ACTIVE
-  INACTIVE
-}
+model PremiumPost {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  src         String
+  postType    postType
+  status      status   @default(ACTIVE)
 
-enum role {
-  ADMIN
-  PREMIUM
-  USER
-}
-
-enum sizes {
-  tall
-  wide
-  square
-}
-
-enum notificationType {
-  bell
-  email
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
