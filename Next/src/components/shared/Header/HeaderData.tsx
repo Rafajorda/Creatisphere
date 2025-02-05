@@ -79,13 +79,20 @@ export const HeaderData: React.FC<HeaderDataProps> = ({ activeRoute, session }) 
                     }
                     {(!session || session?.user.role === 'USER') && (
                         <Link
-                            href="/Premium"
+                            href="/GetPremium"
                             prefetch={false}
-                            className={`text-2xl px-4 py-1 rounded-lg hover:text-black hover:bg-gray-300 transition-colors duration-200 ${activeRoute === "/Premium" ? "text-black bg-white" : ""}`}
+                            className={`text-2xl px-4 py-1 rounded-lg hover:text-black hover:bg-gray-300 transition-colors duration-200 ${activeRoute === "/GetPremium" ? "text-black bg-white" : ""}`}
                         >
                             Get Premium
                         </Link>
                     )}
+                    <Link
+                        href="/Premium"
+                        prefetch={false}
+                        className={`text-2xl px-4 py-1 rounded-lg hover:text-black hover:bg-gray-300 transition-colors duration-200 ${activeRoute === "/Premium" ? "text-black bg-white" : ""}`}
+                    >
+                        Premium
+                    </Link>
                     {session && (
                         <button onClick={useLogout}>
                             <LogOut className="ml-5" />
