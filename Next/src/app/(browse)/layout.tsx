@@ -3,6 +3,7 @@ import { Metadata } from 'next'
 import StoreProvider from '@/store/StoreProvider'
 import { Header } from '@/components/shared/Header/Header'
 import Footer from '@/components/shared/Footer'
+import { Toaster } from '@/components/ui/toaster'
 
 export const metadata: Metadata = {
     title: {
@@ -25,6 +26,7 @@ function RootLayout({ children }: RootLayoutProps) {
                     <body suppressHydrationWarning={true} className='bg-zinc-800'>
                         <Header />
                         {children}
+                        <Toaster />
                         <Footer />
                     </body>
                 </html>
