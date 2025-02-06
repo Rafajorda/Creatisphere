@@ -16,18 +16,18 @@ export function userMapper(user: UserWithRelations, currentUser: currentUser): U
       products: user.products.map((product) => ({
         ...product,
         categories: product.categories,
-        types: product.types,
         series: product.series,
         collections: product.collections,
         artist: user,
         ImagesProduct: product.ImagesProduct,
+         productPrices: product.productPrices
+  
       })),
     },
     favorites: user.favorites.map((favorite) => ({
       product: {
         ...favorite.favoriting,
         categories: favorite.favoriting.categories,
-        types: favorite.favoriting.types,
         series: favorite.favoriting.series,
         collections: favorite.favoriting.collections,
         artist: {

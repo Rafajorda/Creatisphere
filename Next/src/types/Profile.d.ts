@@ -7,6 +7,7 @@ export interface ProfileItem extends Omit<Profile, 'updatedAt'> {
     bio: string | null;
     avatar: string | null;
     userId: number;
+    updatedAt: Date;
 }
 
 export interface ProfileResponse {
