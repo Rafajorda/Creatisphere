@@ -24,7 +24,7 @@ export default async function getUserProfile(username: string): Promise<UserProf
         products: {
           include: {
             categories: true,
-            types: true,
+            productPrices: true,
             series: true,
             collections: true,
             ImagesProduct: true,
@@ -35,7 +35,7 @@ export default async function getUserProfile(username: string): Promise<UserProf
             favoriting: {
               include: {
                 categories: true,
-                types: true,
+                productPrices: true,
                 series: true,
                 collections: true,
                 ImagesProduct: true,
