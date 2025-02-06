@@ -1,4 +1,4 @@
-import { User, Profile, Product, Favorite, Cart, Order, Returns, Notification } from '@prisma/client';
+import { User, Profile, Product, Favorite, Cart, Order, Returns, Notification, ProductPrice } from '@prisma/client';
 
 
 type UserWithRelations = User & {
@@ -6,7 +6,7 @@ type UserWithRelations = User & {
 
   products: (Product & {
     categories: Category[];
-    types: Type[];
+    productPrices: ProductPrice[];
     series: Series;
     collections: Collection;
     ImagesProduct: ImagesProduct[];
@@ -15,7 +15,7 @@ type UserWithRelations = User & {
   favorites: (Favorite & {
     favoriting: Product & {
       categories: Category[];
-      types: Type[];
+      productPrices: ProductPrice[];
       series: Series;
       collections: Collection;
       ImagesProduct: ImagesProduct[];

@@ -16,7 +16,7 @@ export function userMapper(user: UserWithRelations, currentUser: currentUser): U
       products: user.products.map((product) => ({
         ...product,
         categories: product.categories,
-        types: product.types,
+        productPrices: product.productPrices,
         series: product.series,
         collections: product.collections,
         artist: user,
@@ -27,7 +27,7 @@ export function userMapper(user: UserWithRelations, currentUser: currentUser): U
       product: {
         ...favorite.favoriting,
         categories: favorite.favoriting.categories,
-        types: favorite.favoriting.types,
+        productPrices: favorite.favoriting.productPrices,
         series: favorite.favoriting.series,
         collections: favorite.favoriting.collections,
         artist: {
