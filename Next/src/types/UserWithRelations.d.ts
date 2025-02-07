@@ -10,6 +10,7 @@ type UserWithRelations = User & {
     series: Series;
     collections: Collection;
     ImagesProduct: ImagesProduct[];
+    productPrices: ProductPrice[];
   })[];
 
   favorites: (Favorite & {

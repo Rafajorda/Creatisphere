@@ -8,6 +8,7 @@ async function clearDatabase() {
   await prisma.follows.deleteMany();
   await prisma.orderLine.deleteMany();
   await prisma.order.deleteMany();
+  await prisma.cartProduct.deleteMany();
   await prisma.ProductPrice.deleteMany();
   await prisma.imagesProduct.deleteMany();
   await prisma.product.deleteMany();
@@ -61,25 +62,25 @@ async function main() {
   // Crear categorías
   const categories = [];
   categories.push(await prisma.category.create({
-    data: { name: 'Portraits', slug: 'portraits', image: 'https://via.placeholder.com/300' },
+    data: { name: 'Portraits', slug: 'portraits', image: 'https://picsum.photos/200' },
   }));
   categories.push(await prisma.category.create({
-    data: { name: 'Backgrounds', slug: 'backgrounds', image: 'https://via.placeholder.com/300' },
+    data: { name: 'Backgrounds', slug: 'backgrounds', image: 'https://picsum.photos/200' },
   }));
   categories.push(await prisma.category.create({
-    data: { name: '3D Models', slug: '3d-models', image: 'https://via.placeholder.com/300' },
+    data: { name: '3D Models', slug: '3d-models', image: 'https://picsum.photos/200' },
   }));
   categories.push(await prisma.category.create({
-    data: { name: 'Weapons', slug: 'Weapons', image: 'https://via.placeholder.com/300' },
+    data: { name: 'Weapons', slug: 'Weapons', image: 'https://picsum.photos/200' },
   }));
   categories.push(await prisma.category.create({
-    data: { name: 'Concept Art', slug: 'concept-art', image: 'https://via.placeholder.com/300' },
+    data: { name: 'Concept Art', slug: 'concept-art', image: 'https://picsum.photos/200' },
   }));
   categories.push(await prisma.category.create({
-    data: { name: 'Fanart', slug: 'fanart', image: 'https://via.placeholder.com/300' },
+    data: { name: 'Fanart', slug: 'fanart', image: 'https://picsum.photos/200' },
   }));
   categories.push(await prisma.category.create({
-    data: { name: 'Animations', slug: 'animations', image: 'https://via.placeholder.com/300' },
+    data: { name: 'Animations', slug: 'animations', image: 'https://picsum.photos/200' },
   }));
 
   console.log('Categorías creadas:', categories);
@@ -87,16 +88,16 @@ async function main() {
   // Crear tipos de producto
   const types = [];
   types.push(await prisma.type.create({
-    data: { name: 'Print', slug: 'print', image: 'https://via.placeholder.com/300' },
+    data: { name: 'Print', slug: 'print', image: 'https://picsum.photos/200' },
   }));
   types.push(await prisma.type.create({
-    data: { name: 'Digital copy', slug: 'digital-copy', image: 'https://via.placeholder.com/300' },
+    data: { name: 'Digital copy', slug: 'digital-copy', image: 'https://picsum.photos/200' },
   }));
   types.push(await prisma.type.create({
-    data: { name: '3D', slug: '3d', image: 'https://via.placeholder.com/300' },
+    data: { name: '3D', slug: '3d', image: 'https://picsum.photos/200' },
   }));
   types.push(await prisma.type.create({
-    data: { name: 'Limited Edition bundle', slug: 'limited-edition-bundle', image: 'https://via.placeholder.com/300' },
+    data: { name: 'Limited Edition bundle', slug: 'limited-edition-bundle', image: 'https://picsum.photos/200' },
   }));
 
   console.log('Tipos de producto creados:', types);
@@ -104,31 +105,31 @@ async function main() {
   // Crear colecciones
   const collections = [];
   collections.push(await prisma.collection.create({
-    data: { name: 'Reminiscence', slug: 'Reminiscence', image: 'https://via.placeholder.com/300' },
+    data: { name: 'Reminiscence', slug: 'Reminiscence', image: 'https://picsum.photos/200' },
   }));
   collections.push(await prisma.collection.create({
-    data: { name: 'Tarot', slug: 'Tarot', image: 'https://via.placeholder.com/300' },
+    data: { name: 'Tarot', slug: 'Tarot', image: 'https://picsum.photos/200' },
   }));
   collections.push(await prisma.collection.create({
-    data: { name: 'Bubbly colors', slug: 'Bubbly-colors', image: 'https://via.placeholder.com/300' },
+    data: { name: 'Bubbly colors', slug: 'Bubbly-colors', image: 'https://picsum.photos/200' },
   }));
   collections.push(await prisma.collection.create({
-    data: { name: 'Travel around Japan', slug: 'Travel-around-Japan', image: 'https://via.placeholder.com/300' },
+    data: { name: 'Travel around Japan', slug: 'Travel-around-Japan', image: 'https://picsum.photos/200' },
   }));
   collections.push(await prisma.collection.create({
-    data: { name: 'Cozy', slug: 'Cozy', image: 'https://via.placeholder.com/300' },
+    data: { name: 'Cozy', slug: 'Cozy', image: 'https://picsum.photos/200' },
   }));
   collections.push(await prisma.collection.create({
-    data: { name: 'Dragon Dance', slug: 'Dragon-Dance', image: 'https://via.placeholder.com/300' },
+    data: { name: 'Dragon Dance', slug: 'Dragon-Dance', image: 'https://picsum.photos/200' },
   }));
   collections.push(await prisma.collection.create({
-    data: { name: 'Cosmos', slug: 'Cosmos', image: 'https://via.placeholder.com/300' },
+    data: { name: 'Cosmos', slug: 'Cosmos', image: 'https://picsum.photos/200' },
   }));
   collections.push(await prisma.collection.create({
-    data: { name: 'K-pop', slug: 'K-pop', image: 'https://via.placeholder.com/300' },
+    data: { name: 'K-pop', slug: 'K-pop', image: 'https://picsum.photos/200' },
   }));
   collections.push(await prisma.collection.create({
-    data: { name: 'Reto Loulogio', slug: 'Reto-Loulogio', image: 'https://via.placeholder.com/300' },
+    data: { name: 'Reto Loulogio', slug: 'Reto-Loulogio', image: 'https://picsum.photos/200' },
   }));
 
   console.log('Colecciones creadas:', collections);

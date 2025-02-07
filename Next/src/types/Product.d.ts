@@ -7,6 +7,7 @@ export interface ProductItem extends Omit<Product, 'updatedAt'> {
     collections: Collection;
     artist: User;
     ImagesProduct: ImagesProduct[];
+    size: string;
 }
 
 export interface ProductResponse {

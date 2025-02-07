@@ -13,6 +13,7 @@ model Carousel {
   description String
   image       String
   slug        String?  @unique
+  href        String
   status      status   @default(ACTIVE)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -34,7 +35,6 @@ model Product {
   id             Int             @id @default(autoincrement())
   name           String
   slug           String          @unique
-  price          Float
   stock          Int?
   userId         Int
   cartId         Int?
@@ -44,17 +44,41 @@ model Product {
   status         status          @default(ACTIVE)
   createdAt      DateTime        @default(now())
   updatedAt      DateTime        @updatedAt
-  cartLines      CartProduct[]
   favoritedBy    Favorites[]     @relation("ProductFavoritedBy")
   ImagesProduct  ImagesProduct[]
-  orders         OrderLine[]
   Cart           Cart?           @relation(fields: [cartId], references: [id])
   collections    Collection      @relation(fields: [collectionId], references: [id])
   series         Series          @relation(fields: [seriesId], references: [id])
   artist         User            @relation(fields: [userId], references: [id])
+  productPrices  ProductPrice[]
   returns        ReturnsLine[]
   categories     Category[]      @relation("CategoryToProduct")
-  types          Type[]          @relation("ProductToType")
+}
+
+model ProductPrice {
+  id        Int           @id @default(autoincrement())
+  productId Int
+  typeId    Int
+  price     Float
+  status    status        @default(ACTIVE)
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  cartLines CartProduct[]
+  product   Product       @relation(fields: [productId], references: [id])
+  type      Type          @relation(fields: [typeId], references: [id])
+
+  OrderLine OrderLine[]
+}
+
+model Type {
+  id            Int            @id @default(autoincrement())
+  name          String
+  slug          String         @unique
+  image         String?
+  status        status         @default(ACTIVE)
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  productPrices ProductPrice[]
 }
 
 model Category {
@@ -66,17 +90,6 @@ model Category {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   products  Product[] @relation("CategoryToProduct")
-}
-
-model Type {
-  id        Int       @id @default(autoincrement())
-  name      String
-  slug      String    @unique
-  image     String?
-  status    status    @default(ACTIVE)
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  products  Product[] @relation("ProductToType")
 }
 
 model Collection {
@@ -111,8 +124,8 @@ model User {
   updatedAt     DateTime       @updatedAt
   Cart          Cart[]
   favorites     Favorites[]    @relation("UserFavorites")
-  followers     Follows[]      @relation("follower")
-  following     Follows[]      @relation("following")
+  following     Follows[]      @relation("follower")
+  followers     Follows[]      @relation("following")
   notifications Notification[]
   Order         Order[]
   premium       Premium?
@@ -191,14 +204,14 @@ model Cart {
 }
 
 model CartProduct {
-  id        Int      @id @default(autoincrement())
-  cartId    Int
-  productId Int
-  status    status   @default(ACTIVE)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  cart      Cart     @relation(fields: [cartId], references: [id], onDelete: Cascade)
-  product   Product  @relation(fields: [productId], references: [id])
+  id             Int          @id @default(autoincrement())
+  cartId         Int
+  productPriceId Int
+  status         status       @default(ACTIVE)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  cart           Cart         @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  productPrice   ProductPrice @relation(fields: [productPriceId], references: [id])
 }
 
 model Order {
@@ -216,14 +229,14 @@ model Order {
 model OrderLine {
   id        Int      @id @default(autoincrement())
   orderId   Int
-  productId Int
+  productPriceId Int
   quantity  Int
   price     Float
   status    status   @default(ACTIVE)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  product   Product  @relation(fields: [productId], references: [id])
+  productprice   ProductPrice  @relation(fields: [productPriceId], references: [id])
 }
 
 model Returns {
