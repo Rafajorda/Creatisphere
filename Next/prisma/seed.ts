@@ -850,10 +850,10 @@ console.log('Precios de productos creados:', productPrices);
   // Crear líneas de órdenes
   const orderLines = await prisma.orderLine.createMany({
     data: [
-      { orderId: 1, productId: 1, quantity: 1, price: 120.99 },
-      { orderId: 2, productId: 2, quantity: 1, price: 220.5 },
-      { orderId: 3, productId: 3, quantity: 2, price: 191.5 },
-      { orderId: 4, productId: 4, quantity: 1, price: 150.25 },
+      { orderId: 1, productPriceId: 1, quantity: 1, price: 120.99 },
+      { orderId: 2, productPriceId: 2, quantity: 1, price: 220.5 },
+      { orderId: 3, productPriceId: 3, quantity: 2, price: 191.5 },
+      { orderId: 4, productPriceId: 4, quantity: 1, price: 150.25 },
     ],
   });
 
