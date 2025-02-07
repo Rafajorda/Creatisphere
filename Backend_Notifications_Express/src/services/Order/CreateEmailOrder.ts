@@ -23,7 +23,7 @@ export default async function CreateEmailOrder(order: Order & { orderLines: Orde
 
     const orderLinesHtml = order.orderLines.map(line => `
         <tr>
-            <td style="border: 1px solid #ddd; padding: 8px;">${line.productId}</td>
+            <td style="border: 1px solid #ddd; padding: 8px;">${line.productPriceId}</td>
             <td style="border: 1px solid #ddd; padding: 8px;">${line.quantity}</td>
             <td style="border: 1px solid #ddd; padding: 8px;">$${line.price.toFixed(2)}</td>
             <td style="border: 1px solid #ddd; padding: 8px;">$${(line.quantity * line.price).toFixed(2)}</td>

@@ -44,10 +44,8 @@ model Product {
   status         status          @default(ACTIVE)
   createdAt      DateTime        @default(now())
   updatedAt      DateTime        @updatedAt
-  cartLines      CartProduct[]
   favoritedBy    Favorites[]     @relation("ProductFavoritedBy")
   ImagesProduct  ImagesProduct[]
-  orders         OrderLine[]
   Cart           Cart?           @relation(fields: [cartId], references: [id])
   collections    Collection      @relation(fields: [collectionId], references: [id])
   series         Series          @relation(fields: [seriesId], references: [id])
@@ -58,15 +56,18 @@ model Product {
 }
 
 model ProductPrice {
-  id        Int      @id @default(autoincrement())
+  id        Int           @id @default(autoincrement())
   productId Int
   typeId    Int
   price     Float
-  status    status   @default(ACTIVE)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  product   Product  @relation(fields: [productId], references: [id])
-  type      Type     @relation(fields: [typeId], references: [id])
+  status    status        @default(ACTIVE)
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  cartLines CartProduct[]
+  product   Product       @relation(fields: [productId], references: [id])
+  type      Type          @relation(fields: [typeId], references: [id])
+
+  OrderLine OrderLine[]
 }
 
 model Type {
@@ -203,14 +204,14 @@ model Cart {
 }
 
 model CartProduct {
-  id        Int      @id @default(autoincrement())
-  cartId    Int
-  productId Int
-  status    status   @default(ACTIVE)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  cart      Cart     @relation(fields: [cartId], references: [id], onDelete: Cascade)
-  product   Product  @relation(fields: [productId], references: [id])
+  id             Int          @id @default(autoincrement())
+  cartId         Int
+  productPriceId Int
+  status         status       @default(ACTIVE)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  cart           Cart         @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  productPrice   ProductPrice @relation(fields: [productPriceId], references: [id])
 }
 
 model Order {
@@ -228,14 +229,14 @@ model Order {
 model OrderLine {
   id        Int      @id @default(autoincrement())
   orderId   Int
-  productId Int
+  productPriceId Int
   quantity  Int
   price     Float
   status    status   @default(ACTIVE)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  product   Product  @relation(fields: [productId], references: [id])
+  productprice   ProductPrice  @relation(fields: [productPriceId], references: [id])
 }
 
 model Returns {
