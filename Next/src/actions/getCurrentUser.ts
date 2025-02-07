@@ -27,7 +27,11 @@ export default async function getCurrentUser() {
                     include: {
                       cartLines: {
                         include: {
-                          product: true,
+                          productPrice: {
+                            include:{
+                                product: true
+                            },
+                          },
                         },
                       },
                     },

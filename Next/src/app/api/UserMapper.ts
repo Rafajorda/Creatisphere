@@ -9,6 +9,9 @@ export function userMapper(user: UserWithRelations, currentUser: currentUser): U
   }
 
   return {
+    id: user.id,
+    email: user.email,
+    profile: user.profile,
     username: user.profile?.username || '',
     bio: user.profile?.bio || null,
     avatar: user.profile?.avatar || null,
@@ -20,7 +23,7 @@ export function userMapper(user: UserWithRelations, currentUser: currentUser): U
         collections: product.collections,
         artist: user,
         ImagesProduct: product.ImagesProduct,
-         productPrices: product.productPrices
+         productPrices: product.productPrices,
   
       })),
     },
@@ -76,7 +79,7 @@ export function userMapper(user: UserWithRelations, currentUser: currentUser): U
       ...order,
       orderLines: order.orderLines.map((line) => ({
         ...line,
-        product: line.product,
+        productPrice: line.productPrice,
       })),
     })),
     returns: user.returns.map((returns) => ({

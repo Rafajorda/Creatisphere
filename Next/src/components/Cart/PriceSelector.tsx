@@ -29,12 +29,11 @@ const PriceSelector = ({ prices, defaultPrice }: PriceSelectorProps) => {
       if (selected) {
         const { createdAt, updatedAt, type, ...cleanedPrice } = selected; 
         
-        // Eliminamos timestamps dentro de `type`
+   
         const cleanedType = type ? { ...type, createdAt: undefined, updatedAt: undefined } : null;
     
-        const finalPrice = { ...cleanedPrice, type: cleanedType }; // Reconstruimos sin timestamps
+        const finalPrice = { ...cleanedPrice, type: cleanedType }; 
     
-        console.log("Enviando a Redux:", finalPrice);
         dispatch(setSelectedPrice(finalPrice));
       }
     };

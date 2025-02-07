@@ -56,8 +56,9 @@
                         <p className="text-lg mb-2"><strong>Collection:</strong> {product.collections.name}</p>
                         <p className="text-lg mb-2"><strong>Series:</strong> {product.series.name}</p>
                         <p className="text-lg mb-2"><strong>Artist:</strong> {product.artist?.profile?.username}</p>
+                        {defaultPrice !== null && <AddtoCartButton product={product} defaultPrice={defaultPrice}/>}
                     </div>
-                        {defaultPrice !== null && <AddtoCartButton product={product} defaultPrice={defaultPrice} />}
+                      
                     <div>
                         <h2 className="text-2xl font-bold mb-2">Comments</h2>
                     </div>
@@ -83,8 +84,9 @@
                             <p className="text-lg mb-2"><strong>Collection:</strong> {product.collections.name}</p>
                             <p className="text-lg mb-2"><strong>Series:</strong> {product.series.name}</p>
                             <p className="text-lg mb-2"><strong>Artist:</strong> {product.artist?.profile?.username}</p>
+                            {defaultPrice !== null && <AddtoCartButton product={product} defaultPrice={defaultPrice}/>}
                         </div>
-                        {defaultPrice !== null && <AddtoCartButton product={product} defaultPrice={defaultPrice}/>}
+                       
                         <div>
                             <h2 className="text-2xl font-bold mb-2">Comments</h2>
                         </div>
@@ -111,8 +113,9 @@
                             <p className="text-lg mb-2"><strong>Collection:</strong> {product.collections.name}</p>
                             <p className="text-lg mb-2"><strong>Series:</strong> {product.series.name}</p>
                             <p className="text-lg mb-2"><strong>Artist:</strong> {product.artist?.profile?.username}</p>
+                            {defaultPrice !== null && <AddtoCartButton product={product} defaultPrice={defaultPrice} />}
                         </div>
-                        {defaultPrice !== null && <AddtoCartButton product={product} defaultPrice={defaultPrice} />}
+                       
                         <div>
                             <h2 className="text-2xl font-bold mb-2">Comments</h2>
                         </div>

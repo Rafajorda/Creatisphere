@@ -1,10 +1,12 @@
 'use client'
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { handleAddToCart } from "./AddToCart"
 import { Product, ProductPrice } from "@prisma/client"
-import { useSelector } from "react-redux";
-import { RootState } from "@/store/store"; // Asegúrate de que este sea el path correcto
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/store/store"; 
 import { ProductPriceItem } from "@/types/ProductPrice";
+import { useSession } from "next-auth/react";
+import { redirect } from 'next/navigation'
 
 interface AddtoCartButtonProps {
     product: Product;
@@ -12,16 +14,31 @@ interface AddtoCartButtonProps {
    
 }
 
-
 export const AddtoCartButton = ({ product, defaultPrice }: AddtoCartButtonProps) => {
     const selectedPrice = useSelector((state: RootState) => state.price.selectedprice);
     const priceToUse = selectedPrice ? selectedPrice : defaultPrice;
+    const { data: session } = useSession();
+    const dispatch = useDispatch();
+   
+    console.log('Selected price:', priceToUse);
+    console.log('Product ID:', product.id);
+    
+    const GetToCart = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+
+    if(!session){  
+        redirect('/Login');
+    }
+    else{
+        console.log('Session found, calling handleAddToCart...');
+        handleAddToCart(event, product, priceToUse,session,dispatch)} 
+    }
+
+    
     return (
-        <>
-               
+        <>     
             <button
-                onClick={(event) => handleAddToCart(event, product, priceToUse)}
-                className="mt-4 px-6 py-2 bg-blue-600 text-white text-lg font-semibold rounded-lg hover:bg-blue-700 transition"
+                onClick={(event) => GetToCart(event)}
+                className="mt-4 px-6 py-2 bg-gold text-black text-lg font-semibold rounded-lg hover:bg-dark-gold transition"
             >
                 add to Cart
             </button>

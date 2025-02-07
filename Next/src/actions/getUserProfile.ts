@@ -71,7 +71,11 @@ export default async function getUserProfile(username: string): Promise<UserProf
           include: {
             cartLines: {
               include: {
-                product: true,
+                productPrice:{
+                  include:{
+                    product: true
+                  }
+                }
               },
             },
           },
@@ -80,7 +84,7 @@ export default async function getUserProfile(username: string): Promise<UserProf
           include: {
             orderLines: {
               include: {
-                product: true,
+                productprice: true,
               },
             },
           },

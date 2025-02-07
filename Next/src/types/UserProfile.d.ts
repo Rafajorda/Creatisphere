@@ -7,7 +7,10 @@ import { OrderResponse } from './Order';
 import { ReturnResponse } from './Returns';
 
 export interface UserProfileResponse {
+  id: number;
+  email: string;
   username: string;
+  profile: ProfileResponse;
   bio: string | null;
   avatar: string | null;
   products: ProductResponse;            // Lista de productos del usuario
