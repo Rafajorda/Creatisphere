@@ -1,7 +1,20 @@
-import { PrismaClient } from '@prisma/client';
+import getCart from '@/actions/getCart';
+// import { PrismaClient } from '@prisma/client';
 import { NextResponse } from 'next/server';
+import { prisma } from '@/lib/prisma';
+import getCurrentUser from '@/actions/getCurrentUser';
+import { ApiResponse } from '../exceptions';
 
-const prisma = new PrismaClient();
+
+export async function GET() {
+  const currentUser = await getCurrentUser()
+  if (!currentUser) {
+    return ApiResponse.unauthorized();
+  }
+  const cart = getCart(currentUser?.id);
+  
+  return NextResponse.json(cart);
+}
 
 export async function POST(req: Request) {
   try {
