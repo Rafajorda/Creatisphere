@@ -17,6 +17,7 @@ const revalidate = (slug: string) => {
 }
 
 export const POST = async (req: NextRequest, { params }: { params: ParamsInterface }) => {
+    // return ApiResponse.ok('POST')
     const currentUser = await getCurrentUser();
     if (!currentUser) {
         redirect('/Login');
@@ -30,6 +31,8 @@ export const POST = async (req: NextRequest, { params }: { params: ParamsInterfa
     if (!product) {
         return ApiResponse.notFound('Article not fount');
     }
+
+    // return ApiResponse.ok(product);
 
     try {
         await prisma.favorites.create({
