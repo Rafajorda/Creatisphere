@@ -2,17 +2,22 @@ import { UserFollower } from "@/types/Follow";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import FollowButton from "@/components/shared/buttons/followButton";
+import { FollowProvider } from "@/components/FollowProvider";
 
 interface CardProfileProps {
     profile: UserFollower
 }
 
 export const CardProfile = ({ profile }: CardProfileProps) => {
+    console.log(profile);
+
     return (
-        <>
-            <Link href={`/Profile/${profile.username}`}>
-                <div className={`bg-white shadow-sm rounded-lg overflow-hidden mx-auto my-5 hover:bg-zinc-100`}>
+        <FollowProvider following={profile.isFollowing}>
+            <div className={`bg-white shadow-sm rounded-lg overflow-hidden mx-auto my-5 hover:bg-zinc-100`}>
+                <Link href={`/Profile/${profile.username}`}>
                     <div className={`relative h-24 bg-gradient-to-r from-light-gold to-dark-gold shadow-md`}>
+
                         <div className={`absolute bottom-0 translate-x-4 translate-y-10`}>
                             <Image
                                 src={profile.avatar || "/placeholder.svg?height=200&width=200"}
@@ -27,16 +32,11 @@ export const CardProfile = ({ profile }: CardProfileProps) => {
                         <h1 className={`text-xl font-bold text-gray-800 mb-1`}>{profile.username}</h1>
                         <p className="text-gray-600 text-base italic">{profile.bio}</p>
                     </div>
-                    <div className="text-white bg-black">
-                        {profile.isFollowing ?
-                            <button>siguiendo</button>
-                            :
-                            <button>no siguiendo</button>
-                        }
-                    </div>
+                </Link>
+                <FollowButton author={profile.username} />
+            </div>
 
-                </div>
-            </Link>
-        </>
+        </FollowProvider>
+
     )
 }
