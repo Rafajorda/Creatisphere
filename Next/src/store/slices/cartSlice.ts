@@ -1,7 +1,7 @@
 // cartSlice.ts
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { CartProductItem } from '@/types/CartProduct';  
-import { CartLineItem } from '@/types/CartLine';        
+import { CartProductItem } from '@/types/CartProduct';
+import { CartLineItem } from '@/types/CartLine';
 import { fetchWrapper } from '@/utils/fetch';  // Asegúrate de importar tu `fetchWrapper`
 
 
@@ -27,6 +27,14 @@ const initialState: CartState = {
   total: 0,
   status: 'ACTIVE',
 };
+
+export const fetchCart = createAsyncThunk(
+  "cart/fetchCart",
+  async () => {
+    const response = await fetchWrapper(`/api/cart`, 'GET');
+    return response;
+  }
+);
 
 const cartSlice = createSlice({
   name: 'cart',
@@ -78,7 +86,7 @@ const cartSlice = createSlice({
       state.status = 'INACTIVE';
     },
 
-    
+
     updateProductQuantity(state, action: PayloadAction<{ productId: number; quantity: number }>) {
       const { productId, quantity } = action.payload;
       const existingCartLine = state.cartLines.find((line: { productPriceId: number; }) => line.productPriceId === productId);

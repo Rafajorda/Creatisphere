@@ -11,6 +11,7 @@ import categoriesReducer from './slices/categoriesSlice';
 import priceReducer from './slices/priceSlice';
 import favoriteReducer from './slices/favoriteSlice';
 import currentUserReducer from './slices/currentUserSlice';
+import cartReducer from './slices/cartSlice';
 
 export const store = configureStore({
     reducer: {
@@ -21,7 +22,8 @@ export const store = configureStore({
         categories: categoriesReducer,
         price: priceReducer,
         favorite: favoriteReducer,
-        auth: currentUserReducer
+        auth: currentUserReducer,
+        cart: cartReducer
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware()
 });

@@ -71,6 +71,7 @@ export const authOptions: AuthOptions = {
         console.log("token", token);
         return {
           ...token,
+          id: user.id,
           username: user.username,
           email: user.email,
           role: user.role,
@@ -81,6 +82,7 @@ export const authOptions: AuthOptions = {
     },
     async session({ session, token }: { session: any, token: any }) {
       session.user = {
+        id: token.id,
         username: token.username,
         email: token.email,
         role: token.role,
