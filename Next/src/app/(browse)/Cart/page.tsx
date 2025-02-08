@@ -17,7 +17,7 @@ export async function generateMetadata({ params }: CartPageProps): Promise<Metad
   return profile ? { title: profile.username } : {}
 }
 
-const CartPage = async ({ params }: CartPageProps) => {
+const CartPage = async () => {
   const profile = await getCurrentUser()
   if (!profile) {
     redirect("/404")
@@ -27,6 +27,7 @@ const CartPage = async ({ params }: CartPageProps) => {
   try {
     cart = await getCart(profile.id)
   } catch (e) {
+    console.log(e);
     cart = null
   }
 
