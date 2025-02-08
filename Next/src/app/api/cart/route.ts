@@ -12,7 +12,7 @@ export async function GET() {
     return ApiResponse.unauthorized();
   }
   const cart = getCart(currentUser?.id);
-  
+
   return NextResponse.json(cart);
 }
 

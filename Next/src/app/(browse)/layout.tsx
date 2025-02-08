@@ -4,6 +4,7 @@ import StoreProvider from '@/store/StoreProvider'
 import { Header } from '@/components/shared/Header/Header'
 import Footer from '@/components/shared/Footer'
 import { Toaster } from '@/components/ui/toaster'
+import { CartButton } from '@/components/Cart/CartButton'
 
 export const metadata: Metadata = {
     title: {
@@ -27,6 +28,7 @@ function RootLayout({ children }: RootLayoutProps) {
                         <Header />
                         {children}
                         <Toaster />
+                        <CartButton />
                         <Footer />
                     </body>
                 </html>

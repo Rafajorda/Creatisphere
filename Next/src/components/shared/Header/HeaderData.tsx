@@ -78,13 +78,6 @@ export const HeaderData = ({ activeRoute, session }: HeaderDataProps) => {
                         </Link>
                     }
                     <Link
-                        href="/Cart"
-                        prefetch={false}
-                        className={`text-2xl px-4 py-1 rounded-lg hover:text-black hover:bg-gray-300 transition-colors duration-200 ${activeRoute === "/Cart" ? "text-black bg-white" : ""}`}
-                    >
-                        Cart
-                    </Link>
-                    <Link
                         href="/Premium"
                         prefetch={false}
                         className={`text-2xl px-4 py-1 rounded-lg hover:text-black hover:bg-gray-300 transition-colors duration-200 ${activeRoute === "/Premium" ? "text-black bg-white" : ""}`}
