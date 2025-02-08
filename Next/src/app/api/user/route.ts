@@ -1,7 +1,13 @@
 import { prisma } from "@/lib/prisma"
 import argon2 from "argon2"
-import type { NextRequest } from "next/server"
+import { NextResponse, type NextRequest } from "next/server"
 import { ApiResponse } from "@/app/api/exceptions"
+import getCurrentUser from "@/actions/getCurrentUser"
+
+export const GET = async () => {
+    const currentUser = getCurrentUser();
+    return NextResponse.json(currentUser);
+}
 
 export const PUT = async (req: NextRequest) => {
     const body = await req.json()
