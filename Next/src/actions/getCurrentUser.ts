@@ -16,8 +16,8 @@ export default async function getCurrentUser() {
 
         const currentUser = await prisma.user.findFirst({
             where: {
-                 email: session.user.email
-                
+                email: session.user.email
+
             },
             select: {
                 id: true,
@@ -25,17 +25,17 @@ export default async function getCurrentUser() {
                 profile: true,
                 Cart: {
                     include: {
-                      cartLines: {
-                        include: {
-                          productPrice: {
-                            include:{
-                                product: true
+                        cartLines: {
+                            include: {
+                                productPrice: {
+                                    include: {
+                                        product: true
+                                    },
+                                },
                             },
-                          },
                         },
-                      },
                     },
-                  },
+                },
                 role: true,
                 following: {
                     include: {
@@ -85,6 +85,7 @@ export default async function getCurrentUser() {
                 followingId: follow.follower.id,  // Añadimos el campo missing
                 status: follow.follower.status || 'inactive',
             })),
+            role: currentUser.role
         }
 
         // eslint-disable-next-line @typescript-eslint/no-explicit-any

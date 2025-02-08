@@ -9,6 +9,8 @@ export interface GalleryImage {
     name: string;
     collection: string;
     series: string;
+    favorited: boolean;
+    favoritedBy: [];
 }
 
 interface filters {
@@ -44,7 +46,7 @@ const sortImages = (images: GalleryImage[]): GalleryImage[] => {
 
 export const useFetchGalleryImages = async (filters: filters): Promise<GalleryImage[]> => {
     const { products } = await getProducts(filters);
-    console.log("products",products);
+    // console.log("products", products);
     const mappedImages = products.map(product => {
         const firstImage = product.ImagesProduct[0];
         return {
@@ -55,7 +57,9 @@ export const useFetchGalleryImages = async (filters: filters): Promise<GalleryIm
             slug: product.slug,
             name: product.name,
             collection: product.collections.name,
-            series: product.series.name
+            series: product.series.name,
+            favorited: product.favorited,
+            favoritedBy: product.favoritedBy
         };
     });
 
