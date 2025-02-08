@@ -11,7 +11,7 @@ interface HeaderDataProps {
     session: Session | null;
 }
 
-export const HeaderData: React.FC<HeaderDataProps> = ({ activeRoute, session }) => {
+export const HeaderData = ({ activeRoute, session }: HeaderDataProps) => {
     return (
         <div className="bg-black text-light-gold font-semibold shadow-md">
             <nav className="mx-auto flex items-center justify-between px-20 pl-10 py-4">
@@ -77,15 +77,13 @@ export const HeaderData: React.FC<HeaderDataProps> = ({ activeRoute, session }) 
                             {session.user.username}
                         </Link>
                     }
-                    {(!session || session?.user.role === 'USER') && (
-                        <Link
-                            href="/GetPremium"
-                            prefetch={false}
-                            className={`text-2xl px-4 py-1 rounded-lg hover:text-black hover:bg-gray-300 transition-colors duration-200 ${activeRoute === "/GetPremium" ? "text-black bg-white" : ""}`}
-                        >
-                            Get Premium
-                        </Link>
-                    )}
+                    <Link
+                        href="/Cart"
+                        prefetch={false}
+                        className={`text-2xl px-4 py-1 rounded-lg hover:text-black hover:bg-gray-300 transition-colors duration-200 ${activeRoute === "/Cart" ? "text-black bg-white" : ""}`}
+                    >
+                        Cart
+                    </Link>
                     <Link
                         href="/Premium"
                         prefetch={false}
