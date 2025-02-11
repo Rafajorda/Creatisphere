@@ -88,6 +88,9 @@ services:
       SPRING_DATASOURCE_URL: "postgresql://root:root_secret@postgres:5432/mydatabase"
       SPRING_DATASOURCE_USERNAME: "root"
       SPRING_DATASOURCE_PASSWORD: "root_secret"
+      STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY}
+      PAYPAL_CLIENT_ID: ${PAYPAL_CLIENT_ID}
+      PAYPAL_CLIENT_SECRET: ${PAYPAL_CLIENT_SECRET}
     depends_on:
       - postgres
     networks:
