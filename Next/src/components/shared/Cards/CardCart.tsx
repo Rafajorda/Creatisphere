@@ -1,6 +1,7 @@
 import type React from "react"
 import Image from "next/image"
 import Link from "next/link";
+import { RemoveFromCartButton } from "@/components/Cart/RemoveFromCartButton";
 
 interface CartItemProps {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -30,6 +31,7 @@ export const CardCart = ({ item }: CartItemProps) => {
                 <h2 className="text-xl text-gray-300">{item.types.name}</h2>
                 <h2 className="text-2xl font-semibold text-white mb-5">{item.productPrice.product.name}</h2>
                 <p className="text-xl text-gray-400">{item.productPrice.price.toFixed(2)}€</p>
+                <RemoveFromCartButton productPriceId={item.productPrice.id} cartId={item.cartId} />
             </div>
         </div>
     )
