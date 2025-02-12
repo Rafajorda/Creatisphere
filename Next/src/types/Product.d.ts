@@ -8,6 +8,8 @@ export interface ProductItem extends Omit<Product, 'updatedAt'> {
     artist: User;
     ImagesProduct: ImagesProduct[];
     size: string;
+    favorited: boolean;
+    favoritedBy: User[];
 }
 
 export interface ProductResponse {

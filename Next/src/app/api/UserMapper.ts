@@ -24,7 +24,6 @@ export function userMapper(user: UserWithRelations, currentUser: currentUser): U
         collections: product.collections,
         artist: user,
         ImagesProduct: product.ImagesProduct,
-         productPrices: product.productPrices,
   
       })),
     },
