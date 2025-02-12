@@ -31,6 +31,9 @@ export const ProfileTabs = ({ profile }: ProfileTabsProps) => {
                 <TabsTrigger value="followers" className="my-5 py-1 rounded-r-xl font-bold bg-zinc-700 data-[state=active]:text-black data-[state=active]:bg-gold">
                     Followers ({profile.followers.length})
                 </TabsTrigger>
+                <TabsTrigger value="orders" className="my-5 py-1 rounded-r-xl font-bold bg-zinc-700 data-[state=active]:text-black data-[state=active]:bg-gold">
+                    Orders ({profile.orders.length})
+                </TabsTrigger>
             </TabsList>
 
             {profile.products.products.length > 0 && (
@@ -46,6 +49,9 @@ export const ProfileTabs = ({ profile }: ProfileTabsProps) => {
                 <ProfileFollow profile={profile} isFollower={false} />
             </TabsContent>
             <TabsContent value="followers">
+                <ProfileFollow profile={profile} isFollower={true} />
+            </TabsContent>
+            <TabsContent value="orders">
                 <ProfileFollow profile={profile} isFollower={true} />
             </TabsContent>
         </Tabs>
