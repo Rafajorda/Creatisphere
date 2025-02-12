@@ -4,7 +4,10 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 module.exports = {
-  SPRING_BACKEND_URL: process.env.SPRING_BACKEND_URL,
-  EXPRESS_BACKEND_URL: process.env.EXPRESS_BACKEND_URL,
-  PORT: process.env.PROXY_PORT || 4000,
+  URL_PROXY: process.env.URL_PROXY,
+  PORT_PROXY: process.env.PORT_PROXY || 8000,
+  URL_SPRING: process.env.URL_SPRING,
+  PORT_SPRING: process.env.PORT_SPRING,
+  URL_EXPRESS: process.env.URL_EXPRESS,
+  PORT_EXPRESS: process.env.PORT_EXPRESS
 };
