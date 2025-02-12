@@ -11,13 +11,13 @@ import { Expiring } from '../controllers/Premium/ExpiringController';
 
 const router = Router();
 
- router.post('/Likes', Likes);
- router.post('/Follow', Follow);
- router.post('/Orders', orders);
- router.post('/Deleted', deleted);
- router.post('/Purchased', purchased);
- router.post('/Expired', Expired);
- router.post('/Expiring', Expiring);
- router.post('/General', General);
+ router.post('/notifications/Likes', Likes);
+ router.post('/notifications/Follow', Follow);
+ router.post('/notifications/Orders', orders);
+ router.post('/notifications/Deleted', deleted);
+ router.post('/notifications/Purchased', purchased);
+ router.post('/notifications/Expired', Expired);
+ router.post('/notifications/Expiring', Expiring);
+ router.post('/notifications/General', General);
 
 export default router;
