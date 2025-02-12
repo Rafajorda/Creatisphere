@@ -2,17 +2,17 @@
 import { PayPalScriptProvider, PayPalButtons, FUNDING } from "@paypal/react-paypal-js"
 import React from "react"
 
-export default function PayPalButton() {
+export default function PayPalButton({ total }: { total: number | undefined }) {
     const createOrder = async () => {
         try {
-            const response = await fetch("http://localhost:4000/api/payments/payment/process", {
-            // const response = await fetch("http://localhost:8080/api/payment/process", {
+            const response = await fetch("http://localhost:4000/api/payment/process", {
+                // const response = await fetch("http://localhost:8080/api/payment/process", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    amount: 5.0,
+                    amount: total,
                     paymentMethod: "paypal",
                 }),
             })
@@ -26,13 +26,14 @@ export default function PayPalButton() {
 
     const onApprove = async (data: { orderID: string }) => {
         try {
-            const response = await fetch(`http://localhost:4000/api/payments/payment/capture/${data.orderID}`, {
-            // const response = await fetch(`http://localhost:8080/api/payment/capture/${data.orderID}`, {
+            const response = await fetch(`http://localhost:4000/api/payment/capture/${data.orderID}`, {
+                // const response = await fetch(`http://localhost:8080/api/payment/capture/${data.orderID}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
             })
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             const orderData = await response.json()
             alert("Pago completado con éxito")
         } catch (error) {

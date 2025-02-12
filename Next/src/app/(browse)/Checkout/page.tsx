@@ -1,3 +1,4 @@
+import getCart from '@/actions/getCart';
 import getCurrentUser from '@/actions/getCurrentUser';
 import { PaymentForm } from '@/components/forms/PaymentForm';
 import { StripeProvider } from '@/components/StripeProvider';
@@ -10,16 +11,22 @@ const Checkout = async () => {
         redirect('/Login');
     }
 
+    let cart
+    try {
+        cart = await getCart(currentUser.id)
+    } catch (e) {
+        console.log(e);
+        cart = null
+    }
+
     return (
-        <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-white">
-            <h1 className="text-4xl font-bold mb-8">Stripe Demo - Pago en Euros (€)</h1>
-            <p className="mb-4">
-                Tarjeta de prueba: <code>4242 4242 4242 4242</code>
-            </p>
-            <div className="w-full max-w-md">
-                <StripeProvider>
-                    <PaymentForm />
-                </StripeProvider>
+        <main className="flex min-h-screen flex-col items-center justify-center p-4 sm:p-8 md:p-24">
+            <div className="w-full max-w-2xl bg-white shadow-xl rounded-lg p-8">
+                <div className="w-full">
+                    <StripeProvider>
+                        <PaymentForm total={cart?.total} />
+                    </StripeProvider>
+                </div>
             </div>
         </main>
     )

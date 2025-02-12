@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type React from "react"
 import { CardCart } from "../shared/Cards/CardCart"
+import { redirect } from "next/navigation"
+import Link from "next/link"
 
 interface CartListProps {
   cart: any[]
@@ -28,9 +30,13 @@ export const CartList = ({ cart }: CartListProps) => {
         <h3 className="text-2xl font-bold text-white">
           Total: <span>{total.toFixed(2)}€</span>
         </h3>
-        <button className="bg-dark-gold p-3 rounded-lg mt-3 font-bold hover:bg-gold">
-          Checkout
-        </button>
+
+        <Link href="/Checkout">
+          <button className="bg-dark-gold p-3 rounded-lg mt-3 font-bold hover:bg-gold">
+            Checkout
+          </button>
+        </Link>
+
       </div>
     </div>
   )
