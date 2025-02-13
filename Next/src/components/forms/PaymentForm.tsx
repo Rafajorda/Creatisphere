@@ -7,12 +7,14 @@ import { Button } from "@/components/ui/button"
 import PayPalButton from "../shared/buttons/PayPalButton"
 import { fetchWrapper } from "@/utils/fetch"
 import { redirect } from "next/navigation"
+import { useToast } from "@/hooks/use-toast"
 
 export function PaymentForm({ total }: { total: number | undefined }) {
     const stripe = useStripe()
     const elements = useElements()
     const [error, setError] = useState<string | null>(null)
     const [processing, setProcessing] = useState(false)
+    const { toast } = useToast()
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
@@ -43,8 +45,8 @@ export function PaymentForm({ total }: { total: number | undefined }) {
                 payment_method: { card: cardElement },
             })
 
-            const createOrder = await fetchWrapper("/api/order/checkout", "POST");
-            
+            const createOrder = await fetchWrapper("/api/checkout", "POST");
+
             if (!createOrder) {
                 throw new Error("Error al crear el pedido")
             }
@@ -52,10 +54,11 @@ export function PaymentForm({ total }: { total: number | undefined }) {
             if (stripeError) {
                 setError(stripeError.message || "Ha ocurrido un error al procesar el pago.")
             } else if (paymentIntent?.status === "succeeded") {
-                alert("¡Pago realizado con éxito!")
-                // redirect('/');
-
-                // Aquí puedes redirigir al usuario o actualizar el estado de la aplicación
+                toast({
+                    title: 'Purchased successfully',
+                    description: 'You can check your order on your profile page or your email.',
+                });
+                redirect('/');
             }
         } catch (err) {
             console.log(err)
