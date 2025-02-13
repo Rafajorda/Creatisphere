@@ -5,6 +5,8 @@ import { useState } from "react"
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js"
 import { Button } from "@/components/ui/button"
 import PayPalButton from "../shared/buttons/PayPalButton"
+import { fetchWrapper } from "@/utils/fetch"
+import { redirect } from "next/navigation"
 
 export function PaymentForm({ total }: { total: number | undefined }) {
     const stripe = useStripe()
@@ -41,10 +43,18 @@ export function PaymentForm({ total }: { total: number | undefined }) {
                 payment_method: { card: cardElement },
             })
 
+            const createOrder = await fetchWrapper("/api/order/checkout", "POST");
+            
+            if (!createOrder) {
+                throw new Error("Error al crear el pedido")
+            }
+
             if (stripeError) {
                 setError(stripeError.message || "Ha ocurrido un error al procesar el pago.")
             } else if (paymentIntent?.status === "succeeded") {
                 alert("¡Pago realizado con éxito!")
+                // redirect('/');
+
                 // Aquí puedes redirigir al usuario o actualizar el estado de la aplicación
             }
         } catch (err) {
