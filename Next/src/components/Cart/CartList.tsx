@@ -1,14 +1,14 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import type React from "react"
 import { CardCart } from "../shared/Cards/CardCart"
-import { redirect } from "next/navigation"
 import Link from "next/link"
+import { Button } from "../ui/button"
+import React from "react"
 
 interface CartListProps {
   cart: any[]
 }
 
 export const CartList = ({ cart }: CartListProps) => {
+
   if (!cart || !Array.isArray(cart) || cart.length === 0) {
     return <p className="text-gray-700 text-center py-8">No items in the cart yet.</p>
   }
@@ -32,11 +32,8 @@ export const CartList = ({ cart }: CartListProps) => {
         </h3>
 
         <Link href="/Checkout">
-          <button className="bg-dark-gold p-3 rounded-lg mt-3 font-bold hover:bg-gold">
-            Checkout
-          </button>
+          <Button className="bg-dark-gold p-3 rounded-lg mt-3 font-bold hover:bg-gold">Checkout</Button>
         </Link>
-
       </div>
     </div>
   )

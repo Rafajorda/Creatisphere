@@ -5,7 +5,9 @@ import React from "react"
 
 export const CartButton = async () => {
     const currentUser = await getCurrentUser()
-    const cartLinesLength = currentUser?.cart[0].cartLines.length || 0
+
+    // Check if currentUser and cart exist before accessing cartLines
+    const cartLinesLength = currentUser?.cart?.[0]?.cartLines?.length || 0
 
     if (!currentUser) return null
 

@@ -20,8 +20,8 @@ export default async function getUserProfile(username: string): Promise<UserProf
         },
       },
       include: {
-        profile:true,
-        
+        profile: true,
+
         products: {
           include: {
             categories: true,
@@ -50,7 +50,7 @@ export default async function getUserProfile(username: string): Promise<UserProf
         },
         following: {
           include: {
-            following: { 
+            following: {
               include: {
                 profile: true,  // Incluimos el perfil completo de la persona que el usuario sigue
               },
@@ -71,8 +71,8 @@ export default async function getUserProfile(username: string): Promise<UserProf
           include: {
             cartLines: {
               include: {
-                productPrice:{
-                  include:{
+                productPrice: {
+                  include: {
                     product: true
                   }
                 }
@@ -84,7 +84,16 @@ export default async function getUserProfile(username: string): Promise<UserProf
           include: {
             orderLines: {
               include: {
-                productprice: true,
+                productprice: {
+                  include: {
+                    product: {
+                      include: {
+                        ImagesProduct: true,
+                      },
+                    },
+                    type: true,
+                  },
+                },
               },
             },
           },

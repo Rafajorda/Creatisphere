@@ -5,12 +5,17 @@ import { useState } from "react"
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js"
 import { Button } from "@/components/ui/button"
 import PayPalButton from "../shared/buttons/PayPalButton"
+import { fetchWrapper } from "@/utils/fetch"
+import { useToast } from "@/hooks/use-toast"
+import { useRouter } from "next/navigation"
 
 export function PaymentForm({ total }: { total: number | undefined }) {
     const stripe = useStripe()
     const elements = useElements()
     const [error, setError] = useState<string | null>(null)
     const [processing, setProcessing] = useState(false)
+    const { toast } = useToast();
+    const router = useRouter();
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
@@ -41,11 +46,20 @@ export function PaymentForm({ total }: { total: number | undefined }) {
                 payment_method: { card: cardElement },
             })
 
+            const createOrder = await fetchWrapper("/api/checkout", "POST");
+
+            if (!createOrder) {
+                throw new Error("Error al crear el pedido")
+            }
+
             if (stripeError) {
                 setError(stripeError.message || "Ha ocurrido un error al procesar el pago.")
             } else if (paymentIntent?.status === "succeeded") {
-                alert("¡Pago realizado con éxito!")
-                // Aquí puedes redirigir al usuario o actualizar el estado de la aplicación
+                toast({
+                    title: 'Purchased successfully',
+                    description: 'You can check your order on your profile page or your email.',
+                });
+                router.push("/");
             }
         } catch (err) {
             console.log(err)

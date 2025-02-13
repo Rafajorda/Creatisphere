@@ -6,13 +6,13 @@ import { Order, OrderLine } from '@prisma/client';
 
 export const orders = async (req: Request, res: Response): Promise<void> => {
     try {
-       const { orderId } = req.body;
+        const { orderId } = req.body;
 
-       if (!orderId) {
-           res.status(400).json({ message: 'Required data missing: orderId' });
-           return;
-       }
-       const order = await prismaGetOrder(orderId);
+        if (!orderId) {
+            res.status(400).json({ message: 'Required data missing: orderId' });
+            return;
+        }
+        const order = await prismaGetOrder(orderId);
 
         if (!order) {
             res.status(404).json({ message: 'Order not found' });
