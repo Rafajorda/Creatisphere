@@ -6,15 +6,16 @@ import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js"
 import { Button } from "@/components/ui/button"
 import PayPalButton from "../shared/buttons/PayPalButton"
 import { fetchWrapper } from "@/utils/fetch"
-import { redirect } from "next/navigation"
 import { useToast } from "@/hooks/use-toast"
+import { useRouter } from "next/navigation"
 
 export function PaymentForm({ total }: { total: number | undefined }) {
     const stripe = useStripe()
     const elements = useElements()
     const [error, setError] = useState<string | null>(null)
     const [processing, setProcessing] = useState(false)
-    const { toast } = useToast()
+    const { toast } = useToast();
+    const router = useRouter();
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
@@ -58,7 +59,7 @@ export function PaymentForm({ total }: { total: number | undefined }) {
                     title: 'Purchased successfully',
                     description: 'You can check your order on your profile page or your email.',
                 });
-                redirect('/');
+                router.push("/");
             }
         } catch (err) {
             console.log(err)
