@@ -26,7 +26,7 @@ export default async function CreateEmailOrder(order: Order & { orderLines: Orde
         <tr>
             <td style="border: 1px solid #ddd; padding: 8px;">${line.productprice.product.name}</td>
             <td style="border: 1px solid #ddd; padding: 8px;">${line.productprice.type.name}</td>
-            <td style="border: 1px solid #ddd; padding: 8px;">$${line.price.toFixed(2)}</td>
+            <td style="border: 1px solid #ddd; padding: 8px;">${line.price.toFixed(2)}€</td>
         </tr>
     `).join('');
 
@@ -46,7 +46,7 @@ export default async function CreateEmailOrder(order: Order & { orderLines: Orde
             </table>
             
             <p><strong>Order ID:</strong> ${order.id}</p>
-            <p><strong>Total:</strong> $${order.total.toFixed(2)}</p>
+            <p><strong>Total:</strong> ${order.total.toFixed(2)}€</p>
             <p><strong>Status:</strong> ${order.status}</p>
             <p><strong>Order Date:</strong> ${new Date(order.createdAt).toLocaleDateString()}</p>
 
