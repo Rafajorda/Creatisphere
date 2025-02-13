@@ -9,6 +9,7 @@ import filtersReducer from './slices/filtersSlice';
 import seriesReducer from './slices/seriesSlice';
 import categoriesReducer from './slices/categoriesSlice';
 import priceReducer from './slices/priceSlice';
+import typesReducer from './slices/typesSlice';
 
 export const store = configureStore({
     reducer: {
@@ -18,6 +19,7 @@ export const store = configureStore({
         series: seriesReducer,
         categories: categoriesReducer,
         price: priceReducer,
+        types: typesReducer,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware()
 });

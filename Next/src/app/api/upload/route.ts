@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
         return ApiResponse.badRequest("No se proporcionaron archivos");
     }
 
-    const uploadDir = join(process.cwd(), "public", "assets", "uploads")
+    const uploadDir = join(process.cwd(), "public", "assets", "products")
 
     try {
         for (const file of files) {

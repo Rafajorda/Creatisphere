@@ -1,11 +1,13 @@
-import FileUpload from "@/components/Upload/FileUpload"
+import UploadForm from "@/components/forms/UploadForm"
+import InitializeParamsProduct from "@/components/shared/creatorFetcher"
+
 import React from "react"
 
 export default function Upload() {
     return (
         <main className="flex min-h-screen flex-col items-center mt-10 text-white">
-            <h1 className="text-4xl font-bold">Carga de archivos</h1>
-            <FileUpload />
+            <InitializeParamsProduct/>
+            <UploadForm />
         </main>
     )
 }
