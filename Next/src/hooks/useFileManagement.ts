@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useCallback } from "react"
+import { useState, useCallback, useEffect } from "react"
 import { useDropzone } from "react-dropzone"
 
 interface FileWithPreview extends File {
@@ -10,9 +10,14 @@ interface FileWithPreview extends File {
 export function useFileManagement() {
     const [files, setFiles] = useState<FileWithPreview[]>([])
 
+
+    useEffect(() => {
+        console.log("📁 Archivos en useFileManagement:", files);
+    }, [files]);
+
     const onDrop = useCallback((acceptedFiles: File[]) => {
         setFiles((prevFiles) => [
-            ...prevFiles,
+            ...prevFiles,   
             ...acceptedFiles.map((file) =>
                 Object.assign(file, {
                     preview: URL.createObjectURL(file),

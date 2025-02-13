@@ -3,7 +3,8 @@
 import { useState } from "react"
 
 interface FileWithPreview extends File {
-    preview: string
+    name: string;
+    preview?: string;
 }
 
 export function useFileUpload() {
@@ -11,15 +12,22 @@ export function useFileUpload() {
     const [uploadError, setUploadError] = useState<string | null>(null)
 
     const uploadFiles = async (files: FileWithPreview[]) => {
-        if (files.length === 0) return
+        if (files.length === 0) {
+            console.error("❌ No hay archivos para subir");
+            return false;
+        }
 
         setIsUploading(true)
         setUploadError(null)
 
         const formData = new FormData()
-        files.forEach((file) => {
-            formData.append("files", file)
-        })
+       files.forEach((file) => {
+        if (file instanceof File) {
+            formData.append("files", file, file.name);
+        } else {
+            console.error("No es un archivo válido:", file);
+        }
+    });
 
         try {
             const response = await fetch("/api/upload", {

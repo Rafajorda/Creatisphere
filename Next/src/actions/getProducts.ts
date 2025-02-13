@@ -27,8 +27,14 @@ export default async function getProducts(params: GetProductsParams = {}): Promi
 
   // Construir una clave única para Redis basado en los parámetros
   // const cacheKey = `products:${JSON.stringify(params)}`;
+  // const cacheKey = `products:${JSON.stringify(params)}`;
 
   // 1. Intentar obtener los datos desde Redis
+  // const cachedData = await redis.get(cacheKey);
+  // if (cachedData) {
+  //   // console.log('Usando datos en caché para productos');
+  //   return JSON.parse(cachedData);
+  // }
   // const cachedData = await redis.get(cacheKey);
   // if (cachedData) {
   //   // console.log('Usando datos en caché para productos');
@@ -108,6 +114,7 @@ export default async function getProducts(params: GetProductsParams = {}): Promi
   };
 
   // 3. Guardar los datos en Redis (con un TTL de 1 hora, por ejemplo)
+  // await redis.set(cacheKey, JSON.stringify(response), 'EX', 3600);
   // await redis.set(cacheKey, JSON.stringify(response), 'EX', 3600);
 
   return response;
