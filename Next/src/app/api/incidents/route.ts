@@ -31,3 +31,23 @@ export const POST = async (req: NextRequest) => {
 
     return ApiResponse.ok("Incident created successfully");
 }
+
+export const PUT = async (req: NextRequest) => {
+    const body = await req.json();
+    const { id, status } = body;
+
+    const updatedIncident = await prisma.incidents.update({
+        where: {
+            id: id
+        },
+        data: {
+            status: status
+        }
+    })
+
+    if (!updatedIncident) {
+        return ApiResponse.badRequest("Incident not updated");
+    }
+
+    return ApiResponse.ok("Incident updated successfully");
+}
