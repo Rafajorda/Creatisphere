@@ -2,6 +2,7 @@ import { getAllIncidents } from "@/actions/getIncident"
 import { prisma } from "@/lib/prisma";
 import { NextRequest } from "next/server";
 import { ApiResponse } from "../exceptions";
+import { fetchWrapper } from "@/utils/fetch";
 
 export const GET = async (req: NextRequest) => {
     const { status } = await req.json();
@@ -29,6 +30,14 @@ export const POST = async (req: NextRequest) => {
         return ApiResponse.badRequest("Incident not created");
     }
 
+    const emailIncident = await fetchWrapper("http://localhost:4000/api/notifications/Incidents", "POST", {
+        incident: newIncident.id
+    })
+
+    if (!emailIncident) {
+        ApiResponse.badRequest("Email not sent");
+    }
+
     return ApiResponse.ok("Incident created successfully");
 }
 
@@ -41,7 +50,8 @@ export const PUT = async (req: NextRequest) => {
             id: id
         },
         data: {
-            status: status
+            status: status,
+            updatedAt: new Date()
         }
     })
 
