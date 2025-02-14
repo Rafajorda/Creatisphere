@@ -30,7 +30,7 @@ const Premium = async () => {
                 ))}
             </div>
             {!isPremium && (
-                <div className="w-1/5 fixed right-28 top-32">
+                <div className="w-1/5 fixed right-28 top-48">
                     <div className="relative">
                         <Image
                             src="/assets/card_premium.png"

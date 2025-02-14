@@ -12,11 +12,10 @@ const Settings = async () => {
     if (!currentUser) return null
 
     return (
-        <div className="settings-page">
-            <div className="container page mx-auto">
+        <div className="settings-page my-10">
+            <div className="container page mx-auto max-w-2xl">
                 <div className="row">
                     <div className="col-md-6 offset-md-3 col-xs-12">
-                        <h1 className="text-xs-center">Settings</h1>
                         <UserProfileForm user={currentUser} />
                     </div>
                 </div>

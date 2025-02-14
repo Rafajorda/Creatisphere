@@ -1,5 +1,5 @@
 import { useLogout } from "@/hooks/useAuth";
-import { Bell, LogOut } from "lucide-react";
+import { Bell, LogOut, PlusSquare } from "lucide-react";
 import { Session } from "next-auth";
 import Image from "next/image";
 import Link from "next/link";
@@ -15,7 +15,7 @@ interface HeaderDataProps {
     markAsRead: (notificationId: number) => void;
 }
 
-export const HeaderData = ({ activeRoute, session, notifications, isDropdownOpen, toggleDropdown, markAsRead  }: HeaderDataProps) => {
+export const HeaderData = ({ activeRoute, session, notifications, isDropdownOpen, toggleDropdown, markAsRead }: HeaderDataProps) => {
     const unreadCount = notifications.filter((notif) => !notif.isRead).length;
     return (
         <div className="bg-black text-light-gold font-semibold shadow-md">
@@ -49,7 +49,8 @@ export const HeaderData = ({ activeRoute, session, notifications, isDropdownOpen
                     >
                         Shop
                     </Link>
-                    <Link
+
+                    {/* <Link
                         href="/Commissions"
                         prefetch={false}
                         className={`text-2xl px-4 py-1 rounded-lg hover:text-black hover:bg-gray-300 transition-colors duration-200 ${activeRoute === "/Commissions" ? "text-black bg-white" : ""}`}
@@ -62,18 +63,27 @@ export const HeaderData = ({ activeRoute, session, notifications, isDropdownOpen
                         className={`text-2xl px-4 py-1 rounded-lg hover:text-black hover:bg-gray-300 transition-colors duration-200 ${activeRoute === "/Portfolio" ? "text-black bg-white" : ""}`}
                     >
                         Portfolio
+                    </Link> */}
+
+                    <Link
+                        href="/Premium"
+                        prefetch={false}
+                        className={`text-2xl px-4 py-1 rounded-lg hover:text-black hover:bg-gray-300 transition-colors duration-200 ${activeRoute === "/Premium" ? "text-black bg-white" : ""}`}
+                    >
+                        Premium
                     </Link>
+
                     {session && (
-                         <button onClick={toggleDropdown}>
-                         <div className="relative">
-                             <Bell className="ml-5" />
-                             {unreadCount > 0 && (
-                                 <span className="absolute top-0 right-0 text-xs bg-red-500 text-white rounded-full px-1">
-                                     {unreadCount}
-                                 </span>
-                             )}
-                         </div>
-                     </button>
+                        <button onClick={toggleDropdown}>
+                            <div className="relative">
+                                <Bell />
+                                {unreadCount > 0 && (
+                                    <span className="absolute top-0 right-0 text-xs bg-red-500 text-white rounded-full px-1">
+                                        {unreadCount}
+                                    </span>
+                                )}
+                            </div>
+                        </button>
                     )}
 
                     {/* Notifications Dropdown */}
@@ -84,8 +94,8 @@ export const HeaderData = ({ activeRoute, session, notifications, isDropdownOpen
                                     <li key={notification.id} className="p-3 border-b">
                                         <p className="text-sm">{notification.message}</p>
                                         {!notification.isRead && (
-                                            <button 
-                                                onClick={() => markAsRead(notification.id)} 
+                                            <button
+                                                onClick={() => markAsRead(notification.id)}
                                                 className="text-xs text-blue-500"
                                             >
                                                 Mark as read
@@ -96,6 +106,17 @@ export const HeaderData = ({ activeRoute, session, notifications, isDropdownOpen
                             </ul>
                         </div>
                     )}
+
+                    {session && (
+                        <Link
+                            href="/Upload"
+                            prefetch={false}
+                            className={`text-2xl px-4 py-1 rounded-lg hover:text-black hover:bg-gray-300 transition-colors duration-200 ${activeRoute === "/Cart" ? "text-black bg-white" : ""}`}
+                        >
+                            <PlusSquare />
+                        </Link>
+                    )}
+
                     {!session ? (
                         <Link
                             href="/Login"
@@ -115,13 +136,9 @@ export const HeaderData = ({ activeRoute, session, notifications, isDropdownOpen
                             {session.user.username}
                         </Link>
                     }
-                    <Link
-                        href="/Premium"
-                        prefetch={false}
-                        className={`text-2xl px-4 py-1 rounded-lg hover:text-black hover:bg-gray-300 transition-colors duration-200 ${activeRoute === "/Premium" ? "text-black bg-white" : ""}`}
-                    >
-                        Premium
-                    </Link>
+
+
+
                     {session && (
                         <button onClick={useLogout}>
                             <LogOut className="ml-5" />

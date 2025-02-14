@@ -47,7 +47,7 @@ export default function UserProfileForm({ user }: { user: UserProfileFormData })
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 text-white">
                 <FormField
                     control={form.control}
                     name="email"
@@ -55,7 +55,7 @@ export default function UserProfileForm({ user }: { user: UserProfileFormData })
                         <FormItem>
                             <FormLabel>Email</FormLabel>
                             <FormControl>
-                                <Input placeholder="email@example.com" {...field} />
+                                <Input placeholder="email@example.com" {...field} className="text-muted-foreground" />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -68,7 +68,7 @@ export default function UserProfileForm({ user }: { user: UserProfileFormData })
                         <FormItem>
                             <FormLabel>Password</FormLabel>
                             <FormControl>
-                                <Input type="password" placeholder="********" {...field} />
+                                <Input type="password" placeholder="********" {...field} className="text-muted-foreground" />
                             </FormControl>
                             <FormDescription>Leave blank to keep current password</FormDescription>
                             <FormMessage />
@@ -82,7 +82,7 @@ export default function UserProfileForm({ user }: { user: UserProfileFormData })
                         <FormItem>
                             <FormLabel>Username</FormLabel>
                             <FormControl>
-                                <Input placeholder="username" {...field} />
+                                <Input placeholder="username" {...field} className="text-muted-foreground" />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -95,7 +95,7 @@ export default function UserProfileForm({ user }: { user: UserProfileFormData })
                         <FormItem>
                             <FormLabel>Bio</FormLabel>
                             <FormControl>
-                                <Textarea placeholder="Tell us about yourself" {...field} />
+                                <Textarea placeholder="Tell us about yourself" {...field} className="text-muted-foreground" />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -108,13 +108,13 @@ export default function UserProfileForm({ user }: { user: UserProfileFormData })
                         <FormItem>
                             <FormLabel>Avatar URL</FormLabel>
                             <FormControl>
-                                <Input placeholder="https://example.com/avatar.jpg" {...field} />
+                                <Input placeholder="https://example.com/avatar.jpg" {...field} className="text-muted-foreground" />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
                     )}
                 />
-                <Button type="submit" disabled={isLoading}>
+                <Button type="submit" disabled={isLoading} className="bg-dark-gold hover:bg-gold font-semibold">
                     {isLoading ? "Updating..." : "Update Profile"}
                 </Button>
             </form>
