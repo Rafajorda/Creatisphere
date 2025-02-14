@@ -53,6 +53,7 @@ model Product {
   productPrices  ProductPrice[]
   returns        ReturnsLine[]
   categories     Category[]      @relation("CategoryToProduct")
+  incidents      Incidents[]
 }
 
 model ProductPrice {
@@ -132,6 +133,7 @@ model User {
   products      Product[]
   profile       Profile?
   returns       Returns[]
+  incidents     Incidents[]
 }
 
 model Profile {
@@ -227,16 +229,17 @@ model Order {
 }
 
 model OrderLine {
-  id        Int      @id @default(autoincrement())
-  orderId   Int
+  id             Int          @id @default(autoincrement())
+  orderId        Int
   productPriceId Int
-  quantity  Int
-  price     Float
-  status    status   @default(ACTIVE)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  productprice   ProductPrice  @relation(fields: [productPriceId], references: [id])
+  quantity       Int
+  price          Float
+  status         status       @default(ACTIVE)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  order          Order        @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productprice   ProductPrice @relation(fields: [productPriceId], references: [id])
+  incidents      Incidents[]
 }
 
 model Returns {
@@ -284,4 +287,21 @@ enum sizes {
 enum notificationType {
   bell
   email
+}
+
+model Incidents {
+  id          Int        @id @default(autoincrement())
+  slug        String
+  userId      Int
+  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  productId   Int?
+  product     Product?   @relation(fields: [productId], references: [id], onDelete: Cascade)
+  orderLineId Int?
+  orderLine   OrderLine? @relation(fields: [orderLineId], references: [id], onDelete: Cascade)
+  description String?
+  type        String
+
+  status    status   @default(ACTIVE)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
