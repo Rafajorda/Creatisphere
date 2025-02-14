@@ -5,6 +5,12 @@ import com.gvm_art.Backend_Payments_Springboot.application.exception.ResourceNot
 import com.gvm_art.Backend_Payments_Springboot.application.exception.payments.PaymentMethodNotFoundException;
 import com.gvm_art.Backend_Payments_Springboot.application.exception.payments.PaymentProcessingException;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -18,6 +24,7 @@ import java.util.*;
 
 @Slf4j
 @RestControllerAdvice
+@Tag(name = "Exceptions", description = "Payment processing error handling")
 public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
     private static final String GENERIC_ERROR_MESSAGE = "Something went wrong with the payment process.";
 
@@ -50,11 +57,21 @@ public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(PaymentMethodNotFoundException.class)
+    @Operation(summary = "Payment method not found or not supported")
+    @ApiResponses({
+        @ApiResponse(responseCode = "404", description = "Payment method not found or not supported",
+            content = @Content(schema = @Schema(implementation = Error.class)))
+    })
     public ResponseEntity<?> handlePaymentMethodNotFound(PaymentMethodNotFoundException ex, WebRequest request) {
-        return handleResourceNotFound(ex, request, "paymenttMethod");
+        return handleResourceNotFound(ex, request, "paymentMethod");
     }
 
     @ExceptionHandler(PaymentProcessingException.class)
+    @Operation(summary = "Payment processing error")
+    @ApiResponses({
+        @ApiResponse(responseCode = "500", description = "Payment processing error: {specific error message}",
+            content = @Content(schema = @Schema(implementation = Error.class)))
+    })
     public ResponseEntity<?> handlePaymentProcessing(PaymentProcessingException ex, WebRequest request) {
         var status = HttpStatus.INTERNAL_SERVER_ERROR;
         var error = createErrorBuilder(ex.getMessage()).build();
@@ -70,6 +87,11 @@ public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(BusinessException.class)
+    @Operation(summary = "General payment operation error")
+    @ApiResponses({
+        @ApiResponse(responseCode = "500", description = "Operation error: {specific error message}",
+            content = @Content(schema = @Schema(implementation = Error.class)))
+    })
     public ResponseEntity<?> handleBusiness(BusinessException ex, WebRequest request) {
         var status = HttpStatus.INTERNAL_SERVER_ERROR;
 
