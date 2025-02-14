@@ -9,7 +9,12 @@ import { fetchWrapper } from "@/utils/fetch"
 import { useToast } from "@/hooks/use-toast"
 import { useRouter } from "next/navigation"
 
-export function PaymentForm({ total }: { total: number | undefined }) {
+interface PaymentFormProps {
+    total: number | undefined
+    isGetPremium: boolean
+}
+
+export function PaymentForm({ total, isGetPremium }: PaymentFormProps) {
     const stripe = useStripe()
     const elements = useElements()
     const [error, setError] = useState<string | null>(null)
@@ -46,20 +51,37 @@ export function PaymentForm({ total }: { total: number | undefined }) {
                 payment_method: { card: cardElement },
             })
 
-            const createOrder = await fetchWrapper("/api/checkout", "POST");
+            // Crear el pedido o asignar el rol PREMIUM
+            if (!isGetPremium) {
+                const createOrder = await fetchWrapper("/api/checkout", "POST");
 
-            if (!createOrder) {
-                throw new Error("Error al crear el pedido")
+                if (!createOrder) {
+                    throw new Error("Error al crear el pedido")
+                }
+            } else {
+                const assignPremium = await fetchWrapper("/api/premium", "PUT");
+
+                if (!assignPremium) {
+                    throw new Error("Error al asignar el rol PREMIUM")
+                }
             }
 
             if (stripeError) {
                 setError(stripeError.message || "Ha ocurrido un error al procesar el pago.")
             } else if (paymentIntent?.status === "succeeded") {
-                toast({
-                    title: 'Purchased successfully',
-                    description: 'You can check your order on your profile page or your email.',
-                });
-                router.push("/");
+                if (!isGetPremium) {
+                    toast({
+                        title: 'Purchased successfully',
+                        description: 'You can check your order on your profile page or your email.',
+                    });
+                    router.push("/");
+                } else {
+                    toast({
+                        title: 'Premium Purchased successfully',
+                        description: 'You can now access all premium content.',
+                    });
+                    router.push("/Premium");
+                }
             }
         } catch (err) {
             console.log(err)
@@ -72,6 +94,7 @@ export function PaymentForm({ total }: { total: number | undefined }) {
     return (
         <div className="space-y-8">
             <div className="mb-4">
+                {isGetPremium && <h1 className="font-semibold text-center mb-3">Premium plan</h1>}
                 <h1 className="font-semibold text-center">Total amount: {total ? `€${total.toFixed(2)}` : "Cargando..."}</h1>
             </div>
             <form onSubmit={handleSubmit} className="space-y-6">
