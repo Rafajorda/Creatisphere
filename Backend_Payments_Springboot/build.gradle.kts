@@ -25,6 +25,8 @@ dependencies {
 	implementation("io.projectreactor:reactor-core:3.5.11")
     implementation("io.projectreactor.netty:reactor-netty:1.1.12")
 	implementation("org.springframework.boot:spring-boot-starter-webflux")
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0")
+    implementation("org.springdoc:springdoc-openapi-starter-common:2.7.0")
 	compileOnly("org.projectlombok:lombok")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	annotationProcessor("org.projectlombok:lombok")
