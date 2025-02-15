@@ -20,7 +20,7 @@ export function Filters() {
                 <Button
                     variant="default"
                     size="icon"
-                    aria-label="Filtros"
+                    aria-label="Filters"
                     className="bg-zinc-800 border-filter fixed bottom-10 right-10 rounded-full w-20 h-12 hover:bg-zinc-200 hover:text-black"
                 >
                     <Filter className="h-4 w-4" />
@@ -29,7 +29,7 @@ export function Filters() {
             <SheetContent className="bg-zinc-800/80 w-full sm:max-w-md">
                 <ScrollArea className="h-[calc(100vh-4rem)] pr-4">
                     <SheetHeader>
-                        <SheetTitle className="text-white">Filtros</SheetTitle>
+                        <SheetTitle className="text-white">Filters</SheetTitle>
                         <SheetDescription></SheetDescription>
                     </SheetHeader>
                     <Search placeholder="Product's name" />

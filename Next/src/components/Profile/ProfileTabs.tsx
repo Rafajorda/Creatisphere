@@ -6,12 +6,15 @@ import { ProfileProducts } from "./ProfileProducts";
 import { ProfileFavorites } from "./ProfileFavorites";
 import { ProfileFollow } from "./ProfileFollow";
 import { ProfileOrders } from "./ProfileOrders";
+import getCurrentUser from "@/actions/getCurrentUser";
 
 interface ProfileTabsProps {
     profile: UserProfileResponse
 }
 
-export const ProfileTabs = ({ profile }: ProfileTabsProps) => {
+export const ProfileTabs = async ({ profile }: ProfileTabsProps) => {
+    const currentUser = await getCurrentUser();
+
     return (
         <Tabs defaultValue="products" className="w-full mt-10">
 
@@ -32,9 +35,12 @@ export const ProfileTabs = ({ profile }: ProfileTabsProps) => {
                 <TabsTrigger value="followers" className="my-5 py-1 font-bold bg-zinc-700 data-[state=active]:text-black data-[state=active]:bg-gold">
                     Followers ({profile.followers.length})
                 </TabsTrigger>
-                <TabsTrigger value="orders" className="my-5 py-1 rounded-r-xl font-bold bg-zinc-700 data-[state=active]:text-black data-[state=active]:bg-gold">
-                    Orders ({profile.orders.length})
-                </TabsTrigger>
+
+                {profile.username === currentUser?.profile?.username && (
+                    <TabsTrigger value="orders" className="my-5 py-1 rounded-r-xl font-bold bg-zinc-700 data-[state=active]:text-black data-[state=active]:bg-gold">
+                        Orders ({profile.orders.length})
+                    </TabsTrigger>
+                )}
             </TabsList>
 
             {profile.products.products.length > 0 && (
