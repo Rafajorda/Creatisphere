@@ -22,30 +22,33 @@ export const authOptions: AuthOptions = {
           where: {
             email: credentials.email,
           },
+          include: { profile: true },
         })
 
-        if (!user || !user?.password) {
+
+        if (!user || !user.password || !user.profile?.username) {
+          console.error('User not found, no password stored or username missing') // Log para depurar
           return null
         }
 
         const isCorrectPassword = await argon2.verify(
-          credentials.password,
           user.password,
+          credentials.password,
         )
 
         if (!isCorrectPassword) {
           return null
         }
-
+        console.log("user", user.id, user.status);
         return {
           id: user.id.toString(),
+          username: user.profile?.username,
           email: user.email,
           password: user.password,
           status: user.status,
           createdAt: user.createdAt,
           updatedAt: user.updatedAt,
-          role: user.role,
-          accessToken: user.accessToken,
+          role: user.role
         }
       },
     }),
@@ -55,5 +58,39 @@ export const authOptions: AuthOptions = {
   },
   session: {
     strategy: 'jwt',
+    maxAge: 24 * 60 * 60,
+    updateAge: 6 * 60 * 60,
   },
-}
+  jwt: {
+    maxAge: 3 * 24 * 60 * 60,
+  },
+  callbacks: {
+    async jwt({ token, user }: { token: any, user?: any }) {
+      if (user) {
+        console.log("user", user);
+        console.log("token", token);
+        return {
+          ...token,
+          id: user.id,
+          username: user.username,
+          email: user.email,
+          role: user.role,
+        };
+      }
+
+      return token;
+    },
+    async session({ session, token }: { session: any, token: any }) {
+      session.user = {
+        id: token.id,
+        username: token.username,
+        email: token.email,
+        role: token.role,
+      };
+
+      // console.log(session);
+      return session;
+    },
+  },
+  secret: process.env.NEXTAUTH_SECRET,
+};

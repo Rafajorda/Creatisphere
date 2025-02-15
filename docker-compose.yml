@@ -26,7 +26,49 @@ services:
       - postgres
     networks:
       - appNetwork
-  
+
+  notificaciones:
+    build:
+      context: ./Backend_Notifications_Express
+      dockerfile: Dockerfile
+    container_name: notificaciones_server
+    env_file: ./.env
+    ports:
+      - "3001:3001"
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - appNetwork
+
+  proxy:
+    build:
+      context: ./Backend_Proxy_Express
+      dockerfile: Dockerfile
+    container_name: proxy_server
+    env_file: ./.env
+    ports:
+      - "4000:4000"
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - appNetwork
+
+  cron:
+    build:
+      context: ./Backend_Cron_Express
+      dockerfile: Dockerfile
+    container_name: cron_server
+    ports:
+      - "3002:3002"
+    environment:
+      DATABASE_URL: "postgresql://root:root_secret@postgres:5432/mydatabase"
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - appNetwork
   # nextjs:
   #   build:
   #     context: ./next
@@ -45,6 +87,29 @@ services:
   #   networks:
   #     - appNetwork
 
+  springboot_app:
+    build:
+      context: ./Backend_Payments_Springboot
+      dockerfile: Dockerfile # Este Dockerfile usa `bootRun --continuous`
+    container_name: springboot_app
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./Backend_Payments_Springboot:/app # Solo el directorio de la aplicación
+      - /app/build # Mantener el directorio de build limpio
+      - /app/.gradle # Mantener el caché de dependencias
+    environment:
+      SPRING_DATASOURCE_URL: "postgresql://root:root_secret@postgres:5432/mydatabase"
+      SPRING_DATASOURCE_USERNAME: "root"
+      SPRING_DATASOURCE_PASSWORD: "root_secret"
+      STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY}
+      PAYPAL_CLIENT_ID: ${PAYPAL_CLIENT_ID}
+      PAYPAL_CLIENT_SECRET: ${PAYPAL_CLIENT_SECRET}
+    depends_on:
+      - postgres
+    networks:
+      - appNetwork
+
   redis:
     image: redis:latest
     container_name: redis_container
@@ -61,6 +126,7 @@ services:
 volumes:
   postgresdb:
   redis_data:
+
 
 networks:
   appNetwork:

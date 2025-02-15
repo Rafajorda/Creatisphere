@@ -11,7 +11,7 @@ interface CardCategoriesProps {
 export const CardCategories = ({ category, ind }: CardCategoriesProps) => {
     return (
         <Link
-            key={category.id}
+            // key={category.id}
             href={`/Shop?Category=${category.slug}`}
             className={`group relative flex overflow-hidden rounded-2xl transition-all duration-300 hover:scale-[1.02] ${ind === 0
                 ? 'md:col-span-3 md:row-span-4'
@@ -20,7 +20,7 @@ export const CardCategories = ({ category, ind }: CardCategoriesProps) => {
                     : 'md:col-span-1 md:row-span-1 lg:row-span-2'
                 }`}
         >
-            <div key={category.id}>
+            <div className="relative w-full h-full">
                 <Image
                     // src={`/assets/category/${category.image}`}
                     src={'https://picsum.photos/200'}

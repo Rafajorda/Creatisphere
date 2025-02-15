@@ -1,0 +1,307 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Carousel {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  image       String
+  slug        String?  @unique
+  href        String
+  status      status   @default(ACTIVE)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model ImagesProduct {
+  id        Int      @id @default(autoincrement())
+  src       String
+  alt       String
+  size      sizes
+  productId Int
+  status    status   @default(ACTIVE)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  product   Product  @relation(fields: [productId], references: [id])
+}
+
+model Product {
+  id             Int             @id @default(autoincrement())
+  name           String
+  slug           String          @unique
+  stock          Int?
+  userId         Int
+  cartId         Int?
+  seriesId       Int
+  collectionId   Int
+  favoritesCount Int             @default(0)
+  status         status          @default(ACTIVE)
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  favoritedBy    Favorites[]     @relation("ProductFavoritedBy")
+  ImagesProduct  ImagesProduct[]
+  Cart           Cart?           @relation(fields: [cartId], references: [id])
+  collections    Collection      @relation(fields: [collectionId], references: [id])
+  series         Series          @relation(fields: [seriesId], references: [id])
+  artist         User            @relation(fields: [userId], references: [id])
+  productPrices  ProductPrice[]
+  returns        ReturnsLine[]
+  categories     Category[]      @relation("CategoryToProduct")
+  incidents      Incidents[]
+}
+
+model ProductPrice {
+  id        Int           @id @default(autoincrement())
+  productId Int
+  typeId    Int
+  price     Float
+  status    status        @default(ACTIVE)
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  cartLines CartProduct[]
+  product   Product       @relation(fields: [productId], references: [id])
+  type      Type          @relation(fields: [typeId], references: [id])
+
+  OrderLine OrderLine[]
+}
+
+model Type {
+  id            Int            @id @default(autoincrement())
+  name          String
+  slug          String         @unique
+  image         String?
+  status        status         @default(ACTIVE)
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  productPrices ProductPrice[]
+}
+
+model Category {
+  id        Int       @id @default(autoincrement())
+  name      String
+  slug      String    @unique
+  image     String?
+  status    status    @default(ACTIVE)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  products  Product[] @relation("CategoryToProduct")
+}
+
+model Collection {
+  id        Int       @id @default(autoincrement())
+  name      String
+  slug      String    @unique
+  image     String?
+  status    status    @default(ACTIVE)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  products  Product[]
+}
+
+model Series {
+  id        Int       @id @default(autoincrement())
+  name      String
+  slug      String    @unique
+  image     String?
+  status    status    @default(ACTIVE)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  products  Product[]
+}
+
+model User {
+  id            Int            @id @default(autoincrement())
+  email         String         @unique
+  password      String
+  role          role           @default(USER)
+  status        status         @default(ACTIVE)
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  Cart          Cart[]
+  favorites     Favorites[]    @relation("UserFavorites")
+  following     Follows[]      @relation("follower")
+  followers     Follows[]      @relation("following")
+  notifications Notification[]
+  Order         Order[]
+  premium       Premium?
+  products      Product[]
+  profile       Profile?
+  returns       Returns[]
+  incidents     Incidents[]
+}
+
+model Profile {
+  id        Int      @id @default(autoincrement())
+  username  String   @unique
+  bio       String?
+  avatar    String?
+  userId    Int      @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Favorites {
+  productId   Int
+  userId      Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  favoriting  Product  @relation("ProductFavoritedBy", fields: [productId], references: [id], onDelete: Cascade)
+  favoritedBy User     @relation("UserFavorites", fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([productId, userId])
+}
+
+model Follows {
+  followerId  Int
+  followingId Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  follower    User     @relation("follower", fields: [followerId], references: [id], onDelete: Cascade)
+  following   User     @relation("following", fields: [followingId], references: [id], onDelete: Cascade)
+
+  @@id([followerId, followingId])
+}
+
+model Notification {
+  id               Int              @id @default(autoincrement())
+  message          String
+  userId           Int
+  isRead           Boolean          @default(false)
+  notificationType notificationType @default(bell)
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+  user             User             @relation(fields: [userId], references: [id])
+}
+
+model Premium {
+  id            Int      @id @default(autoincrement())
+  userId        Int      @unique
+  startDate     DateTime @default(now())
+  endDate       DateTime
+  status        status   @default(ACTIVE)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  notify3day    Boolean  @default(false)
+  notifyexpired Boolean  @default(false)
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Cart {
+  id        Int           @id @default(autoincrement())
+  userId    Int
+  total     Float
+  status    status        @default(ACTIVE)
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  user      User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  cartLines CartProduct[]
+  products  Product[]
+}
+
+model CartProduct {
+  id             Int          @id @default(autoincrement())
+  cartId         Int
+  productPriceId Int
+  status         status       @default(ACTIVE)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  cart           Cart         @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  productPrice   ProductPrice @relation(fields: [productPriceId], references: [id])
+}
+
+model Order {
+  id         Int         @id @default(autoincrement())
+  slug       String
+  userId     Int
+  total      Float
+  status     status      @default(ACTIVE)
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+  user       User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  orderLines OrderLine[]
+}
+
+model OrderLine {
+  id             Int          @id @default(autoincrement())
+  orderId        Int
+  productPriceId Int
+  quantity       Int
+  price          Float
+  status         status       @default(ACTIVE)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  order          Order        @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productprice   ProductPrice @relation(fields: [productPriceId], references: [id])
+  incidents      Incidents[]
+}
+
+model Returns {
+  id          Int           @id @default(autoincrement())
+  userId      Int
+  total       Float
+  status      status        @default(ACTIVE)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  user        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  returnsLine ReturnsLine[]
+}
+
+model ReturnsLine {
+  id        Int      @id @default(autoincrement())
+  returnsId Int
+  productId Int
+  quantity  Int
+  price     Float
+  status    status   @default(ACTIVE)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  product   Product  @relation(fields: [productId], references: [id])
+  returns   Returns  @relation(fields: [returnsId], references: [id], onDelete: Cascade)
+}
+
+enum status {
+  PENDING
+  ACTIVE
+  INACTIVE
+}
+
+enum role {
+  ADMIN
+  PREMIUM
+  USER
+}
+
+enum sizes {
+  tall
+  wide
+  square
+}
+
+enum notificationType {
+  bell
+  email
+}
+
+model Incidents {
+  id          Int        @id @default(autoincrement())
+  slug        String
+  userId      Int
+  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  productId   Int?
+  product     Product?   @relation(fields: [productId], references: [id], onDelete: Cascade)
+  orderLineId Int?
+  orderLine   OrderLine? @relation(fields: [orderLineId], references: [id], onDelete: Cascade)
+  description String?
+  type        String
+
+  status    status   @default(ACTIVE)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

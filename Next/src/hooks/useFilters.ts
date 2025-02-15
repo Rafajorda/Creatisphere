@@ -35,6 +35,17 @@ export const useFilters = () => {
             const currentValues = newParams.get(category)?.split(",") || []
             let newValues: string[]
 
+            if (category === "" && value === "") {
+                newParams.delete("Collection")
+                newParams.delete("Category")
+                newParams.delete("Series")
+                newParams.delete("Name")
+                newParams.delete("page")
+                newParams.delete("reset")
+                router.push(pathname + "?" + newParams.toString())
+                return
+            }
+
             if (currentValues.includes(value)) {
                 newValues = currentValues.filter((v) => v !== value)
             } else {

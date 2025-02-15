@@ -2,7 +2,7 @@
 CREATE TYPE "status" AS ENUM ('PENDING', 'ACTIVE', 'INACTIVE');
 
 -- CreateEnum
-CREATE TYPE "role" AS ENUM ('ADMIN', 'CREATOR', 'PREMIUM', 'USER');
+CREATE TYPE "role" AS ENUM ('ADMIN', 'PREMIUM', 'USER');
 
 -- CreateTable
 CREATE TABLE "Carousel" (

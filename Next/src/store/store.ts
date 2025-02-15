@@ -8,6 +8,11 @@ import collectionReducer from './slices/collectionSlice';
 import filtersReducer from './slices/filtersSlice';
 import seriesReducer from './slices/seriesSlice';
 import categoriesReducer from './slices/categoriesSlice';
+import priceReducer from './slices/priceSlice';
+import favoriteReducer from './slices/favoriteSlice';
+import currentUserReducer from './slices/currentUserSlice';
+import cartReducer from './slices/cartSlice';
+import typesReducer from './slices/typesSlice';
 
 export const store = configureStore({
     reducer: {
@@ -16,6 +21,11 @@ export const store = configureStore({
         filters: filtersReducer,
         series: seriesReducer,
         categories: categoriesReducer,
+        price: priceReducer,
+        favorite: favoriteReducer,
+        auth: currentUserReducer,
+        cart: cartReducer,
+        types: typesReducer,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware()
 });

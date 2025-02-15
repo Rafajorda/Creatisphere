@@ -14,42 +14,41 @@ export const POST = async (req: NextRequest) => {
 
   const { username, email, password, repeatpassword } = result.data
 
-    if (password !== repeatpassword) {
+  if (password !== repeatpassword) {
     return ApiResponse.badRequest('Passwords do not match')
   }
 
   const hashPassword = await argon2.hash(password)
   try {
     const existingUser = await prisma.user.findUnique({
-        where: { email },
-      })
-      if (existingUser) {
-        return ApiResponse.badRequest('Email is already registered')
-      }
+      where: { email },
+    })
+    if (existingUser) {
+      return ApiResponse.badRequest('Email is already registered')
+    }
     const user = await prisma.user.create({
-        data: {
-            email,
-            password: hashPassword,
-            accessToken: '',
-            profile: {
-              create: {
-                username,
-              },
-            },
+      data: {
+        email,
+        password: hashPassword,
+        profile: {
+          create: {
+            username,
           },
-          include: {
-            profile: true, 
-          },
+        },
+      },
+      include: {
+        profile: true,
+      },
 
-  })
+    })
 
     return ApiResponse.ok({
-        username: user.profile?.username,
-        email: user.email,
-        createdAt: user.createdAt,
-      })
-    } catch (e) {
-        console.error('Error during registration:', e);
-      return ApiResponse.badRequest('Register fail')
-    }
+      username: user.profile?.username,
+      email: user.email,
+      createdAt: user.createdAt,
+    })
+  } catch (e) {
+    console.error('Error during registration:', e);
+    return ApiResponse.badRequest('Register fail')
+  }
 }

@@ -5,6 +5,7 @@ export interface CarouselItem extends Omit<Carousel, 'updatedAt'> {
     title: string;
     slug: string;
     image?: string | null;
+    href: string;
     description: string;
     status: status;
 }
