@@ -5,15 +5,27 @@ import type React from "react"
 import { fetchWrapper } from "@/utils/fetch"
 import { useProduct } from "@/components/ProductProvider"
 import { useState } from "react"
+import { useSession } from "next-auth/react"
+import { useToast } from "@/hooks/use-toast"
 // import { useRouter } from "next/navigation"
 
 export const FavoriteButton = () => {
     const { product, setProduct } = useProduct()
     const { favorited, slug } = { ...product }
     const [loading, setLoading] = useState(false)
+    const currentUser = useSession().data?.user
+    const { toast } = useToast();
 
     const handleFavorites = async () => {
         setLoading(true)
+
+        if (!currentUser) {
+            toast({
+                title: 'You have to be logged in to favorite a product',
+            });
+
+            return
+        }
         try {
             const data = favorited
                 ?
