@@ -18,7 +18,7 @@ interface HeaderDataProps {
 export const HeaderData = ({ activeRoute, session, notifications, isDropdownOpen, toggleDropdown, markAsRead }: HeaderDataProps) => {
     const unreadCount = notifications.filter((notif) => !notif.isRead).length;
     return (
-        <div className="bg-black text-light-gold font-semibold shadow-md">
+        <div className="bg-black text-green-400 font-semibold shadow-md">
             <nav className="mx-auto flex items-center justify-between px-20 pl-10 py-4">
                 {/* Logo */}
                 <div className="flex items-center">
@@ -26,8 +26,8 @@ export const HeaderData = ({ activeRoute, session, notifications, isDropdownOpen
                         <Image
                             src="/assets/logo/logo.png"
                             alt="BrandName Logo"
-                            width={100}
-                            height={100}
+                            width={200}
+                            height={200}
                             priority
                         />
                     </Link>
@@ -50,20 +50,6 @@ export const HeaderData = ({ activeRoute, session, notifications, isDropdownOpen
                         Shop
                     </Link>
 
-                    {/* <Link
-                        href="/Commissions"
-                        prefetch={false}
-                        className={`text-2xl px-4 py-1 rounded-lg hover:text-black hover:bg-gray-300 transition-colors duration-200 ${activeRoute === "/Commissions" ? "text-black bg-white" : ""}`}
-                    >
-                        Commissions
-                    </Link>
-                    <Link
-                        href="/Portfolio"
-                        prefetch={false}
-                        className={`text-2xl px-4 py-1 rounded-lg hover:text-black hover:bg-gray-300 transition-colors duration-200 ${activeRoute === "/Portfolio" ? "text-black bg-white" : ""}`}
-                    >
-                        Portfolio
-                    </Link> */}
 
                     <Link
                         href="/Premium"
@@ -111,7 +97,7 @@ export const HeaderData = ({ activeRoute, session, notifications, isDropdownOpen
                         <Link
                             href="/Upload"
                             prefetch={false}
-                            className={`text-2xl px-4 py-1 rounded-lg hover:text-black hover:bg-gray-300 transition-colors duration-200 ${activeRoute === "/Cart" ? "text-black bg-white" : ""}`}
+                            className={`text-2xl px-4 py-1 rounded-lg hover:text-black hover:bg-gray-300 transition-colors duration-200 ${activeRoute === "/Upload" ? "text-black bg-white" : ""}`}
                         >
                             <PlusSquare />
                         </Link>
@@ -121,7 +107,7 @@ export const HeaderData = ({ activeRoute, session, notifications, isDropdownOpen
                         <Link
                             href="/Login"
                             prefetch={false}
-                            className={`text-2xl font-bold text-black bg-gold px-4 py-2 rounded-lg hover:bg-dark-gold hover:text-white transition-colors duration-200 ${activeRoute === "/Auth" ? "bg-dark-gold text-white" : ""
+                            className={`text-2xl font-bold text-black bg-teal-400 px-4 py-2 rounded-lg hover:bg-dark-gold hover:text-white transition-colors duration-200 ${activeRoute === "/Auth" ? "bg-dark-gold text-white" : ""
                                 }`}
                         >
                             Sign in

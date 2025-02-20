@@ -1,19 +1,19 @@
 
-import BentoGridCategories from '@/components/BentoGrids/BentoGridCategory';
-import BentoGridCollection from '@/components/BentoGrids/BentoGridCollection';
-import BentoGridSeries from '@/components/BentoGrids/BentoGridSeries';
-import CarouselHome from '@/components/carousel/Carousel';
-import React from 'react';
+import SearchHome from "@/components/Home/SearchHome"
+import SecondScene3d from "@/components/Home/SecondScene3d"
 
-const Home = () => {
-    return (
-        <div className='bg-zinc-800'>
-            <CarouselHome />
-            <BentoGridCollection />
-            <BentoGridSeries />
-            <BentoGridCategories />
+export default function Home() {
+  return (
+    <main className="flex min-h-screen items-center justify-center p-4 sm:p-8 md:p-24">
+      <div className="flex w-full max-w-6xl flex-col items-center justify-between gap-8 md:flex-row">
+        <div className="w-full md:w-1/2">
+          <SearchHome />
         </div>
-    );
-};
+        <div className="w-full h-[300px] md:w-1/2 md:h-[400px]">
+          <SecondScene3d />
+        </div>
+      </div>
+    </main>
+  )
+}
 
-export default Home
