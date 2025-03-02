@@ -3,9 +3,8 @@ import { useSearchParams, usePathname, useRouter } from "next/navigation"
 // import { useSelector, useDispatch } from "react-redux"
 import { type RootState, useAppSelector, useAppDispatch } from "../store/store"
 import { toggleFilter, setFiltersFromUrl } from "@/store/slices/filtersSlice"
-import { selectCollections } from "@/store/slices/collectionSlice"
 import { selectCategories } from "@/store/slices/categoriesSlice"
-import { selectSeries } from "@/store/slices/seriesSlice"
+
 
 export const useFilters = () => {
     const dispatch = useAppDispatch();
@@ -36,9 +35,9 @@ export const useFilters = () => {
             let newValues: string[]
 
             if (category === "" && value === "") {
-                newParams.delete("Collection")
+                newParams.delete("triangles")
                 newParams.delete("Category")
-                newParams.delete("Series")
+                newParams.delete("fileSize")
                 newParams.delete("Name")
                 newParams.delete("page")
                 newParams.delete("reset")
@@ -70,14 +69,14 @@ export const useFilters = () => {
         [filters],
     )
 
-    const collections = useAppSelector(selectCollections)
+  
     const categories = useAppSelector(selectCategories)
-    const series = useAppSelector(selectSeries)
+
 
     const filterList = {
-        Collection: collections.map((collection) => collection.slug),
+
         Category: categories.map((category) => category.slug),
-        Series: series.map((serie) => serie.slug),
+
     }
 
     return { filters, toggleFilterValue, isActive, filterList }

@@ -12,8 +12,6 @@ async function clearDatabase() {
   await prisma.ProductPrice.deleteMany();
   await prisma.imagesProduct.deleteMany();
   await prisma.product.deleteMany();
-  await prisma.series.deleteMany();
-  await prisma.collection.deleteMany();
   await prisma.category.deleteMany();
   await prisma.profile.deleteMany();
   await prisma.user.deleteMany();
@@ -24,8 +22,6 @@ async function clearDatabase() {
   // await prisma.blacklist.deleteMany();
   await prisma.$executeRawUnsafe('TRUNCATE TABLE "User" RESTART IDENTITY CASCADE;');
   await prisma.$executeRawUnsafe('TRUNCATE TABLE "Product" RESTART IDENTITY CASCADE;');
-  await prisma.$executeRawUnsafe('TRUNCATE TABLE "Collection" RESTART IDENTITY CASCADE;');
-  await prisma.$executeRawUnsafe('TRUNCATE TABLE "Series" RESTART IDENTITY CASCADE;');
   await prisma.$executeRawUnsafe('TRUNCATE TABLE "Category" RESTART IDENTITY CASCADE;');
   await prisma.$executeRawUnsafe('TRUNCATE TABLE "Favorites" RESTART IDENTITY CASCADE;');
   await prisma.$executeRawUnsafe('TRUNCATE TABLE "Notification" RESTART IDENTITY CASCADE;');
@@ -62,25 +58,25 @@ async function main() {
   // Crear categorías
   const categories = [];
   categories.push(await prisma.category.create({
-    data: { name: 'Portraits', slug: 'portraits', image: 'https://picsum.photos/200' },
+    data: { name: 'Tools', slug: 'tools', image: 'https://picsum.photos/200' },
   }));
   categories.push(await prisma.category.create({
-    data: { name: 'Backgrounds', slug: 'backgrounds', image: 'https://picsum.photos/200' },
+    data: { name: 'Enviroment', slug: 'enviroment', image: 'https://picsum.photos/200' },
   }));
   categories.push(await prisma.category.create({
-    data: { name: '3D Models', slug: '3d-models', image: 'https://picsum.photos/200' },
+    data: { name: 'Vehicles', slug: 'vehicles', image: 'https://picsum.photos/200' },
   }));
   categories.push(await prisma.category.create({
     data: { name: 'Weapons', slug: 'Weapons', image: 'https://picsum.photos/200' },
   }));
   categories.push(await prisma.category.create({
-    data: { name: 'Concept Art', slug: 'concept-art', image: 'https://picsum.photos/200' },
+    data: { name: 'buildings', slug: 'buildings', image: 'https://picsum.photos/200' },
   }));
   categories.push(await prisma.category.create({
-    data: { name: 'Fanart', slug: 'fanart', image: 'https://picsum.photos/200' },
+    data: { name: 'small objects', slug: 'small-objects', image: 'https://picsum.photos/200' },
   }));
   categories.push(await prisma.category.create({
-    data: { name: 'Animations', slug: 'animations', image: 'https://picsum.photos/200' },
+    data: { name: 'Person', slug: 'person', image: 'https://picsum.photos/200' },
   }));
 
   console.log('Categorías creadas:', categories);
@@ -88,296 +84,262 @@ async function main() {
   // Crear tipos de producto
   const types = [];
   types.push(await prisma.type.create({
-    data: { name: 'Print', slug: 'print', image: 'https://picsum.photos/200' },
+    data: { name: 'standard', slug: 'standard', image: 'https://picsum.photos/200' },
   }));
   types.push(await prisma.type.create({
-    data: { name: 'Digital copy', slug: 'digital-copy', image: 'https://picsum.photos/200' },
+    data: { name: 'Commercial', slug: 'commercial', image: 'https://picsum.photos/200' },
   }));
   types.push(await prisma.type.create({
-    data: { name: '3D', slug: '3d', image: 'https://picsum.photos/200' },
-  }));
-  types.push(await prisma.type.create({
-    data: { name: 'Limited Edition bundle', slug: 'limited-edition-bundle', image: 'https://picsum.photos/200' },
+    data: { name: ' Prosthetic', slug: 'prosthetic', image: 'https://picsum.photos/200' },
   }));
 
   console.log('Tipos de producto creados:', types);
 
   // Crear colecciones
-  const collections = [];
-  collections.push(await prisma.collection.create({
-    data: { name: 'Reminiscence', slug: 'Reminiscence', image: 'https://picsum.photos/200' },
-  }));
-  collections.push(await prisma.collection.create({
-    data: { name: 'Tarot', slug: 'Tarot', image: 'https://picsum.photos/200' },
-  }));
-  collections.push(await prisma.collection.create({
-    data: { name: 'Bubbly colors', slug: 'Bubbly-colors', image: 'https://picsum.photos/200' },
-  }));
-  collections.push(await prisma.collection.create({
-    data: { name: 'Travel around Japan', slug: 'Travel-around-Japan', image: 'https://picsum.photos/200' },
-  }));
-  collections.push(await prisma.collection.create({
-    data: { name: 'Cozy', slug: 'Cozy', image: 'https://picsum.photos/200' },
-  }));
-  collections.push(await prisma.collection.create({
-    data: { name: 'Dragon Dance', slug: 'Dragon-Dance', image: 'https://picsum.photos/200' },
-  }));
-  collections.push(await prisma.collection.create({
-    data: { name: 'Cosmos', slug: 'Cosmos', image: 'https://picsum.photos/200' },
-  }));
-  collections.push(await prisma.collection.create({
-    data: { name: 'K-pop', slug: 'K-pop', image: 'https://picsum.photos/200' },
-  }));
-  collections.push(await prisma.collection.create({
-    data: { name: 'Reto Loulogio', slug: 'Reto-Loulogio', image: 'https://picsum.photos/200' },
-  }));
-
-  console.log('Colecciones creadas:', collections);
-
-  // Crear series
-  const series = [];
-  series.push(await prisma.series.create({
-    data: { name: 'Pokemon', slug: 'pokemon', image: 'col_pokemon.jpg' },
-  }));
-  series.push(await prisma.series.create({
-    data: { name: 'LoL', slug: 'lol', image: 'col_lol.jpg' },
-  }));
-  series.push(await prisma.series.create({
-    data: { name: 'Genshin', slug: 'genshin', image: 'col_genshin.jpg' },
-  }));
-  series.push(await prisma.series.create({
-    data: { name: 'GoT', slug: 'got', image: 'col_got.png' },
-  }));
-  series.push(await prisma.series.create({
-    data: { name: 'Dungeons & Dragons', slug: 'dungeons-&-dragons', image: 'col_dnd.jpg' },
-  }));
-  series.push(await prisma.series.create({
-    data: { name: 'Marvel', slug: 'marvel', image: 'col_marvel.jpg' },
-  }));
-  series.push(await prisma.series.create({
-    data: { name: 'Honkai Star Rail', slug: 'honkai-star-rail', image: 'col_honkai.jpg' },
-  }));
-  series.push(await prisma.series.create({
-    data: { name: 'Final Fantasy XIV', slug: 'final-fantasy-xiv', image: 'col_ffxiv.jpg' },
-  }));
-  series.push(await prisma.series.create({
-    data: { name: 'Hololive', slug: 'hololive', image: 'col_hololive.jpg' },
-  }));
-  series.push(await prisma.series.create({
-    data: { name: 'No series', slug: 'no-series', image: null },
-  }));
-  series.push(await prisma.series.create({
-    data: { name: 'Hyouka', slug: 'hyouka', image: null },
-  }));
-  series.push(await prisma.series.create({
-    data: { name: 'Avatar (ATLA)', slug: 'avatar-(atla)', image: null },
-  }));
-
-  console.log('Series creadas:', series);
-
+  
   // Crear productos con relaciones
+  
     const products = [];
     products.push(await prisma.product.create({
       data: {
         name: 'Aomori Fauna',
         slug: 'Aomori-Fauna',
-        stock: 10,
         userId: 1,
-        collectionId: 4,
-        seriesId: 9,
+        file: 'aomori-fauna.glb',
+        fileSize: '15MB',
+        description: 'A stunning 3D model inspired by Aomori landscapes.',
+        triangles: 100000,
       },
     }));
+    
     products.push(await prisma.product.create({
       data: {
         name: 'Signal Sky',
         slug: 'Signal-Sky',
-        stock: 5,
         userId: 2,
-        collectionId: 4,
-        seriesId: 1,
+        file: 'signal-sky.glb',
+        fileSize: '12MB',
+        description: 'A model showcasing the beauty of signal waves in the sky.',
+        triangles: 85000,
       },
     }));
+    
     products.push(await prisma.product.create({
       data: {
         name: 'Endwalker',
-        slug: 'Endwalker',
-        stock: 15,
+        slug: 'Endwalker', 
         userId: 1,
-        collectionId: 1,
-        seriesId: 8,
+        file: 'endwalker.glb',
+        fileSize: '18MB',
+        description: 'A high-quality model inspired by the Endwalker expansion.',
+        triangles: 120000,
       },
     }));
+    
     products.push(await prisma.product.create({
       data: {
         name: 'iRys',
         slug: 'iRys',
-        stock: 8,
         userId: 2,
-        collectionId: 1,
-        seriesId: 9,
+        file: 'irys.glb',
+        fileSize: '14MB',
+        description: 'A futuristic model representing digital transformation.',
+        triangles: 90000,
       },
     }));
+    
     products.push(await prisma.product.create({
       data: {
         name: 'Sana',
         slug: 'Sana',
-        stock: 12,
         userId: 1,
-        collectionId: 3,
-        seriesId: 9,
+        file: 'sana.glb',
+        fileSize: '10MB',
+        description: 'A cosmic-themed 3D model capturing the essence of space.',
+        triangles: 75000,
       },
     }));
+    
     products.push(await prisma.product.create({
       data: {
         name: 'Puerto al alba',
         slug: 'Puerto-al-alba',
-        stock: 10,
         userId: 2,
-        collectionId: 5,
-        seriesId: 10,
+        file: 'puerto-al-alba.glb',
+        fileSize: '16MB',
+        description: 'A tranquil port scene at dawn.',
+        triangles: 95000,
       },
     }));
+    
     products.push(await prisma.product.create({
       data: {
         name: 'Puerto al ocaso',
         slug: 'Puerto-al-ocaso',
-        stock: 5,
         userId: 1,
-        collectionId: 5,
-        seriesId: 10,
+        file: 'puerto-al-ocaso.glb',
+        fileSize: '13MB',
+        description: 'A beautiful port scene at sunset.',
+        triangles: 89000,
       },
     }));
+    
     products.push(await prisma.product.create({
       data: {
         name: 'Cafe Hyouka',
         slug: 'Cafe-Hyouka',
-        stock: 15,
         userId: 2,
-        collectionId: 1,
-        seriesId: 11,
+        file: 'cafe-hyouka.glb',
+        fileSize: '11MB',
+        description: 'A cozy café scene inspired by the Hyouka series.',
+        triangles: 78000,
       },
     }));
+    
     products.push(await prisma.product.create({
       data: {
         name: 'Cage interpretation',
         slug: 'Cage-interpretation',
-        stock: 8,
         userId: 1,
-        collectionId: 9,
-        seriesId: 10,
+        file: 'cage-interpretation.glb',
+        fileSize: '17MB',
+        description: 'A symbolic 3D model representing entrapment and freedom.',
+        triangles: 102000,
       },
     }));
+    
     products.push(await prisma.product.create({
       data: {
         name: 'Dragon dance - Zuko',
         slug: 'Dragon-dance-Zuko',
-        stock: 12,
         userId: 2,
-        collectionId: 6,
-        seriesId: 12,
+        file: 'dragon-dance-zuko.glb',
+        fileSize: '20MB',
+        description: 'Zuko performing the dragon dance in high detail.',
+        triangles: 150000,
       },
     }));
+    
     products.push(await prisma.product.create({
       data: {
         name: 'Dragon dance - Aang',
         slug: 'Dragon-dance-Aang',
-
-        stock: 10,
         userId: 1,
-        collectionId: 6,
-        seriesId: 12,
+        file: 'dragon-dance-aang.glb',
+        fileSize: '19MB',
+        description: 'Aang performing the dragon dance in stunning 3D.',
+        triangles: 140000,
       },
     }));
+    
     products.push(await prisma.product.create({
       data: {
         name: 'Pokemon Galicia',
         slug: 'Pokemon-Galicia',
-        stock: 15,
         userId: 2,
-        collectionId: 9,
-        seriesId: 1,
+        file: 'pokemon-galicia.glb',
+        fileSize: '21MB',
+        description: 'A Pokemon-inspired model set in the Galicia region.',
+        triangles: 160000,
       },
     }));
+    
     products.push(await prisma.product.create({
       data: {
         name: 'Temple Yue',
         slug: 'Temple-Yue',
-        stock: 8,
         userId: 1,
-        collectionId: 1,
-        seriesId: 5,
+        file: 'temple-yue.glb',
+        fileSize: '14MB',
+        description: 'A grand temple dedicated to Yue in a moonlit setting.',
+        triangles: 110000,
       },
     }));
+    
     products.push(await prisma.product.create({
       data: {
         name: 'Moonholder Yue',
         slug: 'Moonholder-Yue',
-        stock: 12,
         userId: 2,
-        collectionId: 7,
-        seriesId: 5,
+        file: 'moonholder-yue.glb',
+        fileSize: '15MB',
+        description: 'A mystical 3D representation of Yue holding the moon.',
+        triangles: 125000,
       },
     }));
+    
     products.push(await prisma.product.create({
       data: {
         name: 'Agni kai',
         slug: 'Agni-kai',
-        stock: 10,
         userId: 1,
-        collectionId: 6,
-        seriesId: 12,
+        file: 'agni-kai.glb',
+        fileSize: '22MB',
+        description: 'A fiery duel between two powerful benders.',
+        triangles: 170000,
       },
     }));
+    
     products.push(await prisma.product.create({
       data: {
         name: 'Hoenn',
         slug: 'Hoenn',
-        stock: 15,
         userId: 2,
-        collectionId: 5,
-        seriesId: 1,
+        file: 'hoenn.glb',
+        fileSize: '18MB',
+        description: 'A vibrant 3D model of the Hoenn region.',
+        triangles: 135000,
       },
     }));
+    
     products.push(await prisma.product.create({
       data: {
         name: 'Hyouka finale',
         slug: 'Hyouka-finale',
-        stock: 8,
         userId: 1,
-        collectionId: 1,
-        seriesId: 11,
+        file: 'hyouka-finale.glb',
+        fileSize: '12MB',
+        description: 'A dramatic recreation of the final scene of Hyouka.',
+        triangles: 105000,
       },
     }));
+    
     products.push(await prisma.product.create({
       data: {
         name: 'Starry night',
         slug: 'Starry-night',
-        stock: 12,
         userId: 2,
-        collectionId: 7,
-        seriesId: 10,
+        file: 'starry-night.glb',
+        fileSize: '16MB',
+        description: 'A 3D visualization inspired by Van Gogh’s Starry Night.',
+        triangles: 98000,
       },
     }));
+    
     products.push(await prisma.product.create({
       data: {
         name: 'Heize',
         slug: 'Heize',
-        stock: 10,
         userId: 1,
-        collectionId: 8,
-        seriesId: 10,
+        file: 'heize.glb',
+        fileSize: '11MB',
+        description: 'A minimalistic yet elegant 3D representation.',
+        triangles: 92000,
       },
     }));
+    
     products.push(await prisma.product.create({
       data: {
         name: 'Kokomi',
         slug: 'Kokomi',
-        stock: 15,
         userId: 2,
-        collectionId: 2,
-        seriesId: 3,
+        file: 'kokomi.glb',
+        fileSize: '19MB',
+        description: 'A stunning model of Kokomi in an underwater setting.',
+        triangles: 132000,
       },
     }));
+    
 
     console.log('Productos creados:', products);
 
@@ -627,28 +589,28 @@ const productPrices = await prisma.productPrice.createMany({
     
     // Producto 2
     { productId: products[1].id, typeId: types[0].id, price: 19.99 }, 
-    { productId: products[1].id, typeId: types[2].id, price: 29.99 },
+    { productId: products[1].id, typeId: types[1].id, price: 29.99 },
 
     // Producto 3
     { productId: products[2].id, typeId: types[0].id, price: 29.99 }, 
-    { productId: products[2].id, typeId: types[3].id, price: 49.99 },
+    { productId: products[2].id, typeId: types[1].id, price: 49.99 },
 
     // Producto 4
-    { productId: products[3].id, typeId: types[1].id, price: 22.50 }, 
-    { productId: products[3].id, typeId: types[2].id, price: 35.00 },
+    { productId: products[3].id, typeId: types[0].id, price: 22.50 }, 
+    { productId: products[3].id, typeId: types[1].id, price: 35.00 },
 
     // Producto 5
     { productId: products[4].id, typeId: types[0].id, price: 27.99 },
     { productId: products[4].id, typeId: types[1].id, price: 17.99 },
-    { productId: products[4].id, typeId: types[3].id, price: 55.00 },
+
 
     // Producto 6
     { productId: products[5].id, typeId: types[0].id, price: 24.50 }, 
-    { productId: products[5].id, typeId: types[2].id, price: 32.99 },
+    { productId: products[5].id, typeId: types[1].id, price: 32.99 },
 
     // Producto 7
-    { productId: products[6].id, typeId: types[1].id, price: 21.99 }, 
-    { productId: products[6].id, typeId: types[3].id, price: 42.50 },
+    { productId: products[6].id, typeId: types[0].id, price: 21.99 }, 
+    { productId: products[6].id, typeId: types[1].id, price: 42.50 },
 
     // Producto 8
     { productId: products[7].id, typeId: types[0].id, price: 30.00 },
@@ -656,51 +618,50 @@ const productPrices = await prisma.productPrice.createMany({
 
     // Producto 9
     { productId: products[8].id, typeId: types[0].id, price: 26.99 },
-    { productId: products[8].id, typeId: types[2].id, price: 38.99 },
+    { productId: products[8].id, typeId: types[1].id, price: 38.99 },
 
     // Producto 10
-    { productId: products[9].id, typeId: types[1].id, price: 23.50 }, 
-    { productId: products[9].id, typeId: types[3].id, price: 50.00 },
+    { productId: products[9].id, typeId: types[0].id, price: 23.50 }, 
+    { productId: products[9].id, typeId: types[1].id, price: 50.00 },
 
     // Producto 11
     { productId: products[10].id, typeId: types[0].id, price: 28.99 }, 
-    { productId: products[10].id, typeId: types[2].id, price: 40.99 },
+    { productId: products[10].id, typeId: types[1].id, price: 40.99 },
 
     // Producto 12
-    { productId: products[11].id, typeId: types[1].id, price: 31.99 }, 
-    { productId: products[11].id, typeId: types[3].id, price: 60.00 },
+    { productId: products[11].id, typeId: types[0].id, price: 31.99 }, 
+    { productId: products[11].id, typeId: types[1].id, price: 60.00 },
 
     // Producto 13
     { productId: products[12].id, typeId: types[0].id, price: 20.50 },
     { productId: products[12].id, typeId: types[1].id, price: 14.50 },
 
     // Producto 14
-    { productId: products[13].id, typeId: types[2].id, price: 32.99 }, 
-    { productId: products[13].id, typeId: types[3].id, price: 58.50 },
+    { productId: products[13].id, typeId: types[2].id, price: 32.99 },
 
     // Producto 15
     { productId: products[14].id, typeId: types[0].id, price: 18.99 }, 
     { productId: products[14].id, typeId: types[1].id, price: 12.99 },
 
     // Producto 16
-    { productId: products[15].id, typeId: types[2].id, price: 25.50 }, 
-    { productId: products[15].id, typeId: types[3].id, price: 45.00 },
+    { productId: products[15].id, typeId: types[0].id, price: 25.50 }, 
+    { productId: products[15].id, typeId: types[1].id, price: 45.00 },
 
     // Producto 17
     { productId: products[16].id, typeId: types[0].id, price: 29.99 }, 
     { productId: products[16].id, typeId: types[1].id, price: 19.99 },
 
     // Producto 18
-    { productId: products[17].id, typeId: types[2].id, price: 33.99 }, 
-    { productId: products[17].id, typeId: types[3].id, price: 65.00 },
+    { productId: products[17].id, typeId: types[0].id, price: 33.99 }, 
+    { productId: products[17].id, typeId: types[1].id, price: 65.00 },
 
     // Producto 19
     { productId: products[18].id, typeId: types[0].id, price: 22.99 }, 
     { productId: products[18].id, typeId: types[1].id, price: 16.99 },
 
     // Producto 20
-    { productId: products[19].id, typeId: types[2].id, price: 30.50 }, 
-    { productId: products[19].id, typeId: types[3].id, price: 55.50 },
+    { productId: products[19].id, typeId: types[0].id, price: 30.50 }, 
+    { productId: products[19].id, typeId: types[1].id, price: 55.50 },
   ],
 });
 

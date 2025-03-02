@@ -4,8 +4,6 @@ import type React from "react"
 import { useState } from "react"
 import { useAppSelector } from "../../store/store"
 import { selectCategories } from "../../store/slices/categoriesSlice"
-import { selectSeries } from "../../store/slices/seriesSlice"
-import { selectCollections } from "../../store/slices/collectionSlice"
 import { selectTypes } from "../../store/slices/typesSlice"
 import { Button } from "../ui/button"
 import { useFileUpload } from "@/hooks/useFileUpload"
@@ -17,8 +15,6 @@ interface ProductForm {
     name: string
     categories: number[]
     size: string | null
-    series: number
-    collection: number
     types: { id: number; price: number }[]
     file: File | null
     email: string
@@ -30,16 +26,12 @@ export default function UploadForm() {
         name: "",
         categories: [],
         size: "",
-        series: 0,
-        collection: 0,
         types: [],
         file: null,
         email: session.data?.user.email || "",
     })
     const [loading, setLoading] = useState(false)
     const categories = useAppSelector(selectCategories)
-    const series = useAppSelector(selectSeries)
-    const collections = useAppSelector(selectCollections)
     const types = useAppSelector(selectTypes)
     const { uploadFiles } = useFileUpload()
     const onFieldChange = (val: Partial<ProductForm>) => {
@@ -131,41 +123,7 @@ export default function UploadForm() {
                     />
                 </fieldset>
 
-                <div className="flex gap-4">
-                    <fieldset className="form-group mb-0 w-1/2">
-                        <label className="block mb-1 text-lg font-semibold">Series</label>
-                        <select
-                            className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent text-black"
-                            value={product.series}
-                            onChange={(e) => setProduct({ ...product, series: Number(e.target.value) })}
-                            disabled={loading}
-                        >
-                            <option value={0}>Select a series</option>
-                            {series.map((series) => (
-                                <option key={series.id} value={series.id}>
-                                    {series.name}
-                                </option>
-                            ))}
-                        </select>
-                    </fieldset>
-
-                    <fieldset className="form-group mb-0 w-1/2">
-                        <label className="block mb-1 text-lg font-semibold">Collection</label>
-                        <select
-                            className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent text-black"
-                            value={product.collection}
-                            onChange={(e) => setProduct({ ...product, collection: Number(e.target.value) })}
-                            disabled={loading}
-                        >
-                            <option value={0}>Select a collection</option>
-                            {collections.map((collection) => (
-                                <option key={collection.id} value={collection.id}>
-                                    {collection.name}
-                                </option>
-                            ))}
-                        </select>
-                    </fieldset>
-                </div>
+               
 
                 {/* Size buttons */}
                 <div className="flex gap-4">

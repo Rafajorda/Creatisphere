@@ -2,6 +2,20 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { useState } from 'react';
+import ModelViewer3d from '../viewer/3dmodelviewer';
+import { useAppSelector } from '@/store/store';
+import { selectCategories } from '@/store/slices/categoriesSlice';
+import { useSession } from 'next-auth/react';
+
+interface productForm {
+    name: string
+    categories: number[]
+    file: File | null
+    types: { id: number; price: number }[]
+    triangles: number | null
+    fileSize: string
+    email: string
+}
 
 function ModelUploader() {
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -17,7 +31,51 @@ function ModelUploader() {
         }
     };
 
+    const saveModel = async () => {
+        if (!selectedFile) return;
+        const fileBuffer = await new Promise<ArrayBuffer>((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(reader.result as ArrayBuffer);
+            reader.onerror = () => reject(new Error("Failed to read file"));
+            reader.readAsArrayBuffer(selectedFile);
+        });
+
+
+        const reader = new FileReader();
+        reader.onload = () => {
+            // const buffer = reader.result;
+            fetch('/api/upload', {
+                method: 'POST',
+                body: JSON.stringify({
+                    fileName: selectedFile.name.replace('.gltf', '.glb'),
+                    fileData: Buffer.from(fileBuffer as ArrayBuffer).toString('base64')
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    console.log('File uploaded successfully');
+                } else {
+                    console.error('File upload failed');
+                }
+            })
+            .catch(error => {
+                console.error('Error uploading file:', error);
+            });
+        };
+        reader.readAsArrayBuffer(selectedFile);
+    };
+        
+
     const processModel = async (file: Blob | MediaSource) => {
+        const  session = useSession();
+        const categories = useAppSelector(selectCategories)
+
+
+
         return new Promise<void>((resolve, reject) => {
             const loader = new GLTFLoader();
             const fileSize = file instanceof Blob ? (file.size / 1024).toFixed(2) + " KB" : "Unknown size"; // Get file size in KB
@@ -32,57 +90,13 @@ function ModelUploader() {
                     if (child.isMesh) {
                         const geometry = child.geometry;
                         if (geometry.index) {
-                            triangleCount += geometry.index.count / 3; // Indexed geometry
+                            triangleCount += geometry.index.count / 3;
                         } else {
-                            triangleCount += geometry.attributes.position.count / 3; // Non-indexed
+                            triangleCount += geometry.attributes.position.count / 3; 
                         }
                     }
                 });
                 setTriangleCount(triangleCount);
-                console.log("📌 Model Metadata:");
-                console.log("📂 File Name:", (file as File).name);
-                console.log("📏 File Size:", fileSize);
-                console.log("🔺 Triangles:", triangleCount);
-                console.log("🔺 Triangles:", triangleCount);
-
-                // Save the file to public/assets/3d
-                const reader = new FileReader();
-                reader.onload = () => {
-                    const buffer = reader.result;
-                    const blob = new Blob([buffer as ArrayBuffer], { type: 'model/gltf-binary' });
-                    const link = document.createElement('a');
-                    link.href = URL.createObjectURL(blob);
-                    fetch('/api/upload', {
-                        method: 'POST',
-                        body: JSON.stringify({
-                            fileName: (file as File).name.replace('.gltf', '.glb'),
-                            fileData: Buffer.from(buffer as ArrayBuffer).toString('base64')
-                        }),
-                        headers: {
-                            'Content-Type': 'application/json'
-                        }
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            console.log('File uploaded successfully');
-                        } else {
-                            console.error('File upload failed');
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error uploading file:', error);
-                    });
-                    const saveButton = document.createElement('button');
-                    saveButton.textContent = 'Save Model';
-                    saveButton.onclick = () => {
-                        link.click();
-                        document.body.removeChild(saveButton);
-                    };
-                    document.body.appendChild(saveButton);
-                };
-                reader.readAsArrayBuffer(file as Blob);
-
                 URL.revokeObjectURL(fileURL); // Clean up object URL
                 resolve();
             }, undefined, (error: any) => reject(error));
@@ -90,30 +104,35 @@ function ModelUploader() {
     };
 
     return (
-        <div className="p-4">
-            <h2 className="text-lg font-bold">Upload 3D Model</h2>
-            <select className="border p-2 rounded-md mt-2">
-                <option>Select a 3D model</option>
-                {selectedFile && <option>{selectedFile.name}</option>}
-            </select>
+        <div className="flex justify-center items-center min-h-screen bg-gray-100">
+            <div className="p-6 bg-white rounded-lg shadow-md w-full max-w-md">
+            <h2 className="text-2xl font-semibold mb-4 text-center">Upload 3D Model</h2>
             <input
                 type="file"
                 accept=".gltf, .glb"
                 onChange={handleFileChange}
-                className="block mt-4 p-2 border rounded-md"
+                className="block w-full p-2 border border-gray-300 rounded-md mb-4"
             />
             {selectedFile && (
-                <div className="mt-4">
-                    <p className="text-sm">File Size: {(selectedFile.size / 1024).toFixed(2)} KB</p>
-                    <p className="text-sm">Triangles: {triangleCount}</p>
-                    <button
-                        onClick={() => processModel(selectedFile)}
-                        className="mt-4 p-2 bg-blue-500 text-white rounded-md"
-                    >
-                        Save Model
-                    </button>
+                <div className="mb-4">
+                <ModelViewer3d modelUrl={URL.createObjectURL(selectedFile)} />
                 </div>
             )}
+            <div className="mt-4">
+                {selectedFile && (
+                <p className="text-sm text-gray-600 mb-2">
+                    File Size: {(selectedFile.size / 1024).toFixed(2)} KB
+                </p>
+                )}
+                <p className="text-sm text-gray-600 mb-4">Triangles: {triangleCount}</p>
+                <button
+                    onClick={() => { if (selectedFile) saveModel(); }}
+                    className="w-full p-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+                    >
+                Save Model
+                </button>
+            </div>
+            </div>
         </div>
     );
 }

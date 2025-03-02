@@ -40,8 +40,10 @@ CREATE TABLE "Product" (
     "stock" INTEGER,
     "userId" INTEGER NOT NULL,
     "cartId" INTEGER,
-    "seriesId" INTEGER NOT NULL,
-    "collectionId" INTEGER NOT NULL,
+    "file"    TEXT,
+    "fileSize"  TEXT
+    "description"  TEXT
+    "triangles"      INTEGER
     "favoritesCount" INTEGER NOT NULL DEFAULT 0,
     "status" "status" NOT NULL DEFAULT 'ACTIVE',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -76,31 +78,8 @@ CREATE TABLE "Type" (
     CONSTRAINT "Type_pkey" PRIMARY KEY ("id")
 );
 
--- CreateTable
-CREATE TABLE "Collection" (
-    "id" SERIAL NOT NULL,
-    "name" TEXT NOT NULL,
-    "slug" TEXT NOT NULL,
-    "image" TEXT,
-    "status" "status" NOT NULL DEFAULT 'ACTIVE',
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3) NOT NULL,
 
-    CONSTRAINT "Collection_pkey" PRIMARY KEY ("id")
-);
 
--- CreateTable
-CREATE TABLE "Series" (
-    "id" SERIAL NOT NULL,
-    "name" TEXT NOT NULL,
-    "slug" TEXT NOT NULL,
-    "image" TEXT,
-    "status" "status" NOT NULL DEFAULT 'ACTIVE',
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3) NOT NULL,
-
-    CONSTRAINT "Series_pkey" PRIMARY KEY ("id")
-);
 
 -- CreateTable
 CREATE TABLE "User" (
@@ -249,12 +228,6 @@ CREATE UNIQUE INDEX "Category_slug_key" ON "Category"("slug");
 CREATE UNIQUE INDEX "Type_slug_key" ON "Type"("slug");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Collection_slug_key" ON "Collection"("slug");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Series_slug_key" ON "Series"("slug");
-
--- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- CreateIndex
@@ -277,12 +250,6 @@ ALTER TABLE "Product" ADD CONSTRAINT "Product_userId_fkey" FOREIGN KEY ("userId"
 
 -- AddForeignKey
 ALTER TABLE "Product" ADD CONSTRAINT "Product_cartId_fkey" FOREIGN KEY ("cartId") REFERENCES "Cart"("id") ON DELETE SET NULL ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Product" ADD CONSTRAINT "Product_collectionId_fkey" FOREIGN KEY ("collectionId") REFERENCES "Collection"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Product" ADD CONSTRAINT "Product_seriesId_fkey" FOREIGN KEY ("seriesId") REFERENCES "Series"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Profile" ADD CONSTRAINT "Profile_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;

@@ -5,7 +5,7 @@ import PriceDisplay from "@/components/Cart/PriceDisplay"
 import { ProductItem } from "@/types/Product"
 
 interface ListDetailsProps {
-    product: ProductItem // Replace 'any' with a proper Product interface
+    product: ProductItem 
 }
 
 const ListDetails = ({ product }: ListDetailsProps) => {
@@ -30,12 +30,7 @@ const ListDetails = ({ product }: ListDetailsProps) => {
             >
                 <h1 className="text-4xl font-bold mb-4">{product.name}</h1>
                 <div className="space-y-4 mb-8">
-                    <p className="text-lg">
-                        <span className="font-semibold">Collection:</span> {product.collections.name}
-                    </p>
-                    <p className="text-lg">
-                        <span className="font-semibold">Series:</span> {product.series.name}
-                    </p>
+                    
 
                     <div className="mb-6">
                         <PriceSelector prices={product.productPrices} defaultPrice={defaultPrice} />

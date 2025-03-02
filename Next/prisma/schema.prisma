@@ -63,11 +63,12 @@ model Product {
   id             Int             @id @default(autoincrement())
   name           String
   slug           String          @unique
-  stock          Int?
+  file           String
+  fileSize       String
+  description    String
+  triangles      Int
   userId         Int
   cartId         Int?
-  seriesId       Int
-  collectionId   Int
   favoritesCount Int             @default(0)
   status         status          @default(ACTIVE)
   createdAt      DateTime        @default(now())
@@ -75,8 +76,6 @@ model Product {
   favoritedBy    Favorites[]     @relation("ProductFavoritedBy")
   ImagesProduct  ImagesProduct[]
   Cart           Cart?           @relation(fields: [cartId], references: [id])
-  collections    Collection      @relation(fields: [collectionId], references: [id])
-  series         Series          @relation(fields: [seriesId], references: [id])
   artist         User            @relation(fields: [userId], references: [id])
   productPrices  ProductPrice[]
   returns        ReturnsLine[]
@@ -119,28 +118,6 @@ model Category {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   products  Product[] @relation("CategoryToProduct")
-}
-
-model Collection {
-  id        Int       @id @default(autoincrement())
-  name      String
-  slug      String    @unique
-  image     String?
-  status    status    @default(ACTIVE)
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  products  Product[]
-}
-
-model Series {
-  id        Int       @id @default(autoincrement())
-  name      String
-  slug      String    @unique
-  image     String?
-  status    status    @default(ACTIVE)
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  products  Product[]
 }
 
 model User {
@@ -317,8 +294,8 @@ model Incidents {
   orderLine   OrderLine? @relation(fields: [orderLineId], references: [id], onDelete: Cascade)
   description String?
   type        String
-  
-  status      status     @default(ACTIVE)
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
+
+  status    status   @default(ACTIVE)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

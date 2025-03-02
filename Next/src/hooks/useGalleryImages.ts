@@ -7,16 +7,19 @@ export interface GalleryImage {
     size: 'square' | 'wide' | 'tall';
     slug: string;
     name: string;
-    collection: string;
-    series: string;
+    fileSize: string;
+    triangles: number;
+    description: string;
     favorited: boolean;
     favoritedBy: [];
 }
 
 interface filters {
     category?: string[]
-    collection?: string[]
-    series?: string
+    fileSize?: string
+    triangles?: number
+    description?: string
+    name?: string
     page?: number
 }
 
@@ -56,8 +59,9 @@ export const useFetchGalleryImages = async (filters: filters): Promise<GalleryIm
             size: firstImage.size,
             slug: product.slug,
             name: product.name,
-            collection: product.collections.name,
-            series: product.series.name,
+            fileSize: product.fileSize,
+            triangles: product.triangles,
+            description: product.description,
             favorited: product.favorited,
             favoritedBy: product.favoritedBy
         };

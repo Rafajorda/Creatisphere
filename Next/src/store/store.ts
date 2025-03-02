@@ -4,9 +4,7 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 
 // Importa tus reducers aquí
 import productReducer from './slices/productSlice';
-import collectionReducer from './slices/collectionSlice';
 import filtersReducer from './slices/filtersSlice';
-import seriesReducer from './slices/seriesSlice';
 import categoriesReducer from './slices/categoriesSlice';
 import priceReducer from './slices/priceSlice';
 import favoriteReducer from './slices/favoriteSlice';
@@ -17,9 +15,7 @@ import typesReducer from './slices/typesSlice';
 export const store = configureStore({
     reducer: {
         product: productReducer,
-        collection: collectionReducer,
         filters: filtersReducer,
-        series: seriesReducer,
         categories: categoriesReducer,
         price: priceReducer,
         favorite: favoriteReducer,

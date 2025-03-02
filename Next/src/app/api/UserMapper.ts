@@ -20,8 +20,11 @@ export function userMapper(user: UserWithRelations, currentUser: currentUser): U
         ...product,
         categories: product.categories,
         productPrices: product.productPrices,
-        series: product.series,
-        collections: product.collections,
+        file: product.file,
+        fileSize: product.fileSize,
+        triangles: product.triangles,
+        description: product.description,
+
         artist: user,
         ImagesProduct: product.ImagesProduct,
   
@@ -32,8 +35,6 @@ export function userMapper(user: UserWithRelations, currentUser: currentUser): U
         ...favorite.favoriting,
         categories: favorite.favoriting.categories,
         productPrices: favorite.favoriting.productPrices,
-        series: favorite.favoriting.series,
-        collections: favorite.favoriting.collections,
         artist: {
           id: favorite.favoriting.artist.id,
           username: favorite.favoriting.artist.profile?.username || '',

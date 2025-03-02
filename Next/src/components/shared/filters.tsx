@@ -32,7 +32,7 @@ export function Filters() {
                         <SheetTitle className="text-white">Filters</SheetTitle>
                         <SheetDescription></SheetDescription>
                     </SheetHeader>
-                    <Search placeholder="Product's name" />
+                    <Search placeholder="Search" />
                     <Accordion type="multiple" className="w-full">
                         <div className="grid gap-4 py-4">
                             {Object.entries(filterList).map(([filter, indexes]) => (

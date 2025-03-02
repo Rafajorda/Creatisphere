@@ -12,7 +12,7 @@ export const POST = async (req: NextRequest) => {
     try{
     const body = await req.json();
    
-    if (!body || !body.name || !body.email || !body.series || !body.collection) {
+    if (!body || !body.name || !body.email ) {
         return NextResponse.json({ error: "Faltan datos obligatorios" }, { status: 400 });
     }
 
@@ -38,9 +38,6 @@ export const POST = async (req: NextRequest) => {
             data: {
                 name: body.name,
                 slug: slug,
-                seriesId: body.series,
-                collectionId: body.collection,
-                stock: 1,
                 userId: user?.id,
                 categories: {
                   connect: body.categories.map((categoryId: number) => ({ id: categoryId }))

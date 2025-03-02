@@ -6,8 +6,9 @@ import { SkeletonProduct } from '../shared/skeletons/skeletonProduct';
 const ImageGallery = async ({ searchParams }: {
     searchParams?: {
         Category?: string[]
-        Collection?: string[]
-        Series?: string[]
+        fileSize?: string
+        triangles?: number
+        description?: string
         Name?: string
         Page?: number
     }
@@ -15,11 +16,9 @@ const ImageGallery = async ({ searchParams }: {
 
 
     // const category = await searchParams?.category || '';
-    const { Category, Collection, Series, Name, Page } = await searchParams;
+    const { Category, description, fileSize,triangles, Name, Page } = await searchParams;
     const filters = {
-        categorySlugs: Category ? Category.split(',') : '', // Dividimos por comas
-        collectionSlugs: Collection ? Collection.split(',') : '',
-        seriesSlugs: Series ? Series.split(',') : '',
+        categorySlugs: Category ? Category.split(',') : '', 
         searchQuery: Name || '',
         page: Page || 0,
     };

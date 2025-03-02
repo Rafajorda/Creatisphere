@@ -7,8 +7,6 @@ type UserWithRelations = User & {
   products: (Product & {
     categories: Category[];
     productPrices: ProductPrice[];
-    series: Series;
-    collections: Collection;
     ImagesProduct: ImagesProduct[];
     productPrices: ProductPrice[];
   })[];
@@ -17,8 +15,6 @@ type UserWithRelations = User & {
     favoriting: Product & {
       categories: Category[];
       productPrices: ProductPrice[];
-      series: Series;
-      collections: Collection;
       ImagesProduct: ImagesProduct[];
       artist: User & { profile: Profile | null };
     };

@@ -9,8 +9,6 @@ interface GetProductsParams {
   status?: string;
   categorySlugs?: string[];
   // typeSlugs?: string[];
-  seriesSlugs?: string[];
-  collectionSlugs?: string[];
   searchQuery?: string;
   pageSize?: number;
   page?: number;
@@ -25,22 +23,6 @@ export default async function getProducts(params: GetProductsParams = {}): Promi
   const currentUser = await getCurrentUser()
   const userId = currentUser?.id
 
-  // Construir una clave única para Redis basado en los parámetros
-  // const cacheKey = `products:${JSON.stringify(params)}`;
-  // const cacheKey = `products:${JSON.stringify(params)}`;
-
-  // 1. Intentar obtener los datos desde Redis
-  // const cachedData = await redis.get(cacheKey);
-  // if (cachedData) {
-  //   // console.log('Usando datos en caché para productos');
-  //   return JSON.parse(cachedData);
-  // }
-  // const cachedData = await redis.get(cacheKey);
-  // if (cachedData) {
-  //   // console.log('Usando datos en caché para productos');
-  //   return JSON.parse(cachedData);
-  // }
-
   const query: any = {}
   query.status = 'ACTIVE';
 
@@ -50,20 +32,6 @@ export default async function getProducts(params: GetProductsParams = {}): Promi
         slug: {
           in: params.categorySlugs,
         },
-      },
-    }
-  }
-  if (params.seriesSlugs) {
-    query.series = {
-      slug: {
-        in: params.seriesSlugs,
-      },
-    }
-  }
-  if (params.collectionSlugs) {
-    query.collections = {
-      slug: {
-        in: params.collectionSlugs,
       },
     }
   }
@@ -83,15 +51,14 @@ export default async function getProducts(params: GetProductsParams = {}): Promi
     include: {
       artist: true,
       categories: true,
-      series: true,
-      collections: true,
       ImagesProduct: true,
       productPrices: true,
       favoritedBy: {
         where: {
           userId: userId
         }
-      }
+      },
+    
     }
   });
 
@@ -103,8 +70,10 @@ export default async function getProducts(params: GetProductsParams = {}): Promi
         ...product,
         categories: product.categories,
         productPrices: product.productPrices,
-        series: product.series,
-        collections: product.collections,
+        file: product.file,
+        fileSize: product.fileSize,
+        triangles: product.triangles,
+        description: product.description,
         ImagesProduct: product.ImagesProduct,
         artist: product.artist,
         favorited,
