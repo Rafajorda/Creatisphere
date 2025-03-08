@@ -11,7 +11,7 @@ interface productForm {
     name: string
     categories: number[]
     file: File | null
-    types: { id: number; price: number }[]
+    types: []
     triangles: number | null
     fileSize: string
     email: string
@@ -71,8 +71,8 @@ function ModelUploader() {
         
 
     const processModel = async (file: Blob | MediaSource) => {
-        const  session = useSession();
-        const categories = useAppSelector(selectCategories)
+        // const  session = useSession();
+        // const categories = useAppSelector(selectCategories)
 
 
 
@@ -120,11 +120,13 @@ function ModelUploader() {
             )}
             <div className="mt-4">
                 {selectedFile && (
+                    <>
                 <p className="text-sm text-gray-600 mb-2">
                     File Size: {(selectedFile.size / 1024).toFixed(2)} KB
                 </p>
-                )}
                 <p className="text-sm text-gray-600 mb-4">Triangles: {triangleCount}</p>
+                </>
+            )}
                 <button
                     onClick={() => { if (selectedFile) saveModel(); }}
                     className="w-full p-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"

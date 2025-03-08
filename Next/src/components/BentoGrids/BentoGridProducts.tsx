@@ -18,7 +18,7 @@ const ImageGallery = async ({ searchParams }: {
     // const category = await searchParams?.category || '';
     const { Category, description, fileSize,triangles, Name, Page } = await searchParams;
     const filters = {
-        categorySlugs: Category ? Category.split(',') : '', 
+        categorySlugs: Category ? Category.split(',') : '', // Dividimos por comas
         searchQuery: Name || '',
         page: Page || 0,
     };
