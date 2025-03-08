@@ -18,7 +18,7 @@ export const CardCart = ({ item }: CartItemProps) => {
                 <div className={`relative ${size === "tall" ? "h-96 w-56" : "h-56 w-96"}`}>
                     <Link href={`/Details/${item.productPrice.product.slug}`}>
                         <Image
-                            src={`/assets/products/${item.productPrice.product.ImagesProduct[0].src}`}
+                            src={`/assets/products/${item.productPrice.product.userId}/${item.productPrice.product.ImagesProduct[0].src}`}
                             alt={item.productPrice.product.name}
                             layout="fill"
                             objectFit="cover"

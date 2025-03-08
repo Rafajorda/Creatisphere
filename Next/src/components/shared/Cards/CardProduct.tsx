@@ -22,7 +22,7 @@ export const CardProduct = ({ product }: CardProductProps) => {
 
                     <Link href={`/Details/${product.slug}`}>
                         <Image
-                            src={`/assets/products/${product.src}`}
+                            src={`/assets/products/${product.artist.id}/${product.src}`}
                             alt={product.alt}
                             fill
                             sizes="(max-width: 768px) 50vw, 25vw"

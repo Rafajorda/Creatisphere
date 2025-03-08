@@ -1,5 +1,6 @@
 import { getProduct } from "@/actions/getProduct"
 import ListDetails from "@/components/shared/Lists/ListDetails"
+import { ProductItem } from "@/types/Product"
 import React from "react"
 
 interface ProductProps {
@@ -8,7 +9,7 @@ interface ProductProps {
 
 const ProductPage = async ({ params }: ProductProps) => {
     try {
-        const product = await getProduct({ slug: params.slug })
+        const product = await getProduct({ slug: params.slug }) as unknown as ProductItem
 
         if (!product) {
             return (

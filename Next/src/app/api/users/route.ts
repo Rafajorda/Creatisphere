@@ -3,6 +3,8 @@ import { prisma } from '@/lib/prisma'
 import { ApiResponse } from '@/app/api/exceptions'
 import { userRegisterSchema } from '@/validation/schema'
 import argon2 from 'argon2'
+const fs = require('fs');
+const path = require('path');
 
 export const POST = async (req: NextRequest) => {
   const body = await req.json()
@@ -41,7 +43,12 @@ export const POST = async (req: NextRequest) => {
       },
 
     })
+    console.log('User created:', user);
+    const userFolderPath = path.join(process.cwd(), 'public', 'assets', 'products', user.id.toString());
 
+    if (!fs.existsSync(userFolderPath)) {
+      fs.mkdirSync(userFolderPath, { recursive: true });
+    }
     return ApiResponse.ok({
       username: user.profile?.username,
       email: user.email,

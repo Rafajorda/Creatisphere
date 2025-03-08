@@ -20,7 +20,7 @@ const ListDetails = ({ product }: ListDetailsProps) => {
                 className={`w-full ${imageSize === "wide" ? "lg:w-2/3" : imageSize === "tall" ? "md:w-1/3" : "md:w-1/2"} mb-8 ${imageSize !== "wide" ? "md:mb-0" : "lg:mb-0"}`}
             >
                 <img
-                    src={`/assets/products/${product.ImagesProduct[0].src}`}
+                    src={`/assets/products/${product.artist.id}/${product.ImagesProduct[0].src}`}
                     alt={product.name}
                     className={`w-full h-auto object-contain rounded-lg shadow-lg ${imageSize === "tall" ? "max-h-[70vh]" : ""}`}
                 />

@@ -24,7 +24,7 @@ const PriceSelector = ({ prices, defaultPrice }: PriceSelectorProps) => {
     ? selectedPrice
     : defaultPrice;
 
-  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selected = prices.find(price => price.id === parseFloat(e.target.value));
 
     if (selected) {
@@ -42,17 +42,21 @@ const PriceSelector = ({ prices, defaultPrice }: PriceSelectorProps) => {
   return (
     <div>
       <label className="block text-lg mb-2">Select product type:</label>
-      <select
-        className="p-2 border border-gray-300 text-black rounded-md"
-        value={Array.isArray(displayPrice) ? displayPrice[0]?.id : displayPrice.id}
-        onChange={handleChange}
-      >
-        {prices.map((priceObj, index) => (
-          <option key={index} value={priceObj.id}>
-            {priceObj.type?.name}
-          </option>
-        ))}
-      </select>
+      {prices.map((priceObj, index) => (
+        <div key={index} className="mb-2">
+          <label className="inline-flex items-center">
+        <input
+          type="radio"
+          className="form-radio"
+          name="price"
+          value={priceObj.id}
+          checked={displayPrice.id === priceObj.id}
+          onChange={handleChange}
+        />
+        <span className="ml-2">{priceObj.type?.name}</span>
+          </label>
+        </div>
+      ))}
     </div>
   );
 };

@@ -1,4 +1,19 @@
 import getProducts from '@/actions/getProducts';
+import { role } from '@prisma/client';
+import { status } from '@prisma/client';
+
+// type status = 'active' | 'inactive'; // Define the status type
+
+type User = {
+    id: number;
+    status: status;
+    createdAt: Date;
+    updatedAt: Date;
+    email: string;
+    password: string;
+    role: role;
+};
+
 
 export interface GalleryImage {
     id: number;
@@ -11,7 +26,10 @@ export interface GalleryImage {
     triangles: number;
     description: string;
     favorited: boolean;
-    favoritedBy: [];
+    favoritedBy: User[];
+    artist: {
+        id: number;
+    }
 }
 
 interface filters {
@@ -63,7 +81,10 @@ export const useFetchGalleryImages = async (filters: filters): Promise<GalleryIm
             triangles: product.triangles,
             description: product.description,
             favorited: product.favorited,
-            favoritedBy: product.favoritedBy
+            favoritedBy: product.favoritedBy,
+            artist: {
+                id: product.artist.id,
+            }
         };
     });
 
