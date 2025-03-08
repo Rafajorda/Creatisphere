@@ -104,9 +104,9 @@ function ModelUploader() {
     };
 
     return (
-        <div className="flex justify-center items-center min-h-screen bg-gray-100">
+        <div className="flex justify-center items-center min-h-screen bg-gray-800">
             <div className="p-6 bg-white rounded-lg shadow-md w-full max-w-md">
-            <h2 className="text-2xl font-semibold mb-4 text-center">Upload 3D Model</h2>
+            <h2 className="text-2xl font-semibold mb-4 text-center text-black">Upload 3D Model</h2>
             <input
                 type="file"
                 accept=".gltf, .glb"

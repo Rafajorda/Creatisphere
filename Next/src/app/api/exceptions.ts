@@ -6,7 +6,7 @@ export class ApiResponse {
         return NextResponse.json(data, { status: 200 })
     }
 
-    static unauthorized(): NextResponse {
+    static unauthorized(p0: string): NextResponse {
         return NextResponse.json({ errors: ['Unauthorized'] }, { status: 401 })
     }
 

@@ -10,6 +10,7 @@ import { useFileUpload } from "@/hooks/useFileUpload"
 import { fetchWrapper } from "@/utils/fetch"
 import { toast } from "@/hooks/use-toast"
 import { useSession } from "next-auth/react"
+import ModelUploader from "../pruebas/modelUploader"
 
 interface ProductForm {
     name: string
@@ -103,6 +104,9 @@ export default function UploadForm() {
     return (
         <div className="flex justify-center items-center min-h-screen py-4 px-6">
             <form className="w-full max-w-screen-md space-y-6 shadow-md rounded-lg p-8 bg-zinc-500">
+                <section>
+                    <ModelUploader/>
+                </section>
                 <section>
                     <h1 className="text-3xl font-bold text-center mb-6">File upload</h1>
                     <FileUpload onFileChange={handleFileChange} />
