@@ -16,6 +16,8 @@ interface GetProductsParams {
   offset?: number;
 }
 export default async function getProducts(params: GetProductsParams = {}): Promise<ProductResponse> {
+  console.log('Obteniendo productos');
+  // console.log('params', params);
   const page = params.page || 1;
   const limit = ARTICLE_PAGE_LIMIT;
   const offset = (page - 1) * ARTICLE_PAGE_LIMIT;
@@ -36,10 +38,30 @@ export default async function getProducts(params: GetProductsParams = {}): Promi
     }
   }
   if (params.searchQuery) {
-    query.name = {
-      contains: params.searchQuery,
-      mode: 'insensitive',
-    }
+    query.OR = [
+      {
+        name: {
+          contains: params.searchQuery,
+          mode: 'insensitive',
+        },
+      },
+      {
+        description: {
+          contains: params.searchQuery,
+          mode: 'insensitive',
+        },
+      },
+      {
+        categories: {
+          some: {
+            name: {
+              contains: params.searchQuery,
+              mode: 'insensitive',
+            },
+          },
+        },
+      },
+    ];
   }
 
   // 2. Si no está en caché, obtener los datos de la base de datos
@@ -65,7 +87,6 @@ export default async function getProducts(params: GetProductsParams = {}): Promi
   const response: ProductResponse = {
     products: data.map((product) => {
       const favorited = product.favoritedBy.some((fav) => fav.userId === userId);
-
       return {
         ...product,
         categories: product.categories,
