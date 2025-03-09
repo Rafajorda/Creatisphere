@@ -22,7 +22,7 @@ export interface GalleryImage {
     size: 'square' | 'wide' | 'tall';
     slug: string;
     name: string;
-    fileSize: string;
+    fileSize: number;
     triangles: number;
     description: string;
     favorited: boolean;
@@ -34,7 +34,7 @@ export interface GalleryImage {
 
 interface filters {
     category?: string[]
-    fileSize?: string
+    fileSize?: number
     triangles?: number
     description?: string
     name?: string

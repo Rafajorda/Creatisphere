@@ -12,6 +12,26 @@ import Search from "./search"
 export function Filters() {
     const [open, setOpen] = useState(false)
     const { toggleFilterValue, isActive, filterList } = useFilters()
+    const [maxTriangles, setMaxTriangles] = useState("")
+    const [maxFilesize, setMaxFilesize] = useState("")
+
+    const handleResetFilters = () => {
+        toggleFilterValue('', '')
+        setMaxTriangles("")
+        setMaxFilesize("")
+    }
+
+    const handleTrianglesChange = (e: { target: { value: any } }) => {
+        const value = Number(e.target.value);
+        setMaxTriangles(value.toString());
+        toggleFilterValue("triangles", value.toString());
+    };
+
+    const handleFilesizeChange = (e: { target: { value: any } }) => {
+        const value = Number(e.target.value);
+        setMaxFilesize(value.toString());
+        toggleFilterValue("fileSize", value.toString());
+    };
 
     return (
         <Sheet open={open} onOpenChange={setOpen}>
@@ -54,17 +74,53 @@ export function Filters() {
                                                         {index}
                                                     </Button>
                                                 ))}
-
                                             </div>
                                         </div>
                                     </AccordionContent>
                                 </AccordionItem>
-
                             ))}
+                            <AccordionItem value="triangles" className="space-y-2 text-white">
+                                <AccordionTrigger>Max Triangles</AccordionTrigger>
+                                <AccordionContent>
+                                    <div className="space-y-2">
+                                        <label htmlFor="max-triangles">Max Triangles: {maxTriangles}</label>
+                                            <input
+                                                id="max-triangles"
+                                                type="range"
+                                                min="0"
+                                                max="1000000"
+                                                step="1000"
+                                                value={maxTriangles}
+                                                onChange={handleTrianglesChange}
+                                                className="w-full"
+                                            />
+                                        </div>
+                                 </AccordionContent>
+        </AccordionItem>
+        <AccordionItem value="max-filesize" className="space-y-2 text-white">
+            <AccordionTrigger>Max Filesize (KB)</AccordionTrigger>
+            <AccordionContent>
+            <div className="space-y-2">
+            <label htmlFor="max-filesize">Max Filesize: {maxFilesize} KB</label>
+            <input
+                id="max-filesize"
+                type="range"
+                min="10000"
+                max="100000"
+                step="100"
+                value={maxFilesize}
+                onChange={handleFilesizeChange}
+                className="w-full"
+            />
+        </div>
+            </AccordionContent>
+        </AccordionItem>
+                         
+                        
+                     
                             <Button
-                                // variant="destructive"
                                 className="text-xl bg-gold text-black font-bold hover:bg-light-gold mt-3"
-                                onClick={() => toggleFilterValue('', '')}
+                                onClick={handleResetFilters}
                             >Reset Filters</Button>
                         </div>
                     </Accordion>
@@ -74,4 +130,3 @@ export function Filters() {
         </Sheet>
     )
 }
-

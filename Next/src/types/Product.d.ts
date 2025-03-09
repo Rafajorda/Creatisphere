@@ -6,7 +6,7 @@ export interface ProductItem extends Omit<Product, 'updatedAt'> {
     artist: User;
     ImagesProduct: ImagesProduct[];
     file: string;
-    fileSize: string;
+    fileSize: number;
     triangles: number;
     description: string;
     size: string;

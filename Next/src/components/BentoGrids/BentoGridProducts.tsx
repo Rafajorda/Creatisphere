@@ -6,7 +6,7 @@ import { SkeletonProduct } from '../shared/skeletons/skeletonProduct';
 const ImageGallery = async ({ searchParams }: {
     searchParams?: {
         Category?: string[]
-        fileSize?: string
+        fileSize?: number
         triangles?: number
         description?: string
         Name?: string
@@ -19,6 +19,8 @@ const ImageGallery = async ({ searchParams }: {
     const { Category, description, fileSize,triangles, Name, Page } = await searchParams;
     const filters = {
         categorySlugs: Category ? Category.split(',') : '', // Dividimos por comas
+        triangles: triangles || 0,
+        fileSize: fileSize || 0,
         searchQuery: Name || '',
         page: Page || 0,
     };

@@ -8,6 +8,8 @@ import getCurrentUser from './getCurrentUser';
 interface GetProductsParams {
   status?: string;
   categorySlugs?: string[];
+  triangles?: number;
+  fileSize?: number;
   // typeSlugs?: string[];
   searchQuery?: string;
   pageSize?: number;
@@ -17,7 +19,7 @@ interface GetProductsParams {
 }
 export default async function getProducts(params: GetProductsParams = {}): Promise<ProductResponse> {
   console.log('Obteniendo productos');
-  // console.log('params', params);
+  console.log('params', params);
   const page = params.page || 1;
   const limit = ARTICLE_PAGE_LIMIT;
   const offset = (page - 1) * ARTICLE_PAGE_LIMIT;
@@ -26,6 +28,8 @@ export default async function getProducts(params: GetProductsParams = {}): Promi
   const userId = currentUser?.id
 
   const query: any = {}
+  const triangles = Number(params.triangles)
+  const fileSize = Number(params.fileSize)
   query.status = 'ACTIVE';
 
   if (params.categorySlugs) {
@@ -36,6 +40,16 @@ export default async function getProducts(params: GetProductsParams = {}): Promi
         },
       },
     }
+  }
+  if (params.triangles) {
+    query.triangles = {
+      lt: triangles
+    };
+  }
+  if (params.fileSize) {
+    query.fileSize = {
+      lt: fileSize
+    };
   }
   if (params.searchQuery) {
     query.OR = [

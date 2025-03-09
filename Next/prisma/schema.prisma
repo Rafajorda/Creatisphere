@@ -59,12 +59,24 @@ model ImagesProduct {
   product   Product  @relation(fields: [productId], references: [id])
 }
 
+model modelsProduct {
+  id        Int      @id @default(autoincrement())
+  src       String
+  alt       String
+  size      sizes
+  productId Int
+  status    status   @default(ACTIVE)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  product   Product  @relation(fields: [productId], references: [id])
+}
+
 model Product {
   id             Int             @id @default(autoincrement())
   name           String
   slug           String          @unique
   file           String
-  fileSize       String
+  fileSize       Int
   description    String
   triangles      Int
   userId         Int
@@ -75,6 +87,7 @@ model Product {
   updatedAt      DateTime        @updatedAt
   favoritedBy    Favorites[]     @relation("ProductFavoritedBy")
   ImagesProduct  ImagesProduct[]
+  modelsProduct  modelsProduct[]
   Cart           Cart?           @relation(fields: [cartId], references: [id])
   artist         User            @relation(fields: [userId], references: [id])
   productPrices  ProductPrice[]

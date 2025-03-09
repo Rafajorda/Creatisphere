@@ -1,4 +1,4 @@
-'use client'
+    'use client'
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
@@ -6,9 +6,18 @@ import { useEffect, useRef } from 'react';
 
 interface ModelViewerProps {
     modelUrl: string;
+    userid?: number;
 }
-function ModelViewer3d({ modelUrl }: ModelViewerProps) {
+function ModelViewer3d({ modelUrl,userid}: ModelViewerProps) {
     const containerRef = useRef<HTMLDivElement>(null);
+    let fullModelUrl: string = '';
+    if(userid){
+        fullModelUrl = `/assets/products/${userid}/${modelUrl}`;
+       
+    }else{
+        fullModelUrl = modelUrl;
+    }
+  
 
     useEffect(() => {
         const scene = new THREE.Scene();
@@ -39,7 +48,7 @@ function ModelViewer3d({ modelUrl }: ModelViewerProps) {
 
         let model: THREE.Object3D | null = null;
         const loader = new GLTFLoader();
-        loader.load(modelUrl, (gltf: { scene: THREE.Object3D<THREE.Object3DEventMap> | null; }) => {
+        loader.load(fullModelUrl, (gltf: { scene: THREE.Object3D<THREE.Object3DEventMap> | null; }) => {
             model = gltf.scene;
             if (model) {
                 scene.add(model);
@@ -62,7 +71,7 @@ function ModelViewer3d({ modelUrl }: ModelViewerProps) {
                 renderer.setSize(containerRef.current.clientWidth, containerRef.current.clientHeight);
             }
         };
-        // window.addEventListener('resize', onWindowResize);
+        window.addEventListener('resize', onWindowResize);
 
         const animate = () => {
             requestAnimationFrame(animate);
@@ -93,9 +102,9 @@ function ModelViewer3d({ modelUrl }: ModelViewerProps) {
             }
             renderer.dispose();
         };
-    }, [modelUrl]);
+    }, [fullModelUrl]);
 
-    return <div ref={containerRef} style={{  height: '50vh', overflow: 'hidden' }} />;
+    return <div ref={containerRef} style={{ height: '50vh', overflow: 'hidden' }} />;
 }
 
 export default ModelViewer3d;

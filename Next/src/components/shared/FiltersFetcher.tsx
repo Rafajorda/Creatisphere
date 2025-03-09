@@ -6,7 +6,7 @@ import { fetchCategories, selectCategories } from '../../store/slices/categories
 
 const InitializeFiltersShop = () => {
     const categories = useAppSelector(selectCategories);
-
+ 
     const dispatch = useAppDispatch();
 
     useEffect(() => {

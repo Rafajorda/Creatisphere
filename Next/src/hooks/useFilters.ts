@@ -28,6 +28,15 @@ export const useFilters = () => {
 
     const toggleFilterValue = useCallback(
         (category: string, value: string) => {
+
+
+            if (category === "triangles" || category === "fileSize") {
+                const newParams = new URLSearchParams(searchParams.toString());
+                newParams.set(category, value.toString());
+                router.push(pathname + "?" + newParams.toString());
+                return;
+            }
+
             dispatch(toggleFilter({ category, value }))
 
             const newParams = new URLSearchParams(searchParams.toString())
@@ -45,7 +54,7 @@ export const useFilters = () => {
                 return
             }
 
-            if (currentValues.includes(value)) {
+             if (currentValues.includes(value.toString())) {
                 newValues = currentValues.filter((v) => v !== value)
             } else {
                 newValues = [...currentValues, value]
@@ -76,7 +85,8 @@ export const useFilters = () => {
     const filterList = {
 
         Category: categories.map((category) => category.slug),
-
+        // triangles: [],
+        // fileSize: [],
     }
 
     return { filters, toggleFilterValue, isActive, filterList }

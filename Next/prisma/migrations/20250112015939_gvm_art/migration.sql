@@ -41,7 +41,7 @@ CREATE TABLE "Product" (
     "userId" INTEGER NOT NULL,
     "cartId" INTEGER,
     "file"    TEXT,
-    "fileSize"  TEXT
+    "fileSize"  INTEGER,
     "description"  TEXT
     "triangles"      INTEGER
     "favoritesCount" INTEGER NOT NULL DEFAULT 0,

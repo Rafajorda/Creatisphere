@@ -13,7 +13,8 @@ interface productForm {
     file: File | null
     types: []
     triangles: number | null
-    fileSize: string
+    fileSize: number | null
+    description: string
     email: string
 }
 
