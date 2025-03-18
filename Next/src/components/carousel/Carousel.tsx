@@ -33,7 +33,7 @@ const CarouselHome = async () => {
                 <CarouselPrevious className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white rounded-full p-2 shadow-lg z-10" />
                 <CarouselNext className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white rounded-full p-2 shadow-lg z-10" />
             </Carousel>
-            <div className="absolute bottom-0 left-0 right-0 h-3 bg-gold drop-shadow-xl"></div>
+            <div className="absolute bottom-0 left-0 right-0 h-3 bg-teal-400 drop-shadow-xl"></div>
         </div>
     )
 }

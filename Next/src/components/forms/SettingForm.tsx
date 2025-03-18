@@ -114,7 +114,7 @@ export default function UserProfileForm({ user }: { user: UserProfileFormData })
                         </FormItem>
                     )}
                 />
-                <Button type="submit" disabled={isLoading} className="bg-dark-gold hover:bg-gold font-semibold">
+                <Button type="submit" disabled={isLoading} className="bg-dark-gold hover:bg-teal-400 font-semibold">
                     {isLoading ? "Updating..." : "Update Profile"}
                 </Button>
             </form>

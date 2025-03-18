@@ -94,7 +94,7 @@ const SignForm = ({ isRegister }: SignFormProps) => {
         {isRegister && (
           <fieldset className="form-group mb-4">
             <input
-              className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:border-gold"
+              className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:border-teal-400"
               type="text"
               name="username"
               placeholder={"username"}
@@ -107,7 +107,7 @@ const SignForm = ({ isRegister }: SignFormProps) => {
         )}
         <fieldset className="form-group mb-4">
           <input
-            className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:border-gold"
+            className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:border-teal-400"
             type="text"
             name="email"
             placeholder={"email"}
@@ -119,7 +119,7 @@ const SignForm = ({ isRegister }: SignFormProps) => {
         </fieldset>
         <fieldset className="form-group mb-4">
           <input
-            className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:border-gold"
+            className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:border-teal-400"
             type="password"
             name="password"
             placeholder={"password"}
@@ -132,7 +132,7 @@ const SignForm = ({ isRegister }: SignFormProps) => {
         {isRegister && (
           <fieldset className="form-group mb-4">
             <input
-              className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:border-gold"
+              className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:border-teal-400"
               type="password"
               name="repeat password"
               placeholder={"repeat password"}
@@ -145,7 +145,7 @@ const SignForm = ({ isRegister }: SignFormProps) => {
         )}
 
         <button
-          className="w-full px-4 py-2 font-bold text-white bg-gold rounded-lg hover:bg-light-gold focus:outline-none focus:shadow-outline"
+          className="w-full px-4 py-2 font-bold text-white bg-teal-400 rounded-lg hover:bg-light-gold focus:outline-none focus:shadow-outline"
           data-testid="btn-submit"
           disabled={loading}
         >

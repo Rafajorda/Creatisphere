@@ -15,7 +15,7 @@ const Register: NextPage = () => {
         <div className="w-full max-w-md bg-zinc-200 p-10 rounded-lg shadow-md">
           <h1 className="text-center text-2xl font-bold mb-4">{('Register')}</h1>
           <p className="text-center text-gray-600 mb-6">
-            <Link href="/Login" className="text-gold font-bold hover:underline">
+            <Link href="/Login" className="text-teal-400 font-bold hover:underline">
               {('Have an account?')}
             </Link>
           </p>

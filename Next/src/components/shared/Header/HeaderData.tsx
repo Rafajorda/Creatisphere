@@ -116,7 +116,7 @@ export const HeaderData = ({ activeRoute, session, notifications, isDropdownOpen
                         <Link
                             href={`/Profile/${session.user.username}`}
                             prefetch={false}
-                            className={`text-2xl font-bold text-black bg-gold px-4 py-2 rounded-lg hover:bg-dark-gold hover:text-white transition-colors duration-200 ${activeRoute === "/Profile" ? "bg-dark-gold text-white" : ""
+                            className={`text-2xl font-bold text-black bg-teal-400 px-4 py-2 rounded-lg hover:bg-dark-gold hover:text-white transition-colors duration-200 ${activeRoute === "/Profile" ? "bg-dark-gold text-white" : ""
                                 }`}
                         >
                             {session.user.username}

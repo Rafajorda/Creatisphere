@@ -44,7 +44,7 @@ export const AddtoCartButton = ({ product, defaultPrice }: AddtoCartButtonProps)
         <>
             <button
                 onClick={(event) => GetToCart(event)}
-                className="mt-4 px-6 py-2 bg-gold text-black text-lg font-semibold rounded-lg hover:bg-dark-gold transition"
+                className="mt-4 px-6 py-2 bg-teal-400 text-black text-lg font-semibold rounded-lg hover:bg-dark-gold transition"
             >
                 add to Cart
             </button>

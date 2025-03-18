@@ -21,23 +21,23 @@ export const ProfileTabs = async ({ profile }: ProfileTabsProps) => {
             <TabsList className={`grid w-full ${profile.products.products.length > 0 ? 'grid-cols-5' : 'grid-cols-4'}`}>
 
                 {profile.products.products.length > 0 && (
-                    <TabsTrigger value="products" className="my-5 py-1 rounded-l-xl font-bold bg-zinc-700 data-[state=active]:text-black data-[state=active]:bg-gold">
+                    <TabsTrigger value="products" className="my-5 py-1 rounded-l-xl font-bold bg-zinc-700 data-[state=active]:text-black data-[state=active]:bg-teal-400">
                         Products ({profile.products.products.length})
                     </TabsTrigger>
                 )}
 
-                <TabsTrigger value="favorites" className="my-5 py-1 font-bold bg-zinc-700 data-[state=active]:text-black data-[state=active]:bg-gold">
+                <TabsTrigger value="favorites" className="my-5 py-1 font-bold bg-zinc-700 data-[state=active]:text-black data-[state=active]:bg-teal-400">
                     Favorites ({profile.favorites.length})
                 </TabsTrigger>
-                <TabsTrigger value="following" className="my-5 py-1 font-bold bg-zinc-700 data-[state=active]:text-black data-[state=active]:bg-gold">
+                <TabsTrigger value="following" className="my-5 py-1 font-bold bg-zinc-700 data-[state=active]:text-black data-[state=active]:bg-teal-400">
                     Following ({profile.following.length})
                 </TabsTrigger>
-                <TabsTrigger value="followers" className="my-5 py-1 font-bold bg-zinc-700 data-[state=active]:text-black data-[state=active]:bg-gold">
+                <TabsTrigger value="followers" className="my-5 py-1 font-bold bg-zinc-700 data-[state=active]:text-black data-[state=active]:bg-teal-400">
                     Followers ({profile.followers.length})
                 </TabsTrigger>
 
                 {profile.username === currentUser?.profile?.username && (
-                    <TabsTrigger value="orders" className="my-5 py-1 rounded-r-xl font-bold bg-zinc-700 data-[state=active]:text-black data-[state=active]:bg-gold">
+                    <TabsTrigger value="orders" className="my-5 py-1 rounded-r-xl font-bold bg-zinc-700 data-[state=active]:text-black data-[state=active]:bg-teal-400">
                         Orders ({profile.orders.length})
                     </TabsTrigger>
                 )}

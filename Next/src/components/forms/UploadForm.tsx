@@ -116,7 +116,7 @@ export default function UploadForm() {
                 <fieldset className="form-group mb-0">
                     <label className="block mb-1 text-lg font-semibold">Name</label>
                     <input
-                        className="w-full px-3 py-2 text-gray-700 border rounded-md focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent"
+                        className="w-full px-3 py-2 text-gray-700 border rounded-md focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent"
                         type="text"
                         name="name"
                         placeholder={"product name"}
@@ -139,7 +139,7 @@ export default function UploadForm() {
                                     key={size}
                                     type="button"
                                     onClick={() => handleSizeChange(size)}
-                                    className={`px-4 py-2 rounded-md text-sm font-semibold transition-colors ${product.size === size ? "bg-gold text-white" : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                                    className={`px-4 py-2 rounded-md text-sm font-semibold transition-colors ${product.size === size ? "bg-teal-400 text-white" : "bg-gray-200 text-gray-700 hover:bg-gray-300"
                                         }`}
                                 >
                                     {size}
@@ -164,7 +164,7 @@ export default function UploadForm() {
                                         }))
                                     }}
                                     className={`px-4 py-2 rounded-md text-sm font-semibold transition-colors ${product.categories.includes(category.id)
-                                        ? "bg-gold text-white"
+                                        ? "bg-teal-400 text-white"
                                         : "bg-gray-200 text-gray-700 hover:bg-gray-300"
                                         }`}
                                 >
@@ -195,7 +195,7 @@ export default function UploadForm() {
                                             }
                                         }}
                                         className={`px-4 py-2 rounded-md text-sm font-semibold transition-colors flex-grow text-left ${product.types.some((t) => t.id === type.id)
-                                            ? "bg-gold text-white"
+                                            ? "bg-teal-400 text-white"
                                             : "bg-gray-200 text-gray-700 hover:bg-gray-300"
                                             }`}
                                     >
@@ -204,7 +204,7 @@ export default function UploadForm() {
                                     <input
                                         type="number"
                                         placeholder="Price"
-                                        className="px-3 py-2 border rounded-md w-48 text-black focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent"
+                                        className="px-3 py-2 border rounded-md w-48 text-black focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent"
                                         value={product.types.find((t) => t.id === type.id)?.price || ""}
                                         onChange={(e) => handleTypeSelection(type.id, Number.parseFloat(e.target.value))}
                                         disabled={loading}
