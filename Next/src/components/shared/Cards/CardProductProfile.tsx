@@ -17,7 +17,7 @@ export const CardProductProfile = ({ product }: CardProductProps) => {
             <Link href={`/Details/${product.slug}`}>
                 <div className="relative w-full h-64">
                     <Image
-                        src={`/assets/products/${product.ImagesProduct[0].src}`}
+                        src={`/assets/products/${product.artist.id}/${product.ImagesProduct[0].src}`}
                         alt={product.name}
                         fill
                         sizes="(max-width: 768px) 50vw, 25vw"
