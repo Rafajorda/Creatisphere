@@ -8,7 +8,6 @@ const ImageGallery = async ({ searchParams }: {
         Category?: string[]
         fileSize?: number
         triangles?: number
-        description?: string
         Name?: string
         Page?: number
     }
@@ -16,7 +15,7 @@ const ImageGallery = async ({ searchParams }: {
 
 
     // const category = await searchParams?.category || '';
-    const { Category, description, fileSize,triangles, Name, Page } = await searchParams;
+    const { Category,fileSize,triangles, Name, Page } = await searchParams;
     const filters = {
         categorySlugs: Category ? Category.split(',') : '', // Dividimos por comas
         triangles: triangles || 0,
