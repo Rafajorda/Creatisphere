@@ -43,8 +43,8 @@ function ModelViewer3d({ modelUrl,userid}: ModelViewerProps) {
         controls.dampingFactor = 0.05;
         controls.enableZoom = true;
         controls.enablePan = true;
-        controls.minDistance = 15;
-        controls.maxDistance = 50;
+        controls.minDistance = -100;
+        controls.maxDistance = 350;
 
         let model: THREE.Object3D | null = null;
         const loader = new GLTFLoader();
