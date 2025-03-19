@@ -20,8 +20,12 @@ const ListDetails = ({ product }: ListDetailsProps) => {
             <div
                 className={`w-full ${imageSize === "wide" ? "lg:w-2/3" : imageSize === "tall" ? "md:w-1/3" : "md:w-1/2"} mb-8 ${imageSize !== "wide" ? "md:mb-0" : "lg:mb-0"}`}
             >
-                <ModelViewer3d modelUrl={product.file}userid={product.artist.id} />
-                 <p className="text-lg">{product.description}</p>
+                {product.file && product.file.endsWith(".glb") ? (
+                    <ModelViewer3d modelUrl={product.file} userid={product.artist.id} />
+                ) : (
+                    <img src={`/assets/products/${product.artist.id}/${product.ImagesProduct[0].src}`} alt={product.name} className="w-full h-auto" />
+                )}
+                <p className="text-lg">{product.description}</p>
             </div>
            
             <div
