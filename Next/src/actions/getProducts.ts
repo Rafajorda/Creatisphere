@@ -10,7 +10,6 @@ interface GetProductsParams {
   categorySlugs?: string[];
   triangles?: number;
   fileSize?: number;
-  // typeSlugs?: string[];
   searchQuery?: string;
   pageSize?: number;
   page?: number;
@@ -40,7 +39,7 @@ export default async function getProducts(params: GetProductsParams = {}): Promi
         },
       },
     }
-  }
+  }  
   if (params.triangles) {
     query.triangles = {
       lt: triangles
