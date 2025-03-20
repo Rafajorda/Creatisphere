@@ -49,7 +49,13 @@ export const HeaderData = ({ activeRoute, session, notifications, isDropdownOpen
                     >
                         Shop
                     </Link>
-
+                    <Link
+                        href="/Prosthetics"
+                        prefetch={false}
+                        className={`text-2xl px-4 py-1 rounded-lg hover:text-black hover:bg-gray-300 transition-colors duration-200 ${activeRoute === "/Prosthetics" ? "text-black bg-white" : ""}`}
+                    >
+                        Prosthetics
+                    </Link>
 
                     <Link
                         href="/Premium"

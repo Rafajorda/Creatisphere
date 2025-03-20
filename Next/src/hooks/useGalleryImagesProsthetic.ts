@@ -1,4 +1,4 @@
-import getProducts from '@/actions/getProducts';
+import { getProductsProsthetics } from '@/actions/getProductsProsthetics';
 import { role } from '@prisma/client';
 import { status } from '@prisma/client';
 
@@ -65,9 +65,9 @@ const sortImages = (images: GalleryImage[]): GalleryImage[] => {
     return grid.flat().filter((img): img is GalleryImage => img !== null);
 };
 
-export const useFetchGalleryImages = async (filters: filters): Promise<GalleryImage[]> => {
-    const { products } = await getProducts(filters);
-    // console.log("products", products);
+export const useFetchGalleryImagesProsthetics = async (filters: filters): Promise<GalleryImage[]> => {
+    const { products } = await getProductsProsthetics();
+     console.log("products", products);
     const mappedImages = products.map(product => {
         const firstImage = product.ImagesProduct[0];
         return {

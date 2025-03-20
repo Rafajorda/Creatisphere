@@ -80,9 +80,14 @@ export default async function getProducts(params: GetProductsParams = {}): Promi
   // 2. Si no está en caché, obtener los datos de la base de datos
   // console.log('Obteniendo datos de la base de datos para productos');
   const data = await prisma.product.findMany({
-    where: query,
-    // skip: offset,
-    // take: limit,
+    where: {
+      ...query,
+      productPrices: {
+        none: {
+          typeId: 3,
+        },
+      },
+    },
     include: {
       artist: true,
       categories: true,
@@ -90,11 +95,10 @@ export default async function getProducts(params: GetProductsParams = {}): Promi
       productPrices: true,
       favoritedBy: {
         where: {
-          userId: userId
-        }
+          userId: userId,
+        },
       },
-    
-    }
+    },
   });
 
   const response: ProductResponse = {
