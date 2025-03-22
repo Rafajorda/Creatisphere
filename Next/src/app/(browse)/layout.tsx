@@ -9,7 +9,7 @@ import { CartButton } from '@/components/Cart/CartButton'
 export const metadata: Metadata = {
     title: {
         template: '%s | next.js RealWorld example app',
-        default: 'GVM Art', // a default is required when creating a template
+        default: 'Creatisphere', // a default is required when creating a template
     },
     description: 'Powered by Next.js',
 }

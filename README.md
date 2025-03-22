@@ -1,2 +1,3 @@
-# GVM-Art
+# Creatisphere
+
 Rafa Jorda

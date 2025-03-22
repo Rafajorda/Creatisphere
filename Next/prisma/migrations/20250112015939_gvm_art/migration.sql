@@ -43,7 +43,7 @@ CREATE TABLE "Product" (
     "file"    TEXT,
     "fileSize"  INTEGER,
     "description"  TEXT
-    "triangles"      INTEGER
+    "triangles" INTEGER
     "favoritesCount" INTEGER NOT NULL DEFAULT 0,
     "status" "status" NOT NULL DEFAULT 'ACTIVE',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
