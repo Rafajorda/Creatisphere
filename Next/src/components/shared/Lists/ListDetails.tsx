@@ -1,17 +1,23 @@
-import type React from "react"
+import React from "react"
 import { AddtoCartButton } from "@/components/Cart/AddtoCartbutton"
 import PriceSelector from "@/components/Cart/PriceSelector"
 import PriceDisplay from "@/components/Cart/PriceDisplay"
 import { ProductItem } from "@/types/Product"
 import ModelViewer3d from "@/components/viewer/3dmodelviewer"
+import Write_report from "@/components/report/write_report"
 
 interface ListDetailsProps {
     product: ProductItem 
 }
 
+
+
 const ListDetails = ({ product }: ListDetailsProps) => {
     const defaultPrice = product.productPrices[0] || null
     const imageSize = product.ImagesProduct[0].size
+
+
+    
 
     return (
         <div
@@ -25,9 +31,11 @@ const ListDetails = ({ product }: ListDetailsProps) => {
                 ) : (
                     <img src={`/assets/products/${product.artist.id}/${product.ImagesProduct[0].src}`} alt={product.name} className="w-full h-auto" />
                 )}
+                 <Write_report />
                 <p className="text-lg">{product.description}</p>
+               
             </div>
-           
+            
             <div
                 className={`w-full ${imageSize === "wide" ? "lg:w-1/3" : imageSize === "tall" ? "md:w-2/3" : "md:w-1/2"} ${imageSize !== "wide" ? "md:pl-8" : "lg:pl-8"}`}
             >
@@ -40,7 +48,7 @@ const ListDetails = ({ product }: ListDetailsProps) => {
                     </div>
 
                     <p className="text-lg">
-                        <span className="font-semibold">Artist:</span> {product.artist?.profile?.username}
+                        <span className="font-semibold">Artist:</span> <a href={`http://localhost:3000/Profile/${product.artist?.profile?.username}`} className="text-blue-500 hover:underline">{product.artist?.profile?.username}</a>
                     </p>
                     <p className="text-lg">
                         <span className="font-semibold">Triangles:</span> {product.triangles}
