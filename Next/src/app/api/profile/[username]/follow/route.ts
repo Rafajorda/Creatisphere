@@ -1,4 +1,5 @@
 import type { NextRequest } from "next/server"
+import axios from "axios"
 import { prisma } from "@/lib/prisma"
 import { ApiResponse } from "@/app/api/exceptions"
 import getCurrentUser from "@/actions/getCurrentUser"
@@ -27,7 +28,8 @@ export const POST = async (req: NextRequest, { params }: { params: IParams }) =>
     if (!followUser) {
         return ApiResponse.notFound("User not exists")
     }
-
+console.log('followUser', followUser.username)
+console.log('currentUser', currentUser.profile?.username ?? 'No profile')
     await prisma.user.update({
         where: {
             id: currentUser.id,
@@ -49,6 +51,12 @@ export const POST = async (req: NextRequest, { params }: { params: IParams }) =>
         },
     })
     revalidate()
+    const notificationData = {
+        following: currentUser.profile?.username ?? 'No profile',
+        followed: followUser.username
+    };
+
+    await axios.post('http://localhost:4000/api/notifications/Follow', notificationData);
     return ApiResponse.ok({ ...followUser, isFollowing: true })
 }
 
