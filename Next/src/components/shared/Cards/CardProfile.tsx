@@ -16,7 +16,7 @@ export const CardProfile = ({ profile }: CardProfileProps) => {
         <FollowProvider following={profile.isFollowing}>
             <div className={`bg-white shadow-sm rounded-lg overflow-hidden mx-auto my-5 hover:bg-zinc-100`}>
                 <Link href={`/Profile/${profile.username}`}>
-                    <div className={`relative h-24 bg-gradient-to-r from-light-gold to-dark-gold shadow-md`}>
+                    <div className={`relative h-24 bg-gradient-to-r from-teal-200 to-teal-800 shadow-md`}>
 
                         <div className={`absolute bottom-0 translate-x-4 translate-y-10`}>
                             <Image

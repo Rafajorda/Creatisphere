@@ -42,7 +42,7 @@ const Premium = async () => {
                         <div className="absolute inset-0 flex flex-col justify-center items-center p-4">
                             <h2 className="text-4xl font-bold">Get Premium!</h2>
                             <p className="text-md italic mb-2 font-bold">Unlock your art skills to the fullest!</p>
-                            <span className="text-dark-gold text-shadow-md text-5xl font-bold mb-10">{plans.price}€</span>
+                            <span className="text-teal-800 text-shadow-md text-5xl font-bold mb-10">{plans.price}€</span>
                             <ul className="space-y-1 text-sm mb-8 font-semibold">
                                 {plans.features.map((feature, featureIndex) => (
                                     <li key={featureIndex} className="flex items-center">

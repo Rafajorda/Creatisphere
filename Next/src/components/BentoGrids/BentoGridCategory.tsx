@@ -8,7 +8,7 @@ const BentoGridCategories = async () => {
     const limitedCategoriesList = categoriesList.categories.slice(0, 6);
 
     return (
-        <section className='bg-gradient-to-b from-zinc-600 to-light-gold/50'>
+        <section className='bg-gradient-to-b from-zinc-600 to-teal-200/50'>
             <div className='container mx-auto text-shadow-lg'>
                 <h1 className='text-5xl italic font-bold text-white text-end'>Most popular Categories</h1>
                 <div className="grid max-h-screen h-auto p-4 md:grid-cols-2 lg:grid-cols-6 lg:grid-rows-3 gap-5 mt-5">

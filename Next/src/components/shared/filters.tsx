@@ -119,7 +119,7 @@ export function Filters() {
                         
                      
                             <Button
-                                className="text-xl bg-teal-400 text-black font-bold hover:bg-light-gold mt-3"
+                                className="text-xl bg-teal-400 text-black font-bold hover:bg-teal-200 mt-3"
                                 onClick={handleResetFilters}
                             >Reset Filters</Button>
                         </div>

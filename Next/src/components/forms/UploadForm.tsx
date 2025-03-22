@@ -217,7 +217,7 @@ export default function UploadForm() {
 
                 <Button
                     onClick={handleSubmit}
-                    className="w-full bg-gold hover:bg-dark-gold text-white font-bold py-2 px-4 rounded-md transition-colors"
+                    className="w-full bg-teal-400 hover:bg-teal-800 text-white font-bold py-2 px-4 rounded-md transition-colors"
                 >
                     Crear Producto
                 </Button>

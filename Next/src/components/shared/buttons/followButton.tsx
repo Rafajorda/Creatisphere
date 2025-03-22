@@ -9,6 +9,7 @@ interface FollowButtonProps {
 }
 
 const FollowButton = ({ author }: FollowButtonProps) => {
+    console.log('FollowButton author', author)
     const [loading, setLoading] = useState(false)
     const { following, setFollowing } = useFollow()
     const [localFollowing, setLocalFollowing] = useState(following)

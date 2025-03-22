@@ -32,7 +32,7 @@ export const CartList = ({ cart }: CartListProps) => {
         </h3>
 
         <Link href="/Checkout">
-          <Button className="bg-dark-gold p-3 rounded-lg mt-3 font-bold hover:bg-gold">Checkout</Button>
+          <Button className="bg-teal-800 p-3 rounded-lg mt-3 font-bold hover:bg-gold">Checkout</Button>
         </Link>
       </div>
     </div>

@@ -145,7 +145,7 @@ const SignForm = ({ isRegister }: SignFormProps) => {
         )}
 
         <button
-          className="w-full px-4 py-2 font-bold text-white bg-teal-400 rounded-lg hover:bg-light-gold focus:outline-none focus:shadow-outline"
+          className="w-full px-4 py-2 font-bold text-white bg-teal-400 rounded-lg hover:bg-teal-200 focus:outline-none focus:shadow-outline"
           data-testid="btn-submit"
           disabled={loading}
         >
