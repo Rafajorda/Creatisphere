@@ -24,9 +24,9 @@ const ProfilePage = async ({ params }: ProfilePageProps) => {
   const username = await params.username;
   const profile = await useGetProfile(username)
 console.log('ProfilePage profile', profile)
-    // if (!profile) {
-    //   redirect('/404')
-    // }
+    if (!profile) {
+      redirect('/404')
+    }
 
   return (
     <div className="profile-page text-white text-xl container mx-auto">

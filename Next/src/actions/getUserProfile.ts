@@ -106,6 +106,7 @@ export default async function getUserProfile(username: string): Promise<UserProf
       },
     });
 
+    console.log('getUserProfile user:', user);
     // Si no se encuentra al usuario, retornamos null
     if (!user) {
       return null;
@@ -113,9 +114,9 @@ export default async function getUserProfile(username: string): Promise<UserProf
 
     const currentUser = await getCurrentUser();
 
-    if (!currentUser) {
-      return null;
-    }
+    // if (!currentUser) {
+    //   return null;
+    // }
 
     return userMapper(user, currentUser);
   } catch (error) {

@@ -16,7 +16,7 @@ function revalidate() {
 export const POST = async (req: NextRequest, { params }: { params: IParams }) => {
     const currentUser = await getCurrentUser()
     if (!currentUser) {
-        return ApiResponse.unauthorized()
+        return ApiResponse.unauthorized("Unauthorized")
     }
 
     const followUser = await prisma.profile.findUnique({
@@ -55,7 +55,7 @@ export const POST = async (req: NextRequest, { params }: { params: IParams }) =>
 export const DELETE = async (req: NextRequest, { params }: { params: IParams }) => {
     const currentUser = await getCurrentUser()
     if (!currentUser) {
-        return ApiResponse.unauthorized()
+        return ApiResponse.unauthorized("Unauthorized")
     }
 
     const followUser = await prisma.profile.findUnique({
