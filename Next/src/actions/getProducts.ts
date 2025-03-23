@@ -16,7 +16,7 @@ interface GetProductsParams {
   limit?: number;
   offset?: number;
 }
-export default async function getProducts(params: GetProductsParams = {}): Promise<ProductResponse> {
+export default async function getProducts(params: GetProductsParams = {}, includeStatus: boolean = true): Promise<ProductResponse> {
   console.log('Obteniendo productos');
   console.log('params', params);
   const page = params.page || 1;
@@ -29,7 +29,10 @@ export default async function getProducts(params: GetProductsParams = {}): Promi
   const query: any = {}
   const triangles = Number(params.triangles)
   const fileSize = Number(params.fileSize)
-  query.status = 'ACTIVE';
+  
+  if (includeStatus) {
+    query.status = 'ACTIVE';
+  }
 
   if (params.categorySlugs) {
     query.categories = {

@@ -64,7 +64,16 @@ export const HeaderData = ({ activeRoute, session, notifications, isDropdownOpen
                     >
                         Premium
                     </Link>
-
+                    
+                    {session && session.user.role === "ADMIN" && (
+                    <Link
+                        href="/Admin"
+                        prefetch={false}
+                        className={`text-2xl px-4 py-1 rounded-lg hover:text-black hover:bg-gray-300 transition-colors duration-200 ${activeRoute === "/About" ? "text-black bg-white" : ""}`}
+                    >
+                        Admin
+                    </Link>
+                    )}
                     {session && (
                         <button onClick={toggleDropdown}>
                             <div className="relative">
@@ -113,7 +122,7 @@ export const HeaderData = ({ activeRoute, session, notifications, isDropdownOpen
                         <Link
                             href="/Login"
                             prefetch={false}
-                            className={`text-2xl font-bold text-black bg-teal-400 px-4 py-2 rounded-lg hover:bg-dark-gold hover:text-white transition-colors duration-200 ${activeRoute === "/Auth" ? "bg-dark-gold text-white" : ""
+                            className={`text-2xl font-bold text-black bg-teal-400 px-4 py-2 rounded-lg hover:bg-teal-800 hover:text-white transition-colors duration-200 ${activeRoute === "/Auth" ? "bg-teal-800 text-white" : ""
                                 }`}
                         >
                             Sign in
@@ -122,7 +131,7 @@ export const HeaderData = ({ activeRoute, session, notifications, isDropdownOpen
                         <Link
                             href={`/Profile/${session.user.username}`}
                             prefetch={false}
-                            className={`text-2xl font-bold text-black bg-teal-400 px-4 py-2 rounded-lg hover:bg-dark-gold hover:text-white transition-colors duration-200 ${activeRoute === "/Profile" ? "bg-dark-gold text-white" : ""
+                            className={`text-2xl font-bold text-black bg-teal-400 px-4 py-2 rounded-lg hover:bg-teal-800 hover:text-white transition-colors duration-200 ${activeRoute === "/Profile" ? "bg-teal-800 text-white" : ""
                                 }`}
                         >
                             {session.user.username}

@@ -28,8 +28,7 @@ export const POST = async (req: NextRequest, { params }: { params: IParams }) =>
     if (!followUser) {
         return ApiResponse.notFound("User not exists")
     }
-console.log('followUser', followUser.username)
-console.log('currentUser', currentUser.profile?.username ?? 'No profile')
+
     await prisma.user.update({
         where: {
             id: currentUser.id,

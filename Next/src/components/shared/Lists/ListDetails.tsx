@@ -32,7 +32,14 @@ const ListDetails = ({ product }: ListDetailsProps) => {
                     <img src={`/assets/products/${product.artist.id}/${product.ImagesProduct[0].src}`} alt={product.name} className="w-full h-auto" />
                 )}
                  <Write_report productId={product.id} />
-                <p className="text-lg">{product.description}</p>
+                 <p className="text-lg">
+                    {product.description.split("\n").map((line, index) => (
+                        <React.Fragment key={index}>    
+                        {line}
+                        <br />
+                        </React.Fragment>
+                    ))}
+                </p>
                
             </div>
             
